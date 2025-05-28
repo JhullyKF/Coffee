@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class MainView {
     Scanner sc = new Scanner(System.in);
+    ClienteView cv = new ClienteView();
 
     public void inicializar(){
         int op = 1;
@@ -18,9 +19,9 @@ public class MainView {
                     System.out.println("[1] - Login");
                     System.out.println("[2] - Cadastrar");
                     if (sc.nextInt() == 1){
-                        loginCliente();
+                        cv.loginCliente();
                     } else if (sc.nextInt() == 2){
-                        autoCadastro();
+                        cv.autoCadastro();
                     } else {
                         System.out.println("Entrada inválida");
                         return;
@@ -33,14 +34,7 @@ public class MainView {
             }
         } while(op != 0);
     }
-    //login e autocadastro -> cliente view -Pedro
-    public void loginCliente(){
 
-    }
-
-    public void autoCadastro(){
-
-    }
     //funcionario view - Jhully
     public void loginFuncionario(){
 
