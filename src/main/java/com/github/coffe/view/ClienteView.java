@@ -9,6 +9,7 @@ public class ClienteView {
     Scanner sc = new Scanner(System.in);
     ClienteController cc = new ClienteController();
 
+    //Menus
     public void menuClienteAcesso(){
         do{
             System.out.println("[1] - Login");
@@ -38,10 +39,11 @@ public class ClienteView {
             int opc = Integer.parseInt(sc.nextLine());
             switch (opc){
                 case 1: break;
-                case 2: break;
+                case 2: cc.exibirCliente();
+                    break;
                 case 3: break;
                 case 4: break;
-                case 0: break;
+                case 0: return;
                 default: System.out.println("Entrada inválida! Tente novamente");
             }
         }while(true);

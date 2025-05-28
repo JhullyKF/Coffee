@@ -10,8 +10,14 @@ public class ClienteController {
     File clientesFile = new File("clientes.txt");
     Cliente usuario;
 
+    //Construtor
     public ClienteController() {
         clientes = carregarCliente();
+    }
+
+    //"mainMenuCliente"
+    public void exibirCliente(){
+        usuario.exibirDados();
     }
 
     public void logarCliente(Cliente c){
@@ -22,7 +28,7 @@ public class ClienteController {
     public void cadastrarCliente(String cpf, String email, String nome, String senha){
         Cliente novoCliente = new Cliente(cpf, email, nome, senha);
         clientes.add(novoCliente);
-        salvarCliente();
+        atualizarClientes();
     }
 
     public Cliente verificarCliente(String identificador, String senha){
@@ -37,7 +43,7 @@ public class ClienteController {
     }
 
     //Arquivo.txt
-    public void salvarCliente(){
+    public void atualizarClientes(){
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(this.clientesFile))){
             for(Cliente c : this.clientes){
                 bw.write(c.toString());

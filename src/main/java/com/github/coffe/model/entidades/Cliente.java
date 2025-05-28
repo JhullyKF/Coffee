@@ -44,7 +44,7 @@ public class Cliente {
     }
 
     public void exibirDados() {
-        System.out.println("\nSeu nome: " + getNome() + " | Seu CPF " + getCpf() + " | Seu email: " + getEmail() + " | Sua senha atual: " + getSenha());
+        System.out.println("\nSeu nome: " + getNome() + " | Seu CPF: " + getCpf() + " | Seu email: " + getEmail() + " | Sua senha atual: " + getSenha());
     }
 
     @Override
