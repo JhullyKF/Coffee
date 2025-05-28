@@ -2,7 +2,7 @@ package com.github.coffe.view;
 
 import java.util.Scanner;
 
-public class MainView {
+public class MainView { FuncionarioView funcionarioView = new FuncionarioView();
     Scanner sc = new Scanner(System.in);
 
     public void inicializar(){
@@ -27,9 +27,9 @@ public class MainView {
                     }
                     break;
 
-                case 2: loginFuncionario(); break;
+                case 2: funcionarioView.loginFuncionario(); break;
                 default:
-                    System.out.println("Entrada inválida! Tente novamente");
+                    System.out.println("Entrada inválida! Tente novamente"); break;
             }
         } while(op != 0);
     }
@@ -41,8 +41,5 @@ public class MainView {
     public void autoCadastro(){
 
     }
-    //funcionario view - Jhully
-    public void loginFuncionario(){
 
-    }
 }
