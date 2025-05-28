@@ -31,4 +31,9 @@ public class Cliente {
     public String getSenha() {
         return senha;
     }
+
+    @Override
+    public String toString() {
+        return getId_Cliente() + ", " + getCpf() + ", " + getEmail() + ", " + getNome() + ", " + getSenha();
+    }
 }

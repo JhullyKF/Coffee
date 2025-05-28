@@ -28,6 +28,7 @@ public class ClienteView {
         }while (true);
     }
 
+    //Login e cadastro
     public void loginCliente(){
         do {
             System.out.println("Informe seus dados:");
@@ -38,6 +39,7 @@ public class ClienteView {
             boolean cadastrado = cc.verificarCliente(identificador, senha);
             if(cadastrado){
                 System.out.println("Está cadastrado");
+                return;
             } else{
                 System.out.println("Usuário ou senha inválidos");
                 System.out.println("[1] - Tentar novamente");

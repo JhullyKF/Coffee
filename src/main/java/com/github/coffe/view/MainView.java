@@ -1,5 +1,7 @@
 package com.github.coffe.view;
 
+import com.github.coffe.controller.FuncionarioView;
+
 import java.util.Scanner;
 
 public class MainView {
@@ -18,6 +20,7 @@ public class MainView {
             switch (op){
                 case 1: cv.menuClienteAcesso(); break;
                 case 2: funcionarioView.loginFuncionario(); break;
+                case 0: break;
                 default:
                     System.out.println("Entrada inválida! Tente novamente");
             }
