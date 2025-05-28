@@ -1,6 +1,8 @@
 package com.github.coffe.view;
 
 import com.github.coffe.controller.ClienteController;
+import com.github.coffe.model.entidades.Cliente;
+
 import java.util.Scanner;
 
 public class ClienteView {
@@ -53,8 +55,9 @@ public class ClienteView {
             String identificador = sc.nextLine();
             System.out.println("Senha: ");
             String senha = sc.nextLine();
-            boolean cadastrado = cc.verificarCliente(identificador, senha);
-            if(cadastrado){
+            Cliente cliente = cc.verificarCliente(identificador, senha);
+            if(cliente != null){
+                cc.logarCliente(cliente);
                 mainMenuCliente();
                 return;
             } else{

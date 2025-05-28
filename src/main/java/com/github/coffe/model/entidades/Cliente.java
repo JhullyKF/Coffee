@@ -43,6 +43,10 @@ public class Cliente {
         return senha;
     }
 
+    public void exibirDados() {
+        System.out.println("\nSeu nome: " + getNome() + " | Seu CPF " + getCpf() + " | Seu email: " + getEmail() + " | Sua senha atual: " + getSenha());
+    }
+
     @Override
     public String toString() {
         return getId_Cliente() + ", " + getCpf() + ", " + getEmail() + ", " + getNome() + ", " + getSenha();

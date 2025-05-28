@@ -8,9 +8,14 @@ import java.util.ArrayList;
 public class ClienteController {
     ArrayList<Cliente> clientes = new ArrayList<>();
     File clientesFile = new File("clientes.txt");
+    Cliente usuario;
 
     public ClienteController() {
         clientes = carregarCliente();
+    }
+
+    public void logarCliente(Cliente c){
+        this.usuario = c;
     }
 
     //Cadastro e Login
@@ -20,15 +25,15 @@ public class ClienteController {
         salvarCliente();
     }
 
-    public boolean verificarCliente(String identificador, String senha){
+    public Cliente verificarCliente(String identificador, String senha){
         for (Cliente c : clientes) {
             if (c.getCpf().equals(identificador) ||
                     (c.getEmail().equals(identificador)) &&
                             c.getSenha().equals(senha)) {
-                return true;
+                return c;
             }
         }
-        return false;
+        return null;
     }
 
     //Arquivo.txt
