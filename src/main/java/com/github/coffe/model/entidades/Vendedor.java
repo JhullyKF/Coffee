@@ -30,4 +30,19 @@ public class Vendedor extends Funcionario{
         //return (getSalario() + bonus);
         return 1;
     }
+
+    @Override
+    public String toString() {
+        return getIdVendedor() + ", " + getCargo() + ", " + getNome() + ", " + getEmail() + ", " + getCpf() + ", " + getSalario() + ", " + getSenha();
+    }
+
+    public static Vendedor fromString(String linha) {
+        String[] dados = linha.split(", ");
+        int id = Integer.parseInt(dados[0]);
+        String nome = dados[1].trim();
+        String email = dados[2].trim();
+        String cpf = dados[3].trim();
+
+        return new Vendedor(id, nome, email, cpf);
+    }
 }

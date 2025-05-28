@@ -2,7 +2,8 @@ package com.github.coffe.view;
 
 import java.util.Scanner;
 
-public class MainView { FuncionarioView funcionarioView = new FuncionarioView();
+public class MainView {
+    FuncionarioView funcionarioView = new FuncionarioView();
     Scanner sc = new Scanner(System.in);
 
     public void inicializar(){
@@ -33,13 +34,6 @@ public class MainView { FuncionarioView funcionarioView = new FuncionarioView();
             }
         } while(op != 0);
     }
-    //login e autocadastro -> cliente view -Pedro
-    public void loginCliente(){
 
-    }
-
-    public void autoCadastro(){
-
-    }
 
 }

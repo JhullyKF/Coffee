@@ -67,4 +67,7 @@ public abstract class Funcionario {
     public abstract void exibirDados();
 
     public abstract double calcularSalario();
+
+    public abstract String toString();
+
 }

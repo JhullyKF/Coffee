@@ -19,4 +19,18 @@ public class Gerente extends Funcionario{
         //double bonus = totalVendas * 0.15
         return (getSalario() /*+ bonus*/);
     }
+
+    @Override
+    public String toString() {
+        return getCargo() + ", " + getNome() + ", " + getEmail() + ", " + getCpf() + ", " + getSalario() + ", " + getSenha();
+    }
+
+    public static Gerente fromString(String linha) {
+        String[] dados = linha.split(", ");
+        String nome = dados[1].trim();
+        String email = dados[2].trim();
+        String cpf = dados[3].trim();
+
+        return new Gerente(nome, email, cpf);
+    }
 }
