@@ -15,20 +15,10 @@ public class MainView {
             System.out.println("[0] - Sair");
             op = sc.nextInt();
             switch (op){
-                case 1:
-                    System.out.println("[1] - Login");
-                    System.out.println("[2] - Cadastrar");
-                    if (sc.nextInt() == 1){
-                        cv.loginCliente();
-                    } else if (sc.nextInt() == 2){
-                        cv.autoCadastro();
-                    } else {
-                        System.out.println("Entrada inválida");
-                        return;
-                    }
+                case 1: cv.menuClienteAcesso();
                     break;
-
-                case 2: loginFuncionario(); break;
+                case 2: loginFuncionario();
+                    break;
                 default:
                     System.out.println("Entrada inválida! Tente novamente");
             }

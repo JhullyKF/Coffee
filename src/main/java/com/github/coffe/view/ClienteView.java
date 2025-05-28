@@ -7,6 +7,24 @@ import java.util.Scanner;
 public class ClienteView {
     Scanner sc = new Scanner(System.in);
 
+    public void menuClienteAcesso(){
+        do{
+            System.out.println("[1] - Login");
+            System.out.println("[2] - Cadastrar");
+            System.out.println("[0] - Sair");
+            int opc = sc.nextInt();
+            if(opc == 1){
+                loginCliente();
+            } else if(opc == 2){
+                autoCadastro();
+            } else if(opc==0){
+                return;
+            } else{
+                System.out.println("Entrada inválida! Tente novamente");
+            }
+        }while (true);
+    }
+
     public void loginCliente(){
         System.out.println("\nInforme seus dados:");
         System.out.println("\nCPF ou Email: ");
