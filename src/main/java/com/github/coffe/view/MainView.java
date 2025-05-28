@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class MainView {
     FuncionarioView funcionarioView = new FuncionarioView();
     Scanner sc = new Scanner(System.in);
+    ClienteView cv = new ClienteView();
 
     public void inicializar(){
         int op = 1;
@@ -15,22 +16,10 @@ public class MainView {
             System.out.println("[0] - Sair");
             op = sc.nextInt();
             switch (op){
-                case 1:
-                    System.out.println("[1] - Login");
-                    System.out.println("[2] - Cadastrar");
-                    if (sc.nextInt() == 1){
-                        loginCliente();
-                    } else if (sc.nextInt() == 2){
-                        autoCadastro();
-                    } else {
-                        System.out.println("Entrada inválida");
-                        return;
-                    }
-                    break;
-
+                case 1: cv.menuClienteAcesso(); break;
                 case 2: funcionarioView.loginFuncionario(); break;
                 default:
-                    System.out.println("Entrada inválida! Tente novamente"); break;
+                    System.out.println("Entrada inválida! Tente novamente");
             }
         } while(op != 0);
     }
