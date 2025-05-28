@@ -20,6 +20,11 @@ public class ClienteController {
         usuario.exibirDados();
     }
 
+    public void excluirCliente(){
+        clientes.remove(usuario);
+        atualizarClientes();
+    }
+
     public void logarCliente(Cliente c){
         this.usuario = c;
     }

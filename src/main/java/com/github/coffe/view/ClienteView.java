@@ -41,8 +41,19 @@ public class ClienteView {
                 case 1: break;
                 case 2: cc.exibirCliente();
                     break;
-                case 3: break;
-                case 4: break;
+                case 3:
+                    break;
+                case 4:
+                    System.out.println("Deseja mesmo excluir sua conta?");
+                    System.out.println("[1] - Sim / [2] - Não");
+                    int decisor = Integer.parseInt(sc.nextLine());
+                    if(decisor == 1){
+                        cc.excluirCliente();
+                        return;
+                    } else if(decisor != 2){
+                        System.out.println("Entrada inválida! Exclusão abortada");
+                    }
+                    break;
                 case 0: return;
                 default: System.out.println("Entrada inválida! Tente novamente");
             }
