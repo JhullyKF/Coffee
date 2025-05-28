@@ -43,6 +43,18 @@ public class Cliente {
         return senha;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
     public void exibirDados() {
         System.out.println("\nSeu nome: " + getNome() + " | Seu CPF: " + getCpf() + " | Seu email: " + getEmail() + " | Sua senha atual: " + getSenha());
     }

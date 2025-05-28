@@ -41,7 +41,7 @@ public class ClienteView {
                 case 1: break;
                 case 2: cc.exibirCliente();
                     break;
-                case 3:
+                case 3: editarDados();
                     break;
                 case 4:
                     System.out.println("Deseja mesmo excluir sua conta?");
@@ -58,6 +58,36 @@ public class ClienteView {
                 default: System.out.println("Entrada inválida! Tente novamente");
             }
         }while(true);
+    }
+
+    public void editarDados(){
+        do{
+            System.out.println("Selecione uma opção:");
+            System.out.println("[1] - Editar nome");
+            System.out.println("[2] - Editar email");
+            System.out.println("[3] - Editar senha");
+            System.out.println("[0] - Sair");
+            int opc = Integer.parseInt(sc.nextLine());
+            switch(opc){
+                case 1:
+                    System.out.println("Insira o nome:");
+                    String novoNome  = sc.nextLine();
+                    cc.editarDadoCliente("nome", novoNome);
+                    break;
+                case 2:
+                    System.out.println("Insira o email:");
+                    String novoEmail = sc.nextLine();
+                    cc.editarDadoCliente("email", novoEmail);
+                    break;
+                case 3:
+                    System.out.println("Insira a senha:");
+                    String novaSenha = sc.nextLine();
+                    cc.editarDadoCliente("senha", novaSenha);
+                    break;
+                case 0: return;
+                default:System.out.println("Entrada inválida! Tente novamente");
+            }
+        } while(true);
     }
 
     //Login e cadastro

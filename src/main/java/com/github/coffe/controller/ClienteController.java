@@ -20,6 +20,21 @@ public class ClienteController {
         usuario.exibirDados();
     }
 
+    public void editarDadoCliente(String dado, String dadoAtualizado){
+        switch (dado){
+            case "nome":
+                usuario.setNome(dadoAtualizado);
+                break;
+            case "email":
+                usuario.setEmail(dadoAtualizado);
+                break;
+            case "senha":
+                usuario.setSenha(dadoAtualizado);
+                break;
+        }
+        atualizarClientes();
+    }
+
     public void excluirCliente(){
         clientes.remove(usuario);
         atualizarClientes();
