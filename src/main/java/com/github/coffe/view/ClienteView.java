@@ -1,11 +1,14 @@
 package com.github.coffe.view;
 
+import com.github.coffe.controller.ClienteController;
+import com.github.coffe.model.entidades.Cliente;
 import org.apache.logging.log4j.core.util.JsonUtils;
 
 import java.util.Scanner;
 
 public class ClienteView {
     Scanner sc = new Scanner(System.in);
+    ClienteController cc = new ClienteController();
 
     public void menuClienteAcesso(){
         do{
@@ -42,5 +45,6 @@ public class ClienteView {
         String email = sc.nextLine();
         System.out.println("Digite sua senha:");
         String senha = sc.nextLine();
+        cc.cadastrarCliente(cpf, email, nome, senha);
     }
 }
