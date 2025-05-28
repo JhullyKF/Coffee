@@ -1,9 +1,6 @@
 package com.github.coffe.view;
 
 import com.github.coffe.controller.ClienteController;
-import com.github.coffe.model.entidades.Cliente;
-import org.apache.logging.log4j.core.util.JsonUtils;
-
 import java.util.Scanner;
 
 public class ClienteView {

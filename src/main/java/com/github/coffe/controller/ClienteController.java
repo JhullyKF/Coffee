@@ -9,6 +9,11 @@ public class ClienteController {
     ArrayList<Cliente> clientes = new ArrayList<>();
     File clientesFile = new File("clientes.txt");
 
+    public ClienteController() {
+        clientes = carregarCliente();
+    }
+
+    //Cadastro e Login
     public void cadastrarCliente(String cpf, String email, String nome, String senha){
         Cliente novoCliente = new Cliente(cpf, email, nome, senha);
         clientes.add(novoCliente);
@@ -26,6 +31,7 @@ public class ClienteController {
         return false;
     }
 
+    //Arquivo.txt
     public void salvarCliente(){
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(this.clientesFile))){
             for(Cliente c : this.clientes){
@@ -35,5 +41,15 @@ public class ClienteController {
         } catch (IOException e){
             System.err.println("Erro ao salvar cliente: " + e.getMessage());
         }
+    }
+
+    public ArrayList<Cliente> carregarCliente(){
+        try(BufferedReader br = new BufferedReader(new FileReader(this.clientesFile))){
+            String linha;
+            while ((linha = br.readLine()) != null){
+                this.clientes.add(Cliente.fromString(linha));
+            }
+        } catch (IOException ignored){}
+        return clientes;
     }
 }
