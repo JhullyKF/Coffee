@@ -15,7 +15,7 @@ public class ClienteView {
             System.out.println("[1] - Login");
             System.out.println("[2] - Cadastrar");
             System.out.println("[0] - Sair");
-            int opc = sc.nextInt();
+            int opc = Integer.parseInt(sc.nextLine());
             if(opc == 1){
                 loginCliente();
             } else if(opc == 2){
@@ -29,11 +29,26 @@ public class ClienteView {
     }
 
     public void loginCliente(){
-        System.out.println("\nInforme seus dados:");
-        System.out.println("\nCPF ou Email: ");
-        String identificador = sc.nextLine();
-        System.out.println("\nSenha: ");
-        String senha = sc.nextLine();
+        do {
+            System.out.println("Informe seus dados:");
+            System.out.println("CPF ou Email: ");
+            String identificador = sc.nextLine();
+            System.out.println("Senha: ");
+            String senha = sc.nextLine();
+            boolean cadastrado = cc.verificarCliente(identificador, senha);
+            if(cadastrado){
+                System.out.println("Está cadastrado");
+            } else{
+                System.out.println("Usuário ou senha inválidos");
+                System.out.println("[1] - Tentar novamente");
+                System.out.println("[0] - Sair");
+                int opc = Integer.parseInt(sc.nextLine());
+                if(opc == 0) return;
+                else if (opc!=1){
+                    System.out.println("Entrada inválida! Tente novamente");
+                }
+            }
+        }while(true);
     }
 
     public void autoCadastro(){

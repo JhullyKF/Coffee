@@ -15,4 +15,20 @@ public class Cliente {
         this.nome = nome;
         this.senha = senha;
     }
+
+    public int getId_Cliente() {
+        return id_Cliente;
+    }
+    public String getCpf() {
+        return cpf;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public String getNome() {
+        return nome;
+    }
+    public String getSenha() {
+        return senha;
+    }
 }

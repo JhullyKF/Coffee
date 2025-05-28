@@ -11,4 +11,15 @@ public class ClienteController {
         Cliente novoCliente = new Cliente(cpf, email, nome, senha);
         clientes.add(novoCliente);
     }
+
+    public boolean verificarCliente(String identificador, String senha){
+        for (Cliente c : clientes) {
+            if (c.getCpf().equals(identificador) ||
+                    (c.getEmail().equals(identificador)) &&
+                            c.getSenha().equals(senha)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
