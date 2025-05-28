@@ -25,6 +25,26 @@ public class ClienteView {
         }while (true);
     }
 
+    public void mainMenuCliente(){
+        do {
+            System.out.println("Selecione uma opção para continuarmos: ");
+            System.out.println("[1] - Realizar pedido");
+            System.out.println("[2] - Informações pessoais");
+            System.out.println("[3] - Editar dados");
+            System.out.println("[4] - Excluir Conta");
+            System.out.println("[0] - Sair");
+            int opc = Integer.parseInt(sc.nextLine());
+            switch (opc){
+                case 1: break;
+                case 2: break;
+                case 3: break;
+                case 4: break;
+                case 0: break;
+                default: System.out.println("Entrada inválida! Tente novamente");
+            }
+        }while(true);
+    }
+
     //Login e cadastro
     public void loginCliente(){
         do {
@@ -35,7 +55,7 @@ public class ClienteView {
             String senha = sc.nextLine();
             boolean cadastrado = cc.verificarCliente(identificador, senha);
             if(cadastrado){
-                System.out.println("Está cadastrado");
+                mainMenuCliente();
                 return;
             } else{
                 System.out.println("Usuário ou senha inválidos");
