@@ -3,6 +3,7 @@ package com.github.coffe.view;
 import java.util.Scanner;
 
 public class MainView {
+    FuncionarioView funcionarioView = new FuncionarioView();
     Scanner sc = new Scanner(System.in);
     ClienteView cv = new ClienteView();
 
@@ -15,18 +16,11 @@ public class MainView {
             System.out.println("[0] - Sair");
             op = sc.nextInt();
             switch (op){
-                case 1: cv.menuClienteAcesso();
-                    break;
-                case 2: loginFuncionario();
-                    break;
+                case 1: cv.menuClienteAcesso(); break;
+                case 2: funcionarioView.loginFuncionario(); break;
                 default:
                     System.out.println("Entrada inválida! Tente novamente");
             }
         } while(op != 0);
-    }
-
-    //funcionario view - Jhully
-    public void loginFuncionario(){
-
     }
 }
