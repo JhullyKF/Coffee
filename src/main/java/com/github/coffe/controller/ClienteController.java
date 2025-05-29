@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class ClienteController {
     ArrayList<Cliente> clientes = new ArrayList<>();
-    File clientesFile = new File("clientes.txt");
+    File clientesFile = new File("src/main/java/com/github/coffe/dados");
     Cliente usuario;
 
     //Construtor
@@ -75,6 +75,9 @@ public class ClienteController {
     }
 
     public ArrayList<Cliente> carregarCliente(){
+        if (!clientesFile.exists()){
+            File clientesFile = new File("src/main/java/com/github/coffe/dados/clientes.txt");
+        }
         try(BufferedReader br = new BufferedReader(new FileReader(this.clientesFile))){
             String linha;
             while ((linha = br.readLine()) != null){
