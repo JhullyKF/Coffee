@@ -1,6 +1,7 @@
 package com.github.coffe.model.entidades;
 
 public abstract class Funcionario {
+    private int idFuncionario;
     private String cargo;
     private String nome;
     private String email;
@@ -8,13 +9,24 @@ public abstract class Funcionario {
     private double salario;
     private String senha;
 
-    public Funcionario(String cargo, String nome, String email, String cpf, double salario, String senha) {
+    public Funcionario(int idFuncionario, String cargo, String nome, String email, String cpf, double salario, String senha) {
+        this.idFuncionario = idFuncionario;
         this.cargo = cargo;
         this.nome = nome;
         this.email = email;
         this.cpf = cpf;
+        this.salario = salario;
         this.senha = senha;
     }
+
+    public int getIdFuncionario() {
+        return idFuncionario;
+    }
+
+    public void setIdFuncionario(int idFuncionario) {
+        this.idFuncionario = idFuncionario;
+    }
+
 
     public String getCargo() {
         return cargo;
@@ -67,4 +79,7 @@ public abstract class Funcionario {
     public abstract void exibirDados();
 
     public abstract double calcularSalario();
+
+    public abstract String toString();
+
 }
