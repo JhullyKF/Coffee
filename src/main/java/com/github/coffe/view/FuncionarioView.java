@@ -11,14 +11,14 @@ public class FuncionarioView {
     Scanner sc = new Scanner(System.in);
 
     public void loginFuncionario(){
-        int tipo;
+        int op=1;
         do{
             System.out.print("Insira seu CPF: ");
             String cpf = sc.nextLine();
             System.out.print("Insira sua senha: ");
             String senha = sc.nextLine();
 
-            tipo = funcionarioController.verificaLogin(cpf, senha);
+            int tipo = funcionarioController.verificaLogin(cpf, senha);
 
              switch (tipo){
                  case 1:
@@ -32,15 +32,15 @@ public class FuncionarioView {
                  case 0:
                      System.out.println("Credenciais inválidas!");
                      System.out.println("Deseja tentar novamente? [1] sim / [2] não");
-                     if (sc.nextInt() == 1){
-                         break;
+                     if (Integer.parseInt(sc.nextLine()) == 2){
+                         op=0;
                      }
-                     return;
+                     break;
 
                  default:
                      System.out.println("Entrada inválida!"); return;
              }
-        } while (tipo != 0);
+        } while (op != 0);
 
     }
 }

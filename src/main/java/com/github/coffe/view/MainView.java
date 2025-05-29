@@ -16,6 +16,10 @@ public class MainView {
             System.out.println("[0] - Sair");
             op = sc.nextInt();
             switch (op){
+                case 0:
+                    System.out.println("Encerrando...");
+                    System.out.println("Volte sempre!!");
+                    return;
                 case 1: cv.menuClienteAcesso(); break;
                 case 2: funcionarioView.loginFuncionario(); break;
                 default:

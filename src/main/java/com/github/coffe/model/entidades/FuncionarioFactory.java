@@ -4,7 +4,7 @@ public class FuncionarioFactory {
     public static Funcionario fromString(String linha) {
         String[] partes = linha.split(", ");
 
-        String tipo = partes[0].trim();
+        String tipo = partes[1].trim();
 
         return switch (tipo) {
             case "Gerente" -> Gerente.fromString(linha);

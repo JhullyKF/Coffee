@@ -1,8 +1,13 @@
 package com.github.coffe.model.entidades;
 
+import java.util.Locale;
+
 public class Gerente extends Funcionario{
     public Gerente(String nome, String email, String cpf) {
-        super("Gerente", nome, email, cpf, 5000.00,"Mudar@123");
+        super(0,"Gerente", nome, email, cpf, 5000.00,"Mudar@123");
+    }
+    public Gerente(int id, String cargo, String nome, String email, String cpf, double salario, String senha){
+        super(id, cargo, nome, email, cpf, salario, senha);
     }
 
     @Override
@@ -22,15 +27,19 @@ public class Gerente extends Funcionario{
 
     @Override
     public String toString() {
-        return getCargo() + ", " + getNome() + ", " + getEmail() + ", " + getCpf() + ", " + getSalario() + ", " + getSenha();
+        return getIdFuncionario() + ", " + getCargo() + ", " + getNome() + ", " + getEmail() + ", " + getCpf() + ", " + getSalario() + ", " + getSenha();
     }
 
     public static Gerente fromString(String linha) {
         String[] dados = linha.split(", ");
-        String nome = dados[1].trim();
-        String email = dados[2].trim();
-        String cpf = dados[3].trim();
+        int idFuncionario = Integer.parseInt(dados[0].trim());
+        String cargo = dados[1].trim();
+        String nome = dados[2].trim();
+        String email = dados[3].trim();
+        String cpf = dados[4].trim();
+        double salario = Double.parseDouble(dados[5].trim());
+        String senha = dados[6].trim();
 
-        return new Gerente(nome, email, cpf);
+        return new Gerente(idFuncionario, cargo, nome, email, cpf, salario, senha);
     }
 }

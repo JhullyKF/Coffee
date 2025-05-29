@@ -1,1 +1,3 @@
-Gerente, Gerente1, gerente1@coffee.com.br, 123, 5000.00, Mudar@123
+0, Gerente, Gerente1, gerente@coffee.com, 12345678900, 5000.00, Mudar@123
+1, Vendedor, Jhully, jhu@coffee.com.br, 123456, 2500.00, Mudar@123
+
