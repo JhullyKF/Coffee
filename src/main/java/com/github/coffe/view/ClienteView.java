@@ -12,9 +12,9 @@ public class ClienteView {
     //Menus
     public void menuClienteAcesso(){
         do{
-            System.out.println("[1] - Login");
+            System.out.println("\n[1] - Login");
             System.out.println("[2] - Cadastrar");
-            System.out.println("[0] - Sair");
+            System.out.println("[0] - Sair\n");
             int opc = Integer.parseInt(sc.nextLine());
             if(opc == 1){
                 loginCliente();
@@ -23,69 +23,71 @@ public class ClienteView {
             } else if(opc==0){
                 return;
             } else{
-                System.out.println("Entrada inválida! Tente novamente");
+                System.out.println("\nEntrada inválida! Tente novamente");
             }
         }while (true);
     }
 
     public void mainMenuCliente(){
         do {
-            System.out.println("Selecione uma opção para continuarmos: ");
+            System.out.println("\nSelecione uma opção para continuarmos: ");
             System.out.println("[1] - Realizar pedido");
             System.out.println("[2] - Informações pessoais");
             System.out.println("[3] - Editar dados");
             System.out.println("[4] - Excluir Conta");
-            System.out.println("[0] - Sair");
+            System.out.println("[0] - Sair\n");
             int opc = Integer.parseInt(sc.nextLine());
             switch (opc){
                 case 1: break;
-                case 2: cc.exibirCliente();
+                case 2:
+                    System.out.println("\nSeus Dados:");
+                    cc.exibirCliente();
                     break;
                 case 3: editarDados();
                     break;
                 case 4:
-                    System.out.println("Deseja mesmo excluir sua conta?");
-                    System.out.println("[1] - Sim / [2] - Não");
+                    System.out.println("\nDeseja mesmo excluir sua conta?");
+                    System.out.println("[1] - Sim / [2] - Não\n");
                     int decisor = Integer.parseInt(sc.nextLine());
                     if(decisor == 1){
                         cc.excluirCliente();
                         return;
                     } else if(decisor != 2){
-                        System.out.println("Entrada inválida! Exclusão abortada");
+                        System.out.println("\nEntrada inválida! Exclusão abortada");
                     }
                     break;
                 case 0: return;
-                default: System.out.println("Entrada inválida! Tente novamente");
+                default: System.out.println("\nEntrada inválida! Tente novamente");
             }
         }while(true);
     }
 
     public void editarDados(){
         do{
-            System.out.println("Selecione uma opção:");
+            System.out.println("\nSelecione uma opção:");
             System.out.println("[1] - Editar nome");
             System.out.println("[2] - Editar email");
             System.out.println("[3] - Editar senha");
-            System.out.println("[0] - Sair");
+            System.out.println("[0] - Sair\n");
             int opc = Integer.parseInt(sc.nextLine());
             switch(opc){
                 case 1:
-                    System.out.println("Insira o nome:");
+                    System.out.println("\nInsira o nome:");
                     String novoNome  = sc.nextLine();
                     cc.editarDadoCliente("nome", novoNome);
                     break;
                 case 2:
-                    System.out.println("Insira o email:");
+                    System.out.println("\nInsira o email:");
                     String novoEmail = sc.nextLine();
                     cc.editarDadoCliente("email", novoEmail);
                     break;
                 case 3:
-                    System.out.println("Insira a senha:");
+                    System.out.println("\nInsira a senha:");
                     String novaSenha = sc.nextLine();
                     cc.editarDadoCliente("senha", novaSenha);
                     break;
                 case 0: return;
-                default:System.out.println("Entrada inválida! Tente novamente");
+                default:System.out.println("\nEntrada inválida! Tente novamente");
             }
         } while(true);
     }
@@ -93,8 +95,8 @@ public class ClienteView {
     //Login e cadastro
     public void loginCliente(){
         do {
-            System.out.println("Informe seus dados:");
-            System.out.println("CPF ou Email: ");
+            System.out.println("\nInforme seus dados:");
+            System.out.println("\nCPF ou Email: ");
             String identificador = sc.nextLine();
             System.out.println("Senha: ");
             String senha = sc.nextLine();
@@ -104,13 +106,13 @@ public class ClienteView {
                 mainMenuCliente();
                 return;
             } else{
-                System.out.println("Usuário ou senha inválidos");
+                System.out.println("\nUsuário ou senha inválidos");
                 System.out.println("[1] - Tentar novamente");
                 System.out.println("[0] - Sair");
                 int opc = Integer.parseInt(sc.nextLine());
                 if(opc == 0) return;
                 else if (opc!=1){
-                    System.out.println("Entrada inválida! Tente novamente");
+                    System.out.println("\nEntrada inválida! Tente novamente");
                 }
             }
         }while(true);
