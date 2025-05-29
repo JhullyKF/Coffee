@@ -7,27 +7,36 @@ public class MainView {
     FuncionarioView funcionarioView = new FuncionarioView();
     Scanner sc = new Scanner(System.in);
     ClienteView cv = new ClienteView();
+    int op;
 
     public void inicializar(){
-        int op = 1;
+        mensagemBoasVindas();
         do{
-            System.out.println("Insira uma opção para continuar: ");
-            System.out.println("[1] - Cliente");
+            System.out.println("\nInsira uma opção para continuar: ");
+            System.out.println("\n[1] - Cliente");
             System.out.println("[2] - Funcionário");
-            System.out.println("[0] - Sair");
+            System.out.println("[0] - Sair\n");
             op = Integer.parseInt(sc.nextLine());
             switch (op){
                 case 0:
-                    System.out.println("Encerrando...");
-                    System.out.println("Volte sempre!!");
+                    System.out.println("\nEncerrando...");
+                    System.out.println("\nVolte sempre!!");
                     return;
                 case 1: cv.menuClienteAcesso(); break;
                 case 2: funcionarioView.loginFuncionario(); break;
                 default:
-                    System.out.println("Entrada inválida! Tente novamente");
+                    System.out.println("\nEntrada inválida! Tente novamente");
             }
         } while(op != 0);
     }
 
-
+    public void mensagemBoasVindas() {
+        System.out.println("""
+                ╔════════════════════════════════════════════╗
+                ║                                             ║
+                ║        ☕  BEM-VINDO AO COFFEE  ☕           ║
+                ║                                             ║
+                ╚════════════════════════════════════════════╝
+        """);
+    }
 }
