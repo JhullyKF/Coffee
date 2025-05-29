@@ -35,6 +35,7 @@ public class FuncionarioController {
             while ((linha = br.readLine()) != null){
                 funcionarios.add(FuncionarioFactory.fromString(linha));
             }
+            log.info("Funcionarios carregados com sucesso");
         } catch (IOException e){
             log.warn("Erro ao carregar funcionários: " + e.getMessage());
         }
@@ -44,12 +45,11 @@ public class FuncionarioController {
     public int verificaLogin(String cpf, String senha){
         carregarFuncionarios();
         for(Funcionario f: funcionarios){
-            System.out.println("[DEBUG] " + f.getClass().getSimpleName() + " - CPF: " + f.getCpf() + ", Senha: " + f.getSenha());
-
             if(f.getCpf().trim().equals(cpf) && f.getSenha().trim().equals(senha.trim())){
                 log.info("Login de <" + f.getNome() + "> realizado com sucesso.");
                 if(f instanceof Gerente) return 1;
                 if(f instanceof Vendedor) return 2;
+                log.info("Login realizado pelo funcionario " + f.getNome());
             }
         }
         log.warn("Tentativa de login mal sucedida para o usuário " + cpf + ", senha: " + senha);
@@ -68,9 +68,8 @@ public class FuncionarioController {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Erro ao atribuir id ao funcionario " + e.getMessage());
         }
-
         while(idsUsados.contains(idLivre)){
             idLivre++;
         }

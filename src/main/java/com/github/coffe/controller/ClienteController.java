@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class ClienteController {
     ArrayList<Cliente> clientes = new ArrayList<>();
-    File clientesFile = new File("src/main/java/com/github/coffe/dados");
+    File clientesFile = new File("src/main/java/com/github/coffe/dados/clientes.txt");
     Cliente usuario;
 
     //Construtor
