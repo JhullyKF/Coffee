@@ -25,12 +25,7 @@ public class FuncionarioController {
     }
 
     public ArrayList<Funcionario> carregarFuncionarios(){
-        funcionarios.clear();
-        if (!funcionariosFile.exists()){
-            File funcionariosFile = new File("src/main/java/com/github/coffe/dados/funcionarios.txt");
-        }
-
-        try(BufferedReader br = new BufferedReader(new FileReader(funcionariosFile))){
+                try(BufferedReader br = new BufferedReader(new FileReader(funcionariosFile))){
             String linha;
             while ((linha = br.readLine()) != null){
                 funcionarios.add(FuncionarioFactory.fromString(linha));

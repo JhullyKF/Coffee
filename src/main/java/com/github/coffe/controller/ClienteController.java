@@ -9,6 +9,7 @@ public class ClienteController {
     ArrayList<Cliente> clientes = new ArrayList<>();
     File clientesFile = new File("src/main/java/com/github/coffe/dados/clientes.txt");
     Cliente usuario;
+    private final String FILE_NAME = "src/main/java/com/github/coffe/dados/clientes.txt";
 
     //Construtor
     public ClienteController() {
@@ -64,7 +65,7 @@ public class ClienteController {
 
     //Arquivo.txt
     public void atualizarClientes(){
-        try(BufferedWriter bw = new BufferedWriter(new FileWriter(this.clientesFile))){
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(this.clientesFile, true))){
             for(Cliente c : this.clientes){
                 bw.write(c.toString());
                 bw.newLine();

@@ -1,6 +1,8 @@
 package com.github.coffe.view;
 
 import com.github.coffe.view.FuncionarioView;
+
+import java.io.IOException;
 import java.util.Scanner;
 
 public class MainView {
@@ -31,12 +33,14 @@ public class MainView {
     }
 
     public void mensagemBoasVindas() {
+
         System.out.println("""
-                ╔════════════════════════════════════════════╗
-                ║                                             ║
-                ║        ☕  BEM-VINDO AO COFFEE  ☕           ║
-                ║                                             ║
-                ╚════════════════════════════════════════════╝
-        """);
+                
+                        ╔════════════════════════════════════════════╗
+                        ║                                            ║
+                        ║        ☕  BEM-VINDO AO COFFEE  ☕           ║
+                        ║                                            ║
+                        ╚════════════════════════════════════════════╝
+                """);
     }
 }

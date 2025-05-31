@@ -1,4 +1,5 @@
 package com.github.coffe.model.servicos;
+import com.github.coffe.model.entidades.Vendedor;
 
 public class Produto {
     private int idProduto;
@@ -44,4 +45,19 @@ public class Produto {
     public void setEstoque(int estoque) {
         this.estoque = estoque;
     }
+
+    public String toString() {
+        return getIdProduto() + ", " + getNome() + ", "  + getPreco() + ", " + getEstoque();
+    }
+
+    public static Produto fromString(String linha) {
+        String[] dados = linha.split(", ");
+        int id = Integer.parseInt(dados[0]);
+        String nome = dados[1].trim();
+        double preco = Double.parseDouble(dados[2].trim());
+        int estoque = Integer.parseInt(dados[3].trim());
+
+        return new Produto(id, nome, preco, estoque);
+    }
 }
+

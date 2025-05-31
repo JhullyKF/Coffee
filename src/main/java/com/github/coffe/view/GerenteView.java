@@ -2,6 +2,7 @@ package com.github.coffe.view;
 
 import com.github.coffe.controller.FuncionarioController;
 import com.github.coffe.controller.GerenteController;
+import com.github.coffe.controller.ProdutoController;
 import com.github.coffe.model.entidades.Funcionario;
 import com.github.coffe.model.entidades.Vendedor;
 
@@ -11,6 +12,7 @@ public class GerenteView {
     Scanner sc = new Scanner(System.in);
     FuncionarioController funcionarioController = new FuncionarioController();
     GerenteController gerenteController = new GerenteController();
+    ProdutoController produtoController = new ProdutoController();
 
     public void menuGerencia(){
         int op;
@@ -21,6 +23,7 @@ public class GerenteView {
                 case 2: listarFuncionarios(); break;
                 case 3: demitirFuncionario(); break;
                 case 4: alterarSalario(); break;
+               // case 5: addProduto();
             }
 
         }while (op != 0 || op < 10);
@@ -28,11 +31,11 @@ public class GerenteView {
 
     public int opcoesGerencia(){
         System.out.println("Selecione uma opção:");
-        System.out.println("[1] - Cadastrar novo vendedor");
-        System.out.println("[2] - Listar funcionarios");
-        System.out.println("[3] - Demitir funcionario");
-        System.out.println("[4] - Alterar salários");
-        System.out.println("[5] - Adicionar produtos");
+        System.out.println("[1] - Cadastrar novo vendedor"); //ok
+        System.out.println("[2] - Listar funcionario");      //ok
+        System.out.println("[3] - Demitir funcionario");     //ok
+        System.out.println("[4] - Alterar salários");        //ok
+        System.out.println("[5] - Adicionar produtos");      //->
         System.out.println("[6] - Remover produtos");
         System.out.println("[7] - Alterar produto");
         System.out.println("[8] - Excluir cliente");
@@ -58,10 +61,12 @@ public class GerenteView {
         String email = sc.nextLine();
         int id = funcionarioController.atribuiId();
         boolean result = gerenteController.cadastrarVendedor(new Vendedor(id, nome, email, cpf));
-        if (result)
+        if (result) {
             System.out.println("Funcionario cadastrado com sucesso");
-        else
-            System.out.println("Erro ao cadastrar funcionario");
+            return;
+        }
+
+        System.out.println("Erro ao cadastrar funcionario");
     }
 
     public void demitirFuncionario(){
@@ -114,6 +119,20 @@ public class GerenteView {
             System.out.println("Salario alterado com sucesso");
         else
             System.out.println("Erro ao alterar salário");
+    }
+
+    public void addProduto(){
+        int op = 1;
+        do{
+            int id = produtoController.atribuiId();
+            System.out.println("Insira o nome do produto: ");
+            String nome = sc.nextLine();
+            System.out.println("Insira o preço: ");
+            double valor = sc.nextDouble();
+            System.out.println("Insira o estoque: ");
+            int estoque = Integer.parseInt(sc.nextLine());
+
+        } while(op!=0);
     }
 
 }
