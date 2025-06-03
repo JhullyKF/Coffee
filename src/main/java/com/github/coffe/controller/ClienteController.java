@@ -1,18 +1,19 @@
 package com.github.coffe.controller;
 
 import com.github.coffe.model.entidades.Cliente;
+import com.github.coffe.persistencia.ClientePersistencia;
 
 import java.io.*;
 import java.util.ArrayList;
 
-public class ClienteController {
+public class ClienteController{
     ArrayList<Cliente> clientes = new ArrayList<>();
-    File clientesFile = new File("src/main/java/com/github/coffe/dados/clientes.txt");
+    ClientePersistencia clientePersistencia = new ClientePersistencia("src/main/java/com/github/coffe/dados/clientes.txt");
     Cliente usuario;
 
     //Construtor
     public ClienteController() {
-        clientes = carregarCliente();
+        clientes = clientePersistencia.carregarDoArquivo();
     }
 
     //"mainMenuCliente"
@@ -32,12 +33,12 @@ public class ClienteController {
                 usuario.setSenha(dadoAtualizado);
                 break;
         }
-        atualizarClientes();
+        clientePersistencia.salvarEmArquivo(clientes);
     }
 
     public void excluirCliente(){
         clientes.remove(usuario);
-        atualizarClientes();
+        clientePersistencia.salvarEmArquivo(clientes);
     }
 
     public void logarCliente(Cliente c){
@@ -48,7 +49,7 @@ public class ClienteController {
     public void cadastrarCliente(String cpf, String email, String nome, String senha){
         Cliente novoCliente = new Cliente(cpf, email, nome, senha);
         clientes.add(novoCliente);
-        atualizarClientes();
+        clientePersistencia.salvarEmArquivo(clientes);
     }
 
     public Cliente verificarCliente(String identificador, String senha){
@@ -60,30 +61,5 @@ public class ClienteController {
             }
         }
         return null;
-    }
-
-    //Arquivo.txt
-    public void atualizarClientes(){
-        try(BufferedWriter bw = new BufferedWriter(new FileWriter(this.clientesFile))){
-            for(Cliente c : this.clientes){
-                bw.write(c.toString());
-                bw.newLine();
-            }
-        } catch (IOException e){
-            System.err.println("Erro ao salvar cliente: " + e.getMessage());
-        }
-    }
-
-    public ArrayList<Cliente> carregarCliente(){
-        if (!clientesFile.exists()){
-            File clientesFile = new File("src/main/java/com/github/coffe/dados/clientes.txt");
-        }
-        try(BufferedReader br = new BufferedReader(new FileReader(this.clientesFile))){
-            String linha;
-            while ((linha = br.readLine()) != null){
-                this.clientes.add(Cliente.fromString(linha));
-            }
-        } catch (IOException ignored){}
-        return clientes;
     }
 }
