@@ -9,7 +9,7 @@ public class MainView {
     FuncionarioView funcionarioView = new FuncionarioView();
     Scanner sc = new Scanner(System.in);
     ClienteView cv = new ClienteView();
-    int op;
+    int op = 1;
 
     public void inicializar(){
         mensagemBoasVindas();
@@ -18,7 +18,7 @@ public class MainView {
             System.out.println("\n[1] - Cliente");
             System.out.println("[2] - Funcionário");
             System.out.println("[0] - Sair\n");
-            op = Integer.parseInt(sc.nextLine());
+            op = Integer.parseInt(sc.nextLine().trim());
             switch (op){
                 case 0:
                     System.out.println("\nEncerrando...");

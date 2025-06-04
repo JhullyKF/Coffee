@@ -30,7 +30,7 @@ public class Gerente extends Funcionario{
         return getIdFuncionario() + ", " + getCargo() + ", " + getNome() + ", " + getEmail() + ", " + getCpf() + ", " + getSalario() + ", " + getSenha();
     }
 
-    public static Gerente fromString(String linha) {
+    public static Funcionario fromString(String linha) {
         String[] dados = linha.split(", ");
         int idFuncionario = Integer.parseInt(dados[0].trim());
         String cargo = dados[1].trim();

@@ -82,4 +82,7 @@ public abstract class Funcionario {
 
     public abstract String toString();
 
+//    public static Funcionario fromString(String linha) {
+//        return null;
+//    }
 }

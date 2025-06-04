@@ -32,7 +32,7 @@ public class Vendedor extends Funcionario{
                 getSalario() + ", " + getSenha();
     }
 
-    public static Vendedor fromString(String linha) {
+    public static Funcionario fromString(String linha) {
         String[] dados = linha.split(", ");
         int id = Integer.parseInt(dados[0]);
         String cargo = dados[1].trim();

@@ -1,5 +1,6 @@
 package com.github.coffe.model.servicos;
 import com.github.coffe.model.entidades.Vendedor;
+import org.apache.logging.log4j.core.util.JsonUtils;
 
 public class Produto {
     private int idProduto;
@@ -44,6 +45,13 @@ public class Produto {
 
     public void setEstoque(int estoque) {
         this.estoque = estoque;
+    }
+
+    public void exibirDados(){
+        System.out.println("============ Dados do produto " + getIdProduto() + ": =============");
+        System.out.println("Nome: " + getNome());
+        System.out.println("Valor: " + getPreco());
+        System.out.println("Estoque: " + getEstoque());
     }
 
     public String toString() {

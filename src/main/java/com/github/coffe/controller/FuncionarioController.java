@@ -17,7 +17,7 @@ import java.util.TreeSet;
 public class FuncionarioController {
     private static final Logger log = LogManager.getLogger(FuncionarioController.class);
     public ArrayList<Funcionario> funcionarios = new ArrayList<Funcionario>();
-    File funcionariosFile = new File("src/main/java/com/github/coffe/dados/funcionarios.txt");
+    File funcionariosFile =  new File("src/main/java/com/github/coffe/dados/funcionarios.txt");
     Set<Integer> idsUsados = new TreeSet<>();
 
     public FuncionarioController(){

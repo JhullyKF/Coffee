@@ -23,7 +23,7 @@ public class FuncionarioView {
              switch (tipo){
                  case 1:
                      GerenteView gerenteView = new GerenteView();
-                     gerenteView.menuGerencia(); break;
+                     gerenteView.menuGerencia(); return;
 
                  case 2:
                      VendedorView vendedorView = new VendedorView();
@@ -31,11 +31,8 @@ public class FuncionarioView {
 
                  case 0:
                      System.out.println("Credenciais inválidas!");
-                     System.out.println("Deseja tentar novamente? [1] sim / [2] não");
-                     if (Integer.parseInt(sc.nextLine()) == 2){
-                         op=0;
-                     }
-                     break;
+                     System.out.println("Deseja tentar novamente? [1] sim / [0] não");
+                     op = Integer.parseInt(sc.nextLine()); break;
 
                  default:
                      System.out.println("Entrada inválida!"); return;
