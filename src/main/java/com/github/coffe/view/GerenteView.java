@@ -6,49 +6,133 @@ import com.github.coffe.controller.ProdutoController;
 import com.github.coffe.model.entidades.Funcionario;
 import com.github.coffe.model.entidades.Vendedor;
 import com.github.coffe.model.servicos.Produto;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Scanner;
 
 public class GerenteView {
+    private static final Logger log = LogManager.getLogger(GerenteView.class);
+
     Scanner sc = new Scanner(System.in);
     FuncionarioController funcionarioController = new FuncionarioController();
     GerenteController gerenteController = new GerenteController();
     ProdutoController produtoController = new ProdutoController();
 
-    public void menuGerencia(){
-        int op;
-        do{
-            op = opcoesGerencia();
+    public void opcoesGerencia(){
+        int op = 1;
+        while(op != 0){
+            System.out.println("======  Selecione uma opção:  =======");
+            System.out.println("[1] - Gerenciar funcionarios");
+            System.out.println("[2] - Gerenciar clientes");
+            System.out.println("[3] - Gerenciar produtos");
+            System.out.println("[0] - voltar");
+            op = Integer.parseInt(sc.nextLine());
             switch (op){
-                case 1: cadastrarVendedor(); break;
-                case 2: listarFuncionarios(); break;
-                case 3: demitirFuncionario(); break;
-                case 4: alterarSalario(); break;
-                case 5:listarProdutos(); break;
-                case 6: addProduto(); break;
-                case 7: removerProduto(); break;
-                case 8: alterarProduto(); break;
+                case 0: return;
+                case 1: gerenciarFuncionarios(); break;
+                case 2: gerenciarClientes(); break;
+                case 3: gerenciarProdutos(); break;
+                default:
+                    System.out.println("Entrada invalida! Tente novamente"); break;
+            }
+        }
+    }
+
+    public void gerenciarFuncionarios(){
+        int op = 1;
+        while (op != 0) {
+            for (int i = 0; i<3; i++) {
+                System.out.println(".");
+                try{
+                    Thread.sleep(200);
+                } catch (InterruptedException e){
+                    log.error("Delay com erro: ", e);
+                }
             }
 
-        } while (op != 0 || op > 10);
-        return;
+            System.out.println("==== Selecione uma opção: =====");
+            System.out.println("[1] - Listar funcionario");      //ok
+            System.out.println("[2] - Cadastrar novo vendedor");     //ok
+            System.out.println("[3] - Demitir funcionario"); //ok
+            System.out.println("[4] - Alterar salários");        //ok
+            System.out.println("[0] - Voltar");
+            op = Integer.parseInt(sc.nextLine());
+
+            switch (op){
+                case 0: return;
+                case 1: listarFuncionarios(); break;
+                case 2: cadastrarVendedor(); break;
+                case 3: demitirFuncionario(); break;
+                case 4: alterarSalario(); break;
+                default:
+                    System.out.println("Entrada inválida, tente novamente!");
+            }
+        }
     }
 
-    public int opcoesGerencia(){
-        System.out.println("Selecione uma opção:");
-        System.out.println("[1] - Cadastrar novo vendedor"); //ok
-        System.out.println("[2] - Listar funcionario");      //ok
-        System.out.println("[3] - Demitir funcionario");     //ok
-        System.out.println("[4] - Alterar salários");        //ok
-        System.out.println("[5] - Listar produtos");         //ok
-        System.out.println("[6] - Adicionar produtos");      //ok
-        System.out.println("[7] - Remover produtos");        //ok
-        System.out.println("[8] - Alterar produto");         //ok
-        System.out.println("[8] - Excluir cliente");
-        System.out.println("[9] - Alterar dados do cliente");
-        System.out.println("[0] - Deslogar");
-        return Integer.parseInt(sc.nextLine());
+    public void gerenciarClientes() {
+        int op = 1;
+        ClienteView clienteView = new ClienteView();
+        while (op != 0) {
+            for (int i = 0; i<3; i++) {
+                System.out.println(".");
+                try{
+                    Thread.sleep(200);
+                } catch (InterruptedException e){
+                    log.error("Delay com erro: ", e);
+                }
+            }
+
+            System.out.println("==== Selecione uma opção: =====");
+            System.out.println("[1] - Listar clientes");
+            System.out.println("[2] - Excluir clientes");
+            System.out.println("[3] - Alterar clientes");
+            System.out.println("[0] - Voltar");
+            op = Integer.parseInt(sc.nextLine());
+
+//            switch (op){
+//                case 1: listarClientes; break;
+//                case 2: excluirCLiente(); break;
+//                case 3: clienteView.editarDados(); break;
+//                default:
+//                    System.out.println("Entrada inválida, tente novamente!");
+//            }
+        }
     }
+
+    public void gerenciarProdutos(){
+        int op = 1;
+        while (op != 0){
+            for (int i = 0; i<3; i++) {
+                System.out.println(".");
+                try{
+                    Thread.sleep(200);
+                } catch (InterruptedException e){
+                    log.error("Delay com erro: ", e);
+                }
+            }
+
+            System.out.println("==== Selecione uma opção: =====");
+            System.out.println("[1] - Listar produtos");      //ok
+            System.out.println("[2] - Cadastrar produto");    //ok
+            System.out.println("[3] - Excluir produto");     //ok
+            System.out.println("[4] - Alterar produtos");        //ok
+            System.out.println("[0] - Voltar");
+            op = Integer.parseInt(sc.nextLine());
+
+            switch (op){
+                case 0: return;
+                case 1: listarProdutos(); break;
+                case 2: addProduto(); break;
+                case 3: removerProduto(); break;
+                case 4: alterarProduto(); break;
+                default:
+                    System.out.println("Entrada inválida, tente novamente!");
+            }
+        }
+    }
+
 
     public void listarFuncionarios(){
         funcionarioController.funcionarios.clear();

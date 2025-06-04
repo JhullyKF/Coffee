@@ -23,7 +23,7 @@ public class FuncionarioView {
              switch (tipo){
                  case 1:
                      GerenteView gerenteView = new GerenteView();
-                     gerenteView.menuGerencia(); return;
+                     gerenteView.opcoesGerencia(); return;
 
                  case 2:
                      VendedorView vendedorView = new VendedorView();

@@ -56,15 +56,20 @@ public class ProdutoController {
 
     public boolean addProduto(int id, String nome, double valor, int estoque){
         produtos.add(new Produto(id, nome, valor, estoque));
-        try(BufferedWriter bw = new BufferedWriter(new FileWriter(produtosFile))){
-            for(Produto p : produtos){
-                bw.write(p.toString());
+        Produto p = null;
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(produtosFile))) {
+            for (Produto produto : produtos) {
+                bw.write(produto.toString());
                 bw.newLine();
-                log.info("Funcionário " + p.getNome() + " cadastrado com sucesso");
-                return true;
+                p = produto;
+                log.info("Produto " + produto.getNome() + " alterado com sucesso");
             }
-        }   catch (IOException e) {
-            log.warn("Erro ao salvar produto " + e.getMessage());
+        } catch (IOException e) {
+            log.warn("Erro ao alterar produto " + e.getMessage());
+        }
+
+        if (produtos.contains(p)) {
+            return true;
         }
         return false;
     }
@@ -92,37 +97,41 @@ public class ProdutoController {
         for (Produto p : produtos) {
             if (p.getIdProduto() == id) {
                 log.debug("Produto encontrado");
+
                 switch (op) {
                     case 1:
                         p.setNome(campo);
                         log.debug("Nome alterado");
                         break;
+
                     case 2:
                         p.setPreco(Double.parseDouble(campo));
                         log.debug("Preço alterado");
                         break;
+
                     case 3:
                         p.setEstoque(Integer.parseInt(campo));
                         log.debug("estoque alterado");
                         break;
+
                     default:
                         log.debug("Default");
-                        return false;
+                        break;
                 }
+
                 try (BufferedWriter bw = new BufferedWriter(new FileWriter(produtosFile))) {
                     for (Produto produto : produtos) {
                         bw.write(produto.toString());
                         bw.newLine();
                         log.info("Produto " + produto.getNome() + " alterado com sucesso");
                     }
-                    return true;
                 } catch (IOException e) {
                     log.warn("Erro ao alterar produto " + e.getMessage());
                 }
-                return false;
-            }
-            if (produtos.contains(p)) {
-                return true;
+
+                if (produtos.contains(p)) {
+                    return true;
+                }
             }
         }
         return false;
