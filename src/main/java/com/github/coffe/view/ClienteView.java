@@ -1,16 +1,18 @@
 package com.github.coffe.view;
 
 import com.github.coffe.controller.ClienteController;
+import com.github.coffe.controller.PedidoController;
+import com.github.coffe.controller.ProdutoController;
 import com.github.coffe.model.entidades.Cliente;
 
 import java.util.Scanner;
 
 public class ClienteView {
-    Scanner sc = new Scanner(System.in);
-    ClienteController cc = new ClienteController();
     private final Scanner sc = new Scanner(System.in);
     private final ClienteController cc = new ClienteController();
+    private final PedidoController pec = new PedidoController(this.cc);
     private final ProdutoController prc = new ProdutoController();
+    private int id, qtd;
 
     //Menus
     public void menuClienteAcesso(){
@@ -78,6 +80,15 @@ public class ClienteView {
             int opc = Integer.parseInt(sc.nextLine());
             switch (opc){
                 case 1:
+                    System.out.println("Qual item deseja comprar(id): ");
+                    id = Integer.parseInt(sc.nextLine());
+                    System.out.println("Quantas unidades do produto: ");
+                    qtd = Integer.parseInt(sc.nextLine());
+                    if(pec.addItem(id, qtd)){
+                        System.out.println("\nItem adicionado ao carrinho!");
+                        break;
+                    }
+                    System.err.println("\nid ou quantidade inválidos!");
                     break;
                 case 2:
                     break;

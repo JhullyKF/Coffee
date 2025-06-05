@@ -111,4 +111,14 @@ public class ProdutoController {
         }
         return false;
     }
+
+    public Produto getProdutoPorId(int id){
+        for (Produto p : produtos){
+            if (p.getIdProduto() == id){
+                return p;
+            }
+        }
+        return null;
+    }
+
 }
