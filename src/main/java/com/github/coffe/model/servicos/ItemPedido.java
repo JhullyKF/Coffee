@@ -1,20 +1,20 @@
 package com.github.coffe.model.servicos;
 
 public class ItemPedido {
-    private int id_ItemPedido;
+    private int idProduto;
     private int quantidade;
 
-    public ItemPedido(int id_ItemPedido, int quantidade) {
-        this.id_ItemPedido = id_ItemPedido;
+    public ItemPedido(int idProduto, int quantidade) {
+        this.idProduto = idProduto;
         this.quantidade = quantidade;
     }
 
-    public int getId_ItemPedido() {
-        return id_ItemPedido;
+    public int getIdProduto() {
+        return idProduto;
     }
 
-    public void setId_ItemPedido(int id_ItemPedido) {
-        this.id_ItemPedido = id_ItemPedido;
+    public void setId_ItemPedido(int idProduto) {
+        this.idProduto = idProduto;
     }
 
     public int getQuantidade() {
@@ -23,5 +23,16 @@ public class ItemPedido {
 
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
+    }
+
+    public String toString() {
+        return getIdProduto() + ": " + getQuantidade();
+    }
+
+    public static ItemPedido fromString(String texto) {
+        String[] partes = texto.split(": ");
+        int idProduto = Integer.parseInt(partes[0]);
+        int quantidade = Integer.parseInt(partes[1]);
+        return new ItemPedido(idProduto, quantidade);
     }
 }

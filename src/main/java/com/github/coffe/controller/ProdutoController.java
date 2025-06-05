@@ -22,6 +22,32 @@ public class ProdutoController {
         return produtos;
     }
 
+    public boolean verificarEstoque(int id, int quantidade){
+        for(Produto p: produtos){
+            if (p.getIdProduto() == id){
+                if (quantidade <= p.getEstoque()){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean alterarEstoque(int id, int quantidade){
+        for (Produto p: produtos){
+            if(p.getIdProduto() == id){
+                if (quantidade <= p.getEstoque()){
+                    int estoque = p.getEstoque() - quantidade;
+                    p.setEstoque(estoque);
+                    log.info("Estoque atualizado com sucesso");
+                    return true;
+                }
+            }
+        }
+        log.warn("Erro ao atualizar estoque");
+        return false;
+    }
+
     public boolean addProduto(String nome, double valor, int estoque){
         Produto p = new Produto(nome, valor, estoque);
         produtos.add(p);

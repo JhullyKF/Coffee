@@ -1,9 +1,6 @@
 package com.github.coffe.view;
 
 import com.github.coffe.controller.FuncionarioController;
-import com.github.coffe.controller.GerenteController;
-
-import java.security.spec.RSAOtherPrimeInfo;
 import java.util.Scanner;
 
 public class FuncionarioView {

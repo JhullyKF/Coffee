@@ -2,7 +2,7 @@ package com.github.coffe.model.entidades;
 
 public abstract class Funcionario {
     private final int idFuncionario;
-    private static int proxId;
+    private static int proxId = 1;
     private String cargo;
     private String nome;
     private String email;
