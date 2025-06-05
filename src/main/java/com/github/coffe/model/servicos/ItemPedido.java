@@ -3,6 +3,8 @@ package com.github.coffe.model.servicos;
 public class ItemPedido {
     private int idProduto;
     private int quantidade;
+    private String nomeItem;
+    private Double preco;
 
     public ItemPedido(int idProduto, int quantidade) {
         this.idProduto = idProduto;
@@ -23,6 +25,22 @@ public class ItemPedido {
 
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
+    }
+
+    public String getNomeItem() {
+        return nomeItem;
+    }
+
+    public void setNomeItem(String nomeItem) {
+        this.nomeItem = nomeItem;
+    }
+
+    public Double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(Double preco) {
+        this.preco = preco;
     }
 
     public String toString() {

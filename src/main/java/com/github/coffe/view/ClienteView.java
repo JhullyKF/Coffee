@@ -91,6 +91,12 @@ public class ClienteView {
                     System.err.println("\nid ou quantidade inválidos!");
                     break;
                 case 2:
+                    if(pec.carrinhoVazio()){
+                        System.err.println("\nCarrinho vazio!");
+                        break;
+                    }
+                    System.out.println("\n============ Seu carrinho =============");
+                    pec.exibirCarrinho();
                     break;
                 case 3:
                     break;

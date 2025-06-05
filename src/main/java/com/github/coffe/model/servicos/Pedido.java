@@ -48,14 +48,6 @@ public class Pedido {
         return status;
     }
 
-    public void setIdCliente(int idCliente){
-        this.idCliente = idCliente;
-    }
-
-    public void setIdVendedor(int idVendedor){
-        this.idVendedor = idVendedor;
-    }
-
     public void setStatus(String status){
         this.status = status;
     }

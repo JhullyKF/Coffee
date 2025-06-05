@@ -12,12 +12,11 @@ import java.util.ArrayList;
 public class PedidoController {
     private static final Logger log = LogManager.getLogger(PedidoController.class);
     private final ArrayList<Pedido> pedidos;
-    private ArrayList<Pedido> pendentes;
-    private final PedidoPersistencia produtoPersistencia;
     private ArrayList<Pedido> pendentes = new ArrayList<>();
     private final PedidoPersistencia pedidoPersistencia;
     private final ArrayList<ItemPedido> carrinho = new ArrayList<>();
     private final ProdutoController produtoController = new ProdutoController();
+    private double valorTotal;
 
     public PedidoController(){
         pedidoPersistencia = new PedidoPersistencia("src/main/java/com/github/coffe/dados/pedidos.txt");
@@ -61,5 +60,28 @@ public class PedidoController {
         ItemPedido itemPedido = new ItemPedido(id, qtd);
         carrinho.add(itemPedido);
         return true;
+    }
+
+    public void exibirCarrinho(){
+        valorTotal = 0;
+        for(ItemPedido item : carrinho){
+            verificarProduto(item);
+            System.out.println("ID: " + item.getIdProduto() + " | Nome: " + item.getNomeItem() + " | Quantidade: " + item.getQuantidade() + " | preco: " + item.getPreco());
+            valorTotal += item.getPreco() * item.getQuantidade();
+        }
+        System.out.println("Total: " + valorTotal);
+    }
+
+    public void verificarProduto(ItemPedido item){
+        for(Produto produto : produtoController.getProdutos()){
+            if(item.getIdProduto() == produto.getIdProduto()){
+                item.setNomeItem(produto.getNome());
+                item.setPreco(produto.getPreco());
+            }
+        }
+    }
+
+    public boolean carrinhoVazio(){
+        return carrinho.isEmpty();
     }
 }
