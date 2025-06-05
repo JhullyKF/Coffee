@@ -2,11 +2,9 @@ package com.github.coffe.controller;
 
 import com.github.coffe.model.servicos.ItemPedido;
 import com.github.coffe.model.servicos.Pedido;
-import com.github.coffe.model.servicos.Produto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.List;
 import java.util.Objects;
 
 public class VendedorController {
