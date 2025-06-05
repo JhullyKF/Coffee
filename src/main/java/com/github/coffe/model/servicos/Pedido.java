@@ -13,7 +13,7 @@ public class Pedido {
     private int idVendedor;
     private String status;
 
-    public Pedido(int id_Pedido, int idCliente, int idVendedor, String status,List<ItemPedido> itens){
+    public Pedido(int id_Pedido, int idCliente, int idVendedor, String status, List<ItemPedido> itens){
         this.idCliente = idCliente;
         this.idVendedor = idVendedor;
         this.itens = itens;
@@ -24,12 +24,11 @@ public class Pedido {
         }
     }
 
-    public Pedido(int idCliente, int idVendedor, String status,List<ItemPedido> itens){
+    public Pedido(int idCliente, List<ItemPedido> itens){
         this.id_Pedido = proxId++;
         this.idCliente = idCliente;
-        this.idVendedor = idVendedor;
         this.itens = itens;
-        this.status = status;
+        this.status = "pendente";
     }
 
     public int getId_Pedido(){

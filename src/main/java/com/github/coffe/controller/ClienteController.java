@@ -49,6 +49,10 @@ public class ClienteController{
         this.usuario = c;
     }
 
+    public Cliente getUsuario() {
+            return usuario;
+    }
+
     //Cadastro e Login
     public void cadastrarCliente(String cpf, String email, String nome, String senha){
         Cliente novoCliente = new Cliente(cpf, email, nome, senha);

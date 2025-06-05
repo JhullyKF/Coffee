@@ -110,6 +110,11 @@ public class ClienteView {
                     System.err.println("Verifique o id do produto ou a quantidade a ser retirada");
                     break;
                 case 4:
+                    if(pec.finalizarPedido()){
+                        System.out.println("\nPedido feito com sucesso!");
+                        break;
+                    }
+                    System.err.println("\nVerifique se seu carrinho contém itens!");
                     break;
                 case 5:
                     break;

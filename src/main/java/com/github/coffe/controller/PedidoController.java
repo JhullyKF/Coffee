@@ -18,6 +18,8 @@ public class PedidoController {
     private final ArrayList<ItemPedido> carrinho = new ArrayList<>();
     private final ProdutoController produtoController = new ProdutoController();
     private double valorTotal;
+    private ClienteController clienteController;
+    private int contadorPedidos = 0;
 
     public PedidoController(){
         pedidoPersistencia = new PedidoPersistencia("src/main/java/com/github/coffe/dados/pedidos.txt");
@@ -27,6 +29,17 @@ public class PedidoController {
                 pendentes.add(p);
             }
         }
+    }
+
+    public PedidoController(ClienteController clienteController){
+        pedidoPersistencia = new PedidoPersistencia("src/main/java/com/github/coffe/dados/pedidos.txt");
+        pedidos = pedidoPersistencia.carregarDoArquivo();
+        for (Pedido p: pedidos){
+            if(p.getStatus().equals("Pendente")){
+                pendentes.add(p);
+            }
+        }
+        this.clienteController = clienteController;
     }
 
     public ArrayList<Pedido> getPedidos() {
@@ -88,6 +101,17 @@ public class PedidoController {
                 }
                 return true;
             }
+        }
+        return false;
+    }
+
+    public boolean finalizarPedido(){
+        if(!carrinhoVazio()){
+            Pedido pedido = new Pedido(clienteController.getUsuario().getId_Cliente(), new ArrayList<ItemPedido>(carrinho));
+            pedidos.add(pedido);
+            pedidoPersistencia.salvarEmArquivo(pedidos);
+            carrinho.clear();
+            return true;
         }
         return false;
     }
