@@ -1,0 +1,3 @@
+0, kit panela, 500.0, 400
+2, Panela Avulsa, 50.99, 50
+3, Copo Plastico, 5.99, 10

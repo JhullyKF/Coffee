@@ -1,15 +1,25 @@
 package com.github.coffe.model.servicos;
-import com.github.coffe.model.entidades.Vendedor;
-import org.apache.logging.log4j.core.util.JsonUtils;
+
 
 public class Produto {
-    private int idProduto;
+    private static int proxId = 1;
+    private final int idProduto;
     private String nome;
     private double preco;
     private int estoque;
 
     public Produto(int idProduto, String nome, double preco, int estoque) {
+        this.nome = nome;
+        this.preco = preco;
+        this.estoque = estoque;
         this.idProduto = idProduto;
+        if (idProduto >= proxId){
+            proxId = idProduto + 1;
+        }
+    }
+
+    public Produto(String nome, double preco, int estoque){
+        this.idProduto = proxId++;
         this.nome = nome;
         this.preco = preco;
         this.estoque = estoque;
@@ -17,10 +27,6 @@ public class Produto {
 
     public int getIdProduto() {
         return idProduto;
-    }
-
-    public void setIdProduto(int idProduto) {
-        this.idProduto = idProduto;
     }
 
     public String getNome() {

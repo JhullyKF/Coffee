@@ -3,17 +3,20 @@ package com.github.coffe.controller;
 import com.github.coffe.model.entidades.Cliente;
 import com.github.coffe.persistencia.ClientePersistencia;
 
-import java.io.*;
 import java.util.ArrayList;
 
 public class ClienteController{
-    ArrayList<Cliente> clientes = new ArrayList<>();
-    ClientePersistencia clientePersistencia = new ClientePersistencia("src/main/java/com/github/coffe/dados/clientes.txt");
-    Cliente usuario;
+    private final ArrayList<Cliente> clientes;
+    private final ClientePersistencia clientePersistencia;
+    private Cliente usuario;
 
     //Construtor
     public ClienteController() {
+        clientePersistencia = new ClientePersistencia("src/main/java/com/github/coffe/dados/clientes.txt");
         clientes = clientePersistencia.carregarDoArquivo();
+    }
+    public ArrayList<Cliente> getClientes(){
+        return clientes;
     }
 
     //"mainMenuCliente"
@@ -61,5 +64,18 @@ public class ClienteController{
             }
         }
         return null;
+    }
+
+    public boolean removerCliente(int id){
+        for (Cliente c : clientes){
+            if(c.getId_Cliente() == id){
+                clientes.remove(c);
+                clientePersistencia.salvarEmArquivo(clientes);
+                if (!clientes.contains(c)){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

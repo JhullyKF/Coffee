@@ -2,8 +2,8 @@ package com.github.coffe.model.entidades;
 
 public class Vendedor extends Funcionario{
 
-    public Vendedor(int id, String nome, String email,String cpf){
-        super(id, "Vendedor", nome, email, cpf, 2500.00, "Mudar@123");
+    public Vendedor(String nome, String email,String cpf){
+        super("Vendedor", nome, email, cpf, 2500.00, "Mudar@123");
     }
 
     public Vendedor(int id, String cargo, String nome, String email, String cpf, double salario, String senha){

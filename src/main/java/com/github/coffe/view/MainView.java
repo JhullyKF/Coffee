@@ -1,24 +1,28 @@
 package com.github.coffe.view;
 
-import com.github.coffe.view.FuncionarioView;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class MainView {
-    FuncionarioView funcionarioView = new FuncionarioView();
-    Scanner sc = new Scanner(System.in);
-    ClienteView cv = new ClienteView();
-    int op = 1;
+    private static final Logger log = LogManager.getLogger(MainView.class);
+    private final FuncionarioView funcionarioView = new FuncionarioView();
+    private final Scanner sc = new Scanner(System.in);
+    private final ClienteView cv = new ClienteView();
+
 
     public void inicializar(){
+        int op = 1;
         mensagemBoasVindas();
+        log.trace("Mensagem de boas vindas carregada");
         do{
             System.out.println("\nInsira uma opção para continuar: ");
             System.out.println("\n[1] - Cliente");
             System.out.println("[2] - Funcionário");
             System.out.println("[0] - Sair\n");
-            op = Integer.parseInt(sc.nextLine().trim());
+            op = sc.nextInt();
+            log.trace("Opção recebida");
             switch (op){
                 case 0:
                     System.out.println("\nEncerrando...");
@@ -29,7 +33,7 @@ public class MainView {
                 default:
                     System.out.println("\nEntrada inválida! Tente novamente");
             }
-        } while(op != 0);
+        } while(true);
     }
 
     public void mensagemBoasVindas() {

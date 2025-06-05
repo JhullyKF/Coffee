@@ -7,8 +7,8 @@ import java.security.spec.RSAOtherPrimeInfo;
 import java.util.Scanner;
 
 public class FuncionarioView {
-    FuncionarioController funcionarioController = new FuncionarioController();
-    Scanner sc = new Scanner(System.in);
+    private final FuncionarioController funcionarioController = new FuncionarioController();
+    private final Scanner sc = new Scanner(System.in);
 
     public void loginFuncionario(){
         int op=1;

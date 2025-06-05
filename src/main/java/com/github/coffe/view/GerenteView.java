@@ -1,8 +1,10 @@
 package com.github.coffe.view;
 
+import com.github.coffe.controller.ClienteController;
 import com.github.coffe.controller.FuncionarioController;
 import com.github.coffe.controller.GerenteController;
 import com.github.coffe.controller.ProdutoController;
+import com.github.coffe.model.entidades.Cliente;
 import com.github.coffe.model.entidades.Funcionario;
 import com.github.coffe.model.entidades.Vendedor;
 import com.github.coffe.model.servicos.Produto;
@@ -11,17 +13,21 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Scanner;
 
+import static java.lang.Thread.sleep;
+
 public class GerenteView {
     private static final Logger log = LogManager.getLogger(GerenteView.class);
 
-    Scanner sc = new Scanner(System.in);
-    FuncionarioController funcionarioController = new FuncionarioController();
-    GerenteController gerenteController = new GerenteController();
-    ProdutoController produtoController = new ProdutoController();
+    private final Scanner sc = new Scanner(System.in);
+    private final FuncionarioController funcionarioController = new FuncionarioController();
+    private final GerenteController gerenteController = new GerenteController();
+    private final ProdutoController produtoController = new ProdutoController();
+    private final ClienteController clienteController = new ClienteController();
 
+    //Menu de Gerencia principal
     public void opcoesGerencia(){
-        int op = 1;
-        while(op != 0){
+        int op;
+        while(true){
             System.out.println("======  Selecione uma opção:  =======");
             System.out.println("[1] - Gerenciar funcionarios");
             System.out.println("[2] - Gerenciar clientes");
@@ -40,12 +46,12 @@ public class GerenteView {
     }
 
     public void gerenciarFuncionarios(){
-        int op = 1;
-        while (op != 0) {
+        int op;
+        while (true) {
             for (int i = 0; i<3; i++) {
                 System.out.println(".");
                 try{
-                    Thread.sleep(200);
+                    sleep(200);
                 } catch (InterruptedException e){
                     log.error("Delay com erro: ", e);
                 }
@@ -74,11 +80,11 @@ public class GerenteView {
     public void gerenciarClientes() {
         int op = 1;
         ClienteView clienteView = new ClienteView();
-        while (op != 0) {
+        while (true) {
             for (int i = 0; i<3; i++) {
                 System.out.println(".");
                 try{
-                    Thread.sleep(200);
+                    sleep(200);
                 } catch (InterruptedException e){
                     log.error("Delay com erro: ", e);
                 }
@@ -87,27 +93,26 @@ public class GerenteView {
             System.out.println("==== Selecione uma opção: =====");
             System.out.println("[1] - Listar clientes");
             System.out.println("[2] - Excluir clientes");
-            System.out.println("[3] - Alterar clientes");
             System.out.println("[0] - Voltar");
             op = Integer.parseInt(sc.nextLine());
 
-//            switch (op){
-//                case 1: listarClientes; break;
-//                case 2: excluirCLiente(); break;
-//                case 3: clienteView.editarDados(); break;
-//                default:
-//                    System.out.println("Entrada inválida, tente novamente!");
-//            }
+            switch (op){
+                case 0: return;
+                case 1: listarClientes(); break;
+                case 2: removerCliente(); break;
+                default:
+                    System.out.println("Entrada inválida, tente novamente!");
+            }
         }
     }
 
     public void gerenciarProdutos(){
-        int op = 1;
-        while (op != 0){
+        int op;
+        while (true){
             for (int i = 0; i<3; i++) {
                 System.out.println(".");
                 try{
-                    Thread.sleep(200);
+                    sleep(200);
                 } catch (InterruptedException e){
                     log.error("Delay com erro: ", e);
                 }
@@ -133,11 +138,9 @@ public class GerenteView {
         }
     }
 
-
+    //Funções de gerenciar funcionarios
     public void listarFuncionarios(){
-        funcionarioController.funcionarios.clear();
-        funcionarioController.carregarFuncionarios();
-        for(Funcionario f: funcionarioController.funcionarios){
+        for(Funcionario f: funcionarioController.getFuncionarios()){
             f.exibirDados();
         }
     }
@@ -149,13 +152,12 @@ public class GerenteView {
         String cpf = sc.nextLine();
         System.out.println("Insira o email: ");
         String email = sc.nextLine();
-        int id = funcionarioController.atribuiId();
-        boolean result = gerenteController.cadastrarVendedor(new Vendedor(id, nome, email, cpf));
+        boolean result = gerenteController.cadastrarVendedor(new Vendedor(nome, email, cpf));
+
         if (result) {
             System.out.println("Funcionario cadastrado com sucesso");
             return;
         }
-
         System.out.println("Erro ao cadastrar funcionario");
     }
 
@@ -163,7 +165,7 @@ public class GerenteView {
         boolean result = false;
         System.out.println("Insira o ID do funcionário para desligamento: ");
         int id = Integer.parseInt(sc.nextLine());
-        for(Funcionario f: funcionarioController.funcionarios){
+        for(Funcionario f: funcionarioController.getFuncionarios()){
             if(f.getIdFuncionario() == id){
                 System.out.println("====== Dados do funcionário: =======");
                 f.exibirDados();
@@ -178,17 +180,18 @@ public class GerenteView {
                 }
             }
         }
-        if (result)
+        if (result) {
             System.out.println("Funcionario demitido com sucesso");
-        else
-            System.out.println("Erro ao demitir funcionario");
+            return;
+        }
+        System.out.println("Erro ao demitir funcionario");
     }
 
     public void alterarSalario(){
         boolean result = false;
         System.out.println("Insira o id do funcionario para alteração: ");
         int id = Integer.parseInt(sc.nextLine());
-        for(Funcionario f: funcionarioController.funcionarios){
+        for(Funcionario f: funcionarioController.getFuncionarios()){
             if(f.getIdFuncionario() == id){
                 System.out.println("====== Dados do funcionário: =======");
                 f.exibirDados();
@@ -211,10 +214,9 @@ public class GerenteView {
             System.out.println("Erro ao alterar salário");
     }
 
+    //Funções de gerenciar produtos
     public void listarProdutos(){
-        produtoController.getProdutos().clear();
-        produtoController.getProdutos();
-        for(Produto p: produtoController.produtos){
+        for(Produto p: produtoController.getProdutos()){
             p.exibirDados();
         }
     }
@@ -222,14 +224,13 @@ public class GerenteView {
     public void addProduto(){
         int op = 1;
         do{
-            int id = produtoController.atribuiId();
             System.out.println("Insira o nome do produto: ");
             String nome = sc.nextLine();
             System.out.println("Insira o preço: ");
             double valor = Double.parseDouble(sc.nextLine());
             System.out.println("Insira o estoque: ");
             int estoque = Integer.parseInt(sc.nextLine());
-            boolean result = produtoController.addProduto(id, nome, valor, estoque);
+            boolean result = produtoController.addProduto(nome, valor, estoque);
 
             if (!result){
                 System.out.println("Erro ao cadastrar o produto");
@@ -308,4 +309,30 @@ public class GerenteView {
         System.out.println("Encerrando processo...");
     }
 
+    //Funções de gerenciar clientes
+    public void listarClientes(){
+        for(Cliente c: clienteController.getClientes()){
+            c.exibirDados();
+        }
+    }
+
+    public void removerCliente(){
+        int op = 1;
+        do {
+            System.out.println("Insira o ID do cliente: ");
+            int id = Integer.parseInt(sc.nextLine());
+
+            boolean result = clienteController.removerCliente(id);
+
+            if (!result) {
+                System.out.println("Erro ao remover cliente");
+                return;
+            }
+
+            System.out.println("Deseja adicionar mais um cliente? [1] - sim / [0] - não");
+            op = Integer.parseInt(sc.nextLine());
+
+        } while(op!=0);
+        System.out.println("Encerrando processo...");
+    }
 }
