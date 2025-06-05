@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class PedidoController {
     private static final Logger log = LogManager.getLogger(PedidoController.class);
@@ -70,6 +71,25 @@ public class PedidoController {
             valorTotal += item.getPreco() * item.getQuantidade();
         }
         System.out.println("Total: " + valorTotal);
+    }
+
+    public boolean removerItem(int id, int qtd){
+        Iterator<ItemPedido> iterator = carrinho.iterator();
+        while (iterator.hasNext()) {
+            ItemPedido item = iterator.next();
+            if (item.getIdProduto() == id) {
+                int qtdReduzida = item.getQuantidade() - qtd;
+                if (qtdReduzida == 0) {
+                    iterator.remove();
+                } else if(qtdReduzida < 0){
+                    return false;
+                } else{
+                    item.setQuantidade(qtdReduzida);
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
     public void verificarProduto(ItemPedido item){

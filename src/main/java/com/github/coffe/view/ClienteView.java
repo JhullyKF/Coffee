@@ -99,6 +99,15 @@ public class ClienteView {
                     pec.exibirCarrinho();
                     break;
                 case 3:
+                    System.out.println("\nDigite o ID do produto: ");
+                    id = Integer.parseInt(sc.nextLine());
+                    System.out.println("\nInforme a quantidade a ser retirada desse produto: ");
+                    qtd = Integer.parseInt(sc.nextLine());
+                    if(pec.removerItem(id, qtd)){
+                        System.out.println("\nCarrinho alterado!");
+                        break;
+                    }
+                    System.err.println("Verifique o id do produto ou a quantidade a ser retirada");
                     break;
                 case 4:
                     break;
