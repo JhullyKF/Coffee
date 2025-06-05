@@ -311,7 +311,7 @@ public class GerenteView {
     //Funções de gerenciar clientes
     public void listarClientes(){
         for(Cliente c: clienteController.getClientes()){
-            c.exibirDados();
+            c.exibirDadosGerencia();
         }
     }
 
