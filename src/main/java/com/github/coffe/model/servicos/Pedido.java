@@ -1,7 +1,5 @@
 package com.github.coffe.model.servicos;
 
-import com.github.coffe.controller.PedidoController;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +52,13 @@ public class Pedido {
     public void exibirDados(){
         System.out.println("============ Dados do pedido " + getId_Pedido() + ": =============");
         System.out.println("ID do atendente: " + getIdVendedor());
+        System.out.println("ID do cliente: " + getIdCliente());
+        System.out.println("Status: " + getStatus());
+        System.out.println("Itens: " + getItens());
+    }
+
+    public void exibirDadosparaCliente(){
+        System.out.println("============ Dados do pedido " + getId_Pedido() + ": =============");
         System.out.println("ID do cliente: " + getIdCliente());
         System.out.println("Status: " + getStatus());
         System.out.println("Itens: " + getItens());

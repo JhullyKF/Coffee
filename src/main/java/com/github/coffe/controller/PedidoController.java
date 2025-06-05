@@ -107,7 +107,7 @@ public class PedidoController {
 
     public boolean finalizarPedido(){
         if(!carrinhoVazio()){
-            Pedido pedido = new Pedido(clienteController.getUsuario().getId_Cliente(), new ArrayList<ItemPedido>(carrinho));
+            Pedido pedido = new Pedido(clienteController.getUsuario().getId_Cliente(), new ArrayList<>(carrinho));
             pedidos.add(pedido);
             pedidoPersistencia.salvarEmArquivo(pedidos);
             carrinho.clear();
@@ -128,4 +128,15 @@ public class PedidoController {
     public boolean carrinhoVazio(){
         return carrinho.isEmpty();
     }
+
+    public boolean mostrarPedidosDeCliente(){
+        for(Pedido pedido : pedidos){
+            if(pedido.getIdCliente() == clienteController.getUsuario().getId_Cliente()){
+                pedido.exibirDadosparaCliente();
+                contadorPedidos++;
+            }
+        }
+        return contadorPedidos > 0;
+    }
+
 }

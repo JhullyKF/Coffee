@@ -117,6 +117,9 @@ public class ClienteView {
                     System.err.println("\nVerifique se seu carrinho contém itens!");
                     break;
                 case 5:
+                    if(!pec.mostrarPedidosDeCliente()){
+                        System.err.println("Verique se há pedidos já realizados!");
+                    }
                     break;
                 case 6:
                     if(prc.listarProdutos()){
