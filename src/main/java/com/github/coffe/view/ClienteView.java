@@ -38,9 +38,9 @@ public class ClienteView {
             System.out.println("[0] - Sair\n");
             int opc = Integer.parseInt(sc.nextLine());
             switch (opc){
-                case 1: break;
+                case 1: realizarPedido();
                 case 2:
-                    System.out.println("\nSeus Dados:");
+                    System.out.println("\n============ Seus dados =============");
                     cc.exibirCliente();
                     break;
                 case 3: editarDados();
@@ -61,6 +61,27 @@ public class ClienteView {
             }
         }while(true);
     }
+
+    public void realizarPedido(){
+        do {
+            switch (opc){
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 0: return;
+                default: System.out.println("\nEntrada inválida! Tente novamente");
+            }
+        }while(true);
+    } //opção 1 de mainMenuCliente
 
     public void editarDados(){
         do{
@@ -90,7 +111,7 @@ public class ClienteView {
                 default:System.out.println("\nEntrada inválida! Tente novamente");
             }
         } while(true);
-    }
+    } //opção 3 de mainMenuCliente
 
     //Login e cadastro
     public void loginCliente(){

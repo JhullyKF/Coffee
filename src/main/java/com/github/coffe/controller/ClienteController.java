@@ -15,6 +15,7 @@ public class ClienteController{
         clientePersistencia = new ClientePersistencia("src/main/java/com/github/coffe/dados/clientes.txt");
         clientes = clientePersistencia.carregarDoArquivo();
     }
+
     public ArrayList<Cliente> getClientes(){
         return clientes;
     }

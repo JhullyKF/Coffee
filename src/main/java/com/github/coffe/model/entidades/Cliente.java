@@ -56,7 +56,6 @@ public class Cliente {
     }
 
     public void exibirDados() {
-        System.out.println("============ Dados do cliente " + getId_Cliente() + ": =============");
         System.out.println("Nome: " + getNome());
         System.out.println("CPF: " + getCpf());
         System.out.println("Email: " + getEmail());
