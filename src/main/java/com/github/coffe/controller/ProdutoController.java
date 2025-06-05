@@ -19,7 +19,6 @@ public class ProdutoController {
     }
 
     public ArrayList<Produto> getProdutos() {
-        produtoPersistencia.carregarDoArquivo();
         return produtos;
     }
 

@@ -7,7 +7,11 @@ import org.apache.logging.log4j.Logger;
 
 public class GerenteController {
     private static final Logger log = LogManager.getLogger(GerenteController.class);
-    private final FuncionarioController funcionarioController = new FuncionarioController();
+    private final FuncionarioController funcionarioController;
+
+    public GerenteController(){
+        funcionarioController = new FuncionarioController();
+    }
 
     public boolean cadastrarVendedor(Vendedor v){
         funcionarioController.getFuncionarios().add(v);

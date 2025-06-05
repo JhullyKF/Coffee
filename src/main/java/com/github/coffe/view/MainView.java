@@ -15,14 +15,13 @@ public class MainView {
     public void inicializar(){
         int op = 1;
         mensagemBoasVindas();
-        log.trace("Mensagem de boas vindas carregada");
         do{
             System.out.println("\nInsira uma opção para continuar: ");
             System.out.println("\n[1] - Cliente");
             System.out.println("[2] - Funcionário");
             System.out.println("[0] - Sair\n");
             op = sc.nextInt();
-            log.trace("Opção recebida");
+
             switch (op){
                 case 0:
                     System.out.println("\nEncerrando...");

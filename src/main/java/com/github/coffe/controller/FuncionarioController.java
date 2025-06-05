@@ -19,7 +19,6 @@ public class FuncionarioController {
     }
 
     public ArrayList<Funcionario> getFuncionarios(){
-        funcionarioPersistencia.carregarDoArquivo();
         return funcionarios;
     }
 

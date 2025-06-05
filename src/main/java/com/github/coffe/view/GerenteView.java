@@ -29,10 +29,10 @@ public class GerenteView {
         int op;
         while(true){
             System.out.println("======  Selecione uma opção:  =======");
-            System.out.println("[1] - Gerenciar funcionarios");
-            System.out.println("[2] - Gerenciar clientes");
-            System.out.println("[3] - Gerenciar produtos");
-            System.out.println("[0] - voltar");
+            System.out.println("[1] - Gerenciar funcionarios"); //ok
+            System.out.println("[2] - Gerenciar clientes");     //ok
+            System.out.println("[3] - Gerenciar produtos");     //ok
+            System.out.println("[0] - voltar");                 //ok
             op = Integer.parseInt(sc.nextLine());
             switch (op){
                 case 0: return;
@@ -58,11 +58,11 @@ public class GerenteView {
             }
 
             System.out.println("==== Selecione uma opção: =====");
-            System.out.println("[1] - Listar funcionario");      //ok
+            System.out.println("[1] - Listar funcionario");          //ok
             System.out.println("[2] - Cadastrar novo vendedor");     //ok
-            System.out.println("[3] - Demitir funcionario"); //ok
-            System.out.println("[4] - Alterar salários");        //ok
-            System.out.println("[0] - Voltar");
+            System.out.println("[3] - Demitir funcionario");         //ok
+            System.out.println("[4] - Alterar salários");            //ok
+            System.out.println("[0] - Voltar");                      //ok
             op = Integer.parseInt(sc.nextLine());
 
             switch (op){
@@ -79,7 +79,6 @@ public class GerenteView {
 
     public void gerenciarClientes() {
         int op = 1;
-        ClienteView clienteView = new ClienteView();
         while (true) {
             for (int i = 0; i<3; i++) {
                 System.out.println(".");
@@ -91,9 +90,9 @@ public class GerenteView {
             }
 
             System.out.println("==== Selecione uma opção: =====");
-            System.out.println("[1] - Listar clientes");
-            System.out.println("[2] - Excluir clientes");
-            System.out.println("[0] - Voltar");
+            System.out.println("[1] - Listar clientes");            //ok
+            System.out.println("[2] - Excluir clientes");           //ok
+            System.out.println("[0] - Voltar");                     //ok
             op = Integer.parseInt(sc.nextLine());
 
             switch (op){
