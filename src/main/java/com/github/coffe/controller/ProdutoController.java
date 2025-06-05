@@ -102,4 +102,13 @@ public class ProdutoController {
         return produtos.contains(produto);
     }
 
+    public boolean listarProdutos(){
+        if(!produtos.isEmpty()){
+            for(Produto p: produtos){
+                p.exibirDados();
+            }
+            return true;
+        }
+        return false;
+    }
 }

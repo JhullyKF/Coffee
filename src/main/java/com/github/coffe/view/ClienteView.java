@@ -8,6 +8,9 @@ import java.util.Scanner;
 public class ClienteView {
     Scanner sc = new Scanner(System.in);
     ClienteController cc = new ClienteController();
+    private final Scanner sc = new Scanner(System.in);
+    private final ClienteController cc = new ClienteController();
+    private final ProdutoController prc = new ProdutoController();
 
     //Menus
     public void menuClienteAcesso(){
@@ -64,6 +67,15 @@ public class ClienteView {
 
     public void realizarPedido(){
         do {
+            System.out.println("\nSelecione uma opção para continuarmos: ");
+            System.out.println("[1] - Adicionar item ao carrinho");
+            System.out.println("[2] - Vizualizar carrinho");
+            System.out.println("[3] - retirar item do carrinho");
+            System.out.println("[4] - finalizar pedido");
+            System.out.println("[5] - vizualizar pedidos");
+            System.out.println("[6] - listar produtos");
+            System.out.println("[0] - Sair\n");
+            int opc = Integer.parseInt(sc.nextLine());
             switch (opc){
                 case 1:
                     break;
@@ -76,6 +88,10 @@ public class ClienteView {
                 case 5:
                     break;
                 case 6:
+                    if(prc.listarProdutos()){
+                        break;
+                    }
+                    System.err.println("\nSem produtos no momento!");
                     break;
                 case 0: return;
                 default: System.out.println("\nEntrada inválida! Tente novamente");

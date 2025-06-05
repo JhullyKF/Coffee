@@ -127,7 +127,7 @@ public class GerenteView {
 
             switch (op){
                 case 0: return;
-                case 1: listarProdutos(); break;
+                case 1: produtoController.listarProdutos(); break;
                 case 2: addProduto(); break;
                 case 3: removerProduto(); break;
                 case 4: alterarProduto(); break;
@@ -214,11 +214,6 @@ public class GerenteView {
     }
 
     //Funções de gerenciar produtos
-    public void listarProdutos(){
-        for(Produto p: produtoController.getProdutos()){
-            p.exibirDados();
-        }
-    }
 
     public void addProduto(){
         int op = 1;
