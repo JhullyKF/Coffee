@@ -1,6 +1,8 @@
 package com.github.coffe.model.entidades;
 
-public abstract class Funcionario {
+import com.github.coffe.interfaces.Identificavel;
+
+public abstract class Funcionario implements Identificavel {
     private final int idFuncionario;
     private static int proxId = 1;
     private String cargo;

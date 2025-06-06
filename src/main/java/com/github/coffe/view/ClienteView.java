@@ -4,7 +4,6 @@ import com.github.coffe.controller.ClienteController;
 import com.github.coffe.controller.PedidoController;
 import com.github.coffe.controller.ProdutoController;
 import com.github.coffe.model.entidades.Cliente;
-
 import java.util.Scanner;
 
 public class ClienteView {
@@ -21,14 +20,11 @@ public class ClienteView {
             System.out.println("[2] - Cadastrar");
             System.out.println("[0] - Sair\n");
             int opc = Integer.parseInt(sc.nextLine());
-            if(opc == 1){
-                loginCliente();
-            } else if(opc == 2){
-                autoCadastro();
-            } else if(opc==0){
-                return;
-            } else{
-                System.out.println("\nEntrada inválida! Tente novamente");
+            switch (opc){
+                case 1: loginCliente(); break;
+                case 2: if(autoCadastro()) System.out.println("\nCadastro efetuado com sucesso"); break;
+                case 0: return;
+                default: System.out.println("\nEntrada inválida! Tente novamente");
             }
         }while (true);
     }
@@ -189,7 +185,7 @@ public class ClienteView {
         }while(true);
     }
 
-    public void autoCadastro(){
+    public boolean autoCadastro(){
         System.out.println("\nDigite seu nome:");
         String nome  = sc.nextLine();
         System.out.println("Digite seu cpf:");
@@ -198,6 +194,6 @@ public class ClienteView {
         String email = sc.nextLine();
         System.out.println("Digite sua senha:");
         String senha = sc.nextLine();
-        cc.cadastrarCliente(cpf, email, nome, senha);
+        return cc.cadastrarCliente(cpf, email, nome, senha);
     }
 }

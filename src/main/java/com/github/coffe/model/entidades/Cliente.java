@@ -1,6 +1,8 @@
 package com.github.coffe.model.entidades;
 
-public class Cliente {
+import com.github.coffe.interfaces.Identificavel;
+
+public class Cliente implements Identificavel {
     private final int id_Cliente;
     private static int proxId = 1;
     private final String cpf;

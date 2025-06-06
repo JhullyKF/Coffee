@@ -2,6 +2,7 @@ package com.github.coffe.controller;
 
 import com.github.coffe.model.entidades.Cliente;
 import com.github.coffe.persistencia.ClientePersistencia;
+import com.github.coffe.utils.Validador;
 
 import java.util.ArrayList;
 
@@ -9,6 +10,7 @@ public class ClienteController{
     private final ArrayList<Cliente> clientes;
     private final ClientePersistencia clientePersistencia;
     private Cliente usuario;
+    Validador validador = new Validador();
 
     //Construtor
     public ClienteController() {
@@ -54,10 +56,19 @@ public class ClienteController{
     }
 
     //Cadastro e Login
-    public void cadastrarCliente(String cpf, String email, String nome, String senha){
+    public boolean cadastrarCliente(String cpf, String email, String nome, String senha){
+        if (!validador.validarCPF(cpf) || validador.cpfExistente(clientes, cpf)) {
+            System.err.println("CPF inválido ou já cadastrado!");
+            return false;
+        }
+        if (!validador.validarEmail(email) || validador.emailExistente(clientes, email)) {
+            System.err.println("Email inválido ou já cadastrado!");
+            return false;
+        }
         Cliente novoCliente = new Cliente(cpf, email, nome, senha);
         clientes.add(novoCliente);
         clientePersistencia.salvarEmArquivo(clientes);
+        return true;
     }
 
     public Cliente verificarCliente(String identificador, String senha){
