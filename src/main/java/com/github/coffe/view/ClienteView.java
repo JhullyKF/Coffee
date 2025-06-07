@@ -146,7 +146,11 @@ public class ClienteView {
                 case 2:
                     System.out.println("\nInsira o email:");
                     String novoEmail = sc.nextLine();
-                    cc.editarDadoCliente("email", novoEmail);
+                    if(cc.editarDadoCliente("email", novoEmail)){
+                        System.out.println("\nEmail atualizado com sucesso!");
+                        break;
+                    }
+                    System.err.println("Email inválido ou já cadastrado!");
                     break;
                 case 3:
                     System.out.println("\nInsira a senha:");
