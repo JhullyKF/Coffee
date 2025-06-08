@@ -44,13 +44,12 @@ public class ClienteView {
             System.out.println("[0] - Sair\n");
             int opc = Integer.parseInt(sc.nextLine());
             switch (opc){
-                case 1: realizarPedido();
+                case 1: realizarPedido(); break;
                 case 2:
                     System.out.println("\n============ Seus dados =============");
                     clienteController.exibirCliente();
                     break;
-                case 3: editarDados();
-                    break;
+                case 3: editarDados(); break;
                 case 4:
                     System.out.println("\nDeseja mesmo excluir sua conta?");
                     System.out.println("[1] - Sim / [2] - Não\n");

@@ -38,7 +38,7 @@ public class ClienteController{
                 usuario.setNome(dadoAtualizado);
                 break;
             case "email":
-                if (!validador.validarEmail(dado) || validador.emailExistente(clientes, dado)) {
+                if (!validador.validarEmail(dadoAtualizado) || validador.emailExistente(clientes, dadoAtualizado)) {
                     log.warn("Atualização de email do cliente <{}> mal sucedida \"{}\" -> email inválido", usuario.getId_Cliente(), dadoAtualizado);
                     valido = false;
                     break;
