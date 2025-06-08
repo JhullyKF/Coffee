@@ -1,19 +1,15 @@
 package com.github.coffe.view;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.util.Scanner;
 
 public class MainView {
-    private static final Logger log = LogManager.getLogger(MainView.class);
     private final FuncionarioView funcionarioView = new FuncionarioView();
     private final Scanner sc = new Scanner(System.in);
     private final ClienteView cv = new ClienteView();
 
 
     public void inicializar(){
-        int op = 1;
+        int op;
         mensagemBoasVindas();
         do{
             System.out.println("\nInsira uma opção para continuar: ");

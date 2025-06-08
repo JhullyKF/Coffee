@@ -69,18 +69,16 @@ public class ClienteController{
     }
 
     public Cliente getUsuario() {
-            return usuario;
+        return usuario;
     }
 
     //Cadastro e Login
     public boolean cadastrarCliente(String cpf, String email, String nome, String senha){
         if (!validador.validarCPF(cpf) || validador.cpfExistente(clientes, cpf)) {
-            System.err.println("CPF inválido ou já cadastrado!");
             log.warn("Erro ao cadastrar usuário, dado inválido: {}", cpf);
             return false;
         }
         if (!validador.validarEmail(email) || validador.emailExistente(clientes, email)) {
-            System.err.println("Email inválido ou já cadastrado!");
             log.warn("Erro ao cadastrar usuário, dado inválido: {}", email);
             return false;
         }
@@ -100,7 +98,7 @@ public class ClienteController{
                 return c;
             }
         }
-        log.warn("Tentativa de login mal sucedida para o usuário {}, senha: {}", identificador, senha);
+        log.warn("Tentativa de login mal sucedida para o usuário {}", identificador);
         return null;
     }
 

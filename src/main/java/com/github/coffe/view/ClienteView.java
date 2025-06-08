@@ -4,6 +4,9 @@ import com.github.coffe.controller.ClienteController;
 import com.github.coffe.controller.PedidoController;
 import com.github.coffe.controller.ProdutoController;
 import com.github.coffe.model.entidades.Cliente;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Scanner;
 
 public class ClienteView {
@@ -13,6 +16,7 @@ public class ClienteView {
     private final ProdutoController produtoController = new ProdutoController();
     private final PedidoView pedidoView = new PedidoView(pedidoController);
     private int id, qtd;
+    private static final Logger log = LogManager.getLogger(ClienteView.class);
 
     //Menus
     public void menuClienteAcesso(){
@@ -192,6 +196,10 @@ public class ClienteView {
         String email = sc.nextLine();
         System.out.println("Digite sua senha:");
         String senha = sc.nextLine();
-        return clienteController.cadastrarCliente(cpf, email, nome, senha);
+        boolean valido = clienteController.cadastrarCliente(cpf, email, nome, senha);
+        if (!valido) {
+            System.err.println("\nCadastro falhou! Verifique os dados e tente novamente.");
+        }
+        return valido;
     }
 }
