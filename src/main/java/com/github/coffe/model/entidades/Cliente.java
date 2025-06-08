@@ -1,17 +1,17 @@
 package com.github.coffe.model.entidades;
 
 import com.github.coffe.interfaces.Identificavel;
+import com.github.coffe.utils.ProximoIdManager;
 
 public class Cliente implements Identificavel {
     private final int id_Cliente;
-    private static int proxId = 1;
     private final String cpf;
     private String email;
     private String nome;
     private String senha;
 
     public Cliente(String cpf, String email, String nome, String senha){
-        this.id_Cliente = proxId++;
+        this.id_Cliente = ProximoIdManager.getProximoId(ProximoIdManager.cliente);
         this.cpf = cpf;
         this.email = email;
         this.nome = nome;
@@ -24,9 +24,6 @@ public class Cliente implements Identificavel {
         this.nome = nome;
         this.senha = senha;
         this.id_Cliente = id_Cliente;
-        if (id_Cliente >= proxId) {
-            proxId = id_Cliente + 1;
-        }
     }
 
     public int getId_Cliente() {

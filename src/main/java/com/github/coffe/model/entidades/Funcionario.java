@@ -1,10 +1,10 @@
 package com.github.coffe.model.entidades;
 
 import com.github.coffe.interfaces.Identificavel;
+import com.github.coffe.utils.ProximoIdManager;
 
 public abstract class Funcionario implements Identificavel {
     private final int idFuncionario;
-    private static int proxId = 1;
     private String cargo;
     private String nome;
     private String email;
@@ -20,13 +20,10 @@ public abstract class Funcionario implements Identificavel {
         this.salario = salario;
         this.senha = senha;
         this.idFuncionario = idFuncionario;
-        if (idFuncionario >= proxId){
-            proxId = idFuncionario + 1;
-        }
     }
 
     public Funcionario(String cargo, String nome, String email, String cpf, double salario, String senha){
-        this.idFuncionario = proxId++;
+        this.idFuncionario = ProximoIdManager.getProximoId(ProximoIdManager.funcionario);
         this.cargo = cargo;
         this.nome = nome;
         this.email = email;
