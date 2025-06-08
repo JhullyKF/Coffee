@@ -8,12 +8,10 @@ public class Pedido {
     private static int proxId = 1;
     private final int id_Pedido;
     private int idCliente;
-    private int idVendedor;
     private String status;
 
-    public Pedido(int id_Pedido, int idCliente, int idVendedor, String status, List<ItemPedido> itens){
+    public Pedido(int id_Pedido, int idCliente, String status, List<ItemPedido> itens){
         this.idCliente = idCliente;
-        this.idVendedor = idVendedor;
         this.itens = itens;
         this.status = status;
         this.id_Pedido = id_Pedido;
@@ -26,7 +24,7 @@ public class Pedido {
         this.id_Pedido = proxId++;
         this.idCliente = idCliente;
         this.itens = itens;
-        this.status = "pendente";
+        this.status = "Pendente";
     }
 
     public int getId_Pedido(){
@@ -35,10 +33,6 @@ public class Pedido {
 
     public int getIdCliente(){
         return idCliente;
-    }
-
-    public int getIdVendedor(){
-        return idVendedor;
     }
 
     public String getStatus(){
@@ -50,14 +44,6 @@ public class Pedido {
     }
 
     public void exibirDados(){
-        System.out.println("============ Dados do pedido " + getId_Pedido() + ": =============");
-        System.out.println("ID do atendente: " + getIdVendedor());
-        System.out.println("ID do cliente: " + getIdCliente());
-        System.out.println("Status: " + getStatus());
-        System.out.println("Itens: " + getItens());
-    }
-
-    public void exibirDadosparaCliente(){
         System.out.println("============ Dados do pedido " + getId_Pedido() + ": =============");
         System.out.println("ID do cliente: " + getIdCliente());
         System.out.println("Status: " + getStatus());
@@ -72,7 +58,7 @@ public class Pedido {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getId_Pedido()).append(", ").append(getIdCliente()).append(", ")
-                .append(getIdVendedor()).append(", ").append(getStatus()).append(", ");
+                .append(getStatus()).append(", ");
 
         for (int i = 0; i < itens.size(); i++) {
             sb.append(itens.get(i).toString());
@@ -85,15 +71,14 @@ public class Pedido {
         String[] dados = linha.split(", ");
         int idPedido = Integer.parseInt(dados[0]);
         int idCliente = Integer.parseInt(dados[1].trim());
-        int idVendedor = Integer.parseInt(dados[2].trim());
-        String status = dados[3].trim();
+        String status = dados[2].trim();
 
         List<ItemPedido> itens = new ArrayList<>();
-        String[] itensStr = dados[4].split("; ");
+        String[] itensStr = dados[3].split("; ");
         for (String itemStr : itensStr) {
             itens.add(ItemPedido.fromString(itemStr));
         }
 
-        return new Pedido(idPedido, idCliente, idVendedor, status, itens);
+        return new Pedido(idPedido, idCliente, status, itens);
     }
 }

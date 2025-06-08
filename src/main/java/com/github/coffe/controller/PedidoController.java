@@ -14,41 +14,26 @@ public class PedidoController {
     private static final Logger log = LogManager.getLogger(PedidoController.class);
     private final ArrayList<Pedido> pedidos;
     private ArrayList<Pedido> pendentes = new ArrayList<>();
+    private ArrayList<Pedido> validados = new ArrayList<>();
     private final PedidoPersistencia pedidoPersistencia;
     private final ArrayList<ItemPedido> carrinho = new ArrayList<>();
     private final ProdutoController produtoController = new ProdutoController();
-    private double valorTotal;
     private ClienteController clienteController;
-    private int contadorPedidos = 0;
 
     public PedidoController(){
         pedidoPersistencia = new PedidoPersistencia("src/main/java/com/github/coffe/dados/pedidos.txt");
         pedidos = pedidoPersistencia.carregarDoArquivo();
-        for (Pedido p: pedidos){
-            if(p.getStatus().equals("Pendente")){
-                pendentes.add(p);
-            }
-        }
+        carregarStatusPedidos();
     }
 
     public PedidoController(ClienteController clienteController){
         pedidoPersistencia = new PedidoPersistencia("src/main/java/com/github/coffe/dados/pedidos.txt");
         pedidos = pedidoPersistencia.carregarDoArquivo();
-        for (Pedido p: pedidos){
-            if(p.getStatus().equals("Pendente")){
-                pendentes.add(p);
-            }
-        }
         this.clienteController = clienteController;
+        carregarStatusPedidos();
     }
 
-    public ArrayList<Pedido> getPedidos() {
-        return pedidos;
-    }
-
-    public ArrayList<Pedido> getPendentes(){
-        return pendentes;
-    }
+    //Adicionar, remover e listar itens do carrinho
 
     public boolean addItem(int id, int qtd){
         Produto produto = produtoController.getProdutoPorId(id);
@@ -72,18 +57,13 @@ public class PedidoController {
         }
 
         ItemPedido itemPedido = new ItemPedido(id, qtd);
+        verificarProduto(itemPedido);
         carrinho.add(itemPedido);
         return true;
     }
 
-    public void exibirCarrinho(){
-        valorTotal = 0;
-        for(ItemPedido item : carrinho){
-            verificarProduto(item);
-            System.out.println("ID: " + item.getIdProduto() + " | Nome: " + item.getNomeItem() + " | Quantidade: " + item.getQuantidade() + " | preco: " + item.getPreco());
-            valorTotal += item.getPreco() * item.getQuantidade();
-        }
-        System.out.println("Total: " + valorTotal);
+    public ArrayList<ItemPedido> getCarrinho(){
+        return carrinho;
     }
 
     public boolean removerItem(int id, int qtd){
@@ -105,17 +85,6 @@ public class PedidoController {
         return false;
     }
 
-    public boolean finalizarPedido(){
-        if(!carrinhoVazio()){
-            Pedido pedido = new Pedido(clienteController.getUsuario().getId_Cliente(), new ArrayList<>(carrinho));
-            pedidos.add(pedido);
-            pedidoPersistencia.salvarEmArquivo(pedidos);
-            carrinho.clear();
-            return true;
-        }
-        return false;
-    }
-
     public void verificarProduto(ItemPedido item){
         for(Produto produto : produtoController.getProdutos()){
             if(item.getIdProduto() == produto.getIdProduto()){
@@ -129,14 +98,53 @@ public class PedidoController {
         return carrinho.isEmpty();
     }
 
-    public boolean mostrarPedidosDeCliente(){
+    //Criando objeto Pedido e salvando em arquivo
+    public boolean finalizarPedido(){
+        if(!carrinhoVazio()){
+            Pedido pedido = new Pedido(clienteController.getUsuario().getId_Cliente(), new ArrayList<>(carrinho));
+            pedidos.add(pedido);
+            pedidoPersistencia.salvarEmArquivo(pedidos);
+            carrinho.clear();
+            return true;
+        }
+        return false;
+    }
+
+    //Listagem dos pedidos feitos
+    public ArrayList<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public ArrayList<Pedido> getPendentes(){
+        return pendentes;
+    }
+
+    public ArrayList<Pedido> getPedidosUsuario(){
+        ArrayList<Pedido> pedidosUsuario = new ArrayList<>();
         for(Pedido pedido : pedidos){
             if(pedido.getIdCliente() == clienteController.getUsuario().getId_Cliente()){
-                pedido.exibirDadosparaCliente();
-                contadorPedidos++;
+                pedidosUsuario.add(pedido);
             }
         }
-        return contadorPedidos > 0;
+        return pedidosUsuario;
+    }
+
+    public ArrayList<Pedido> getPedidosPendentes(){
+        return pendentes;
+    }
+
+    public ArrayList<Pedido> getPedidosValidados(){
+        return validados;
+    }
+
+    public void carregarStatusPedidos(){
+        for (Pedido p: pedidos){
+            if(p.getStatus().equals("Pendente")){
+                pendentes.add(p);
+            } else{
+                validados.add(p);
+            }
+        }
     }
 
 }

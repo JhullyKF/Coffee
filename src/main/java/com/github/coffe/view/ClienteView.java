@@ -8,9 +8,10 @@ import java.util.Scanner;
 
 public class ClienteView {
     private final Scanner sc = new Scanner(System.in);
-    private final ClienteController cc = new ClienteController();
-    private final PedidoController pec = new PedidoController(this.cc);
-    private final ProdutoController prc = new ProdutoController();
+    private final ClienteController clienteController = new ClienteController();
+    private final PedidoController pedidoController = new PedidoController(this.clienteController);
+    private final ProdutoController produtoController = new ProdutoController();
+    private final PedidoView pedidoView = new PedidoView(pedidoController);
     private int id, qtd;
 
     //Menus
@@ -42,7 +43,7 @@ public class ClienteView {
                 case 1: realizarPedido();
                 case 2:
                     System.out.println("\n============ Seus dados =============");
-                    cc.exibirCliente();
+                    clienteController.exibirCliente();
                     break;
                 case 3: editarDados();
                     break;
@@ -51,7 +52,7 @@ public class ClienteView {
                     System.out.println("[1] - Sim / [2] - Não\n");
                     int decisor = Integer.parseInt(sc.nextLine());
                     if(decisor == 1){
-                        cc.excluirCliente();
+                        clienteController.excluirCliente();
                         return;
                     } else if(decisor != 2){
                         System.out.println("\nEntrada inválida! Exclusão abortada");
@@ -80,45 +81,38 @@ public class ClienteView {
                     id = Integer.parseInt(sc.nextLine());
                     System.out.println("Quantas unidades do produto: ");
                     qtd = Integer.parseInt(sc.nextLine());
-                    if(pec.addItem(id, qtd)){
+                    if(pedidoController.addItem(id, qtd)){
                         System.out.println("\nItem adicionado ao carrinho!");
                         break;
                     }
                     System.err.println("\nid ou quantidade inválidos!");
                     break;
                 case 2:
-                    if(pec.carrinhoVazio()){
-                        System.err.println("\nCarrinho vazio!");
-                        break;
-                    }
-                    System.out.println("\n============ Seu carrinho =============");
-                    pec.exibirCarrinho();
+                    pedidoView.exibirCarrinho();
                     break;
                 case 3:
                     System.out.println("\nDigite o ID do produto: ");
                     id = Integer.parseInt(sc.nextLine());
                     System.out.println("\nInforme a quantidade a ser retirada desse produto: ");
                     qtd = Integer.parseInt(sc.nextLine());
-                    if(pec.removerItem(id, qtd)){
+                    if(pedidoController.removerItem(id, qtd)){
                         System.out.println("\nCarrinho alterado!");
                         break;
                     }
                     System.err.println("Verifique o id do produto ou a quantidade a ser retirada");
                     break;
                 case 4:
-                    if(pec.finalizarPedido()){
+                    if(pedidoController.finalizarPedido()){
                         System.out.println("\nPedido feito com sucesso!");
                         break;
                     }
                     System.err.println("\nVerifique se seu carrinho contém itens!");
                     break;
                 case 5:
-                    if(!pec.mostrarPedidosDeCliente()){
-                        System.err.println("Verique se há pedidos já realizados!");
-                    }
+                    pedidoView.mostrarPedidosCliente();
                     break;
                 case 6:
-                    if(prc.listarProdutos()){
+                    if(produtoController.listarProdutos()){
                         break;
                     }
                     System.err.println("\nSem produtos no momento!");
@@ -141,12 +135,12 @@ public class ClienteView {
                 case 1:
                     System.out.println("\nInsira o nome:");
                     String novoNome  = sc.nextLine();
-                    cc.editarDadoCliente("nome", novoNome);
+                    clienteController.editarDadoCliente("nome", novoNome);
                     break;
                 case 2:
                     System.out.println("\nInsira o email:");
                     String novoEmail = sc.nextLine();
-                    if(cc.editarDadoCliente("email", novoEmail)){
+                    if(clienteController.editarDadoCliente("email", novoEmail)){
                         System.out.println("\nEmail atualizado com sucesso!");
                         break;
                     }
@@ -155,7 +149,7 @@ public class ClienteView {
                 case 3:
                     System.out.println("\nInsira a senha:");
                     String novaSenha = sc.nextLine();
-                    cc.editarDadoCliente("senha", novaSenha);
+                    clienteController.editarDadoCliente("senha", novaSenha);
                     break;
                 case 0: return;
                 default:System.out.println("\nEntrada inválida! Tente novamente");
@@ -171,9 +165,9 @@ public class ClienteView {
             String identificador = sc.nextLine();
             System.out.println("Senha: ");
             String senha = sc.nextLine();
-            Cliente cliente = cc.verificarCliente(identificador, senha);
+            Cliente cliente = clienteController.verificarCliente(identificador, senha);
             if(cliente != null){
-                cc.logarCliente(cliente);
+                clienteController.logarCliente(cliente);
                 mainMenuCliente();
                 return;
             } else{
@@ -198,6 +192,6 @@ public class ClienteView {
         String email = sc.nextLine();
         System.out.println("Digite sua senha:");
         String senha = sc.nextLine();
-        return cc.cadastrarCliente(cpf, email, nome, senha);
+        return clienteController.cadastrarCliente(cpf, email, nome, senha);
     }
 }
