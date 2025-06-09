@@ -1,13 +1,25 @@
 package com.github.coffe.model.entidades;
 
-import java.util.Locale;
+import com.github.coffe.controller.PedidoController;
 
 public class Gerente extends Funcionario{
+    int totalVendas;
+
     public Gerente(String nome, String email, String cpf) {
-        super(0,"Gerente", nome, email, cpf, 5000.00,"Mudar@123");
+        super("Gerente", nome, email, cpf, 5000.00,"Mudar@123");
     }
-    public Gerente(int id, String cargo, String nome, String email, String cpf, double salario, String senha){
-        super(id, cargo, nome, email, cpf, salario, senha);
+
+    //from string
+    public Gerente(int id, String cargo, String nome, String email, String cpf, double salarioFixo, double salarioFinal, String senha){
+        super(id, cargo, nome, email, cpf, salarioFixo, salarioFinal, senha);
+    }
+
+    public int getTotalVendas() {
+        return totalVendas;
+    }
+
+    public void setTotalVendas(int totalVendas) {
+        this.totalVendas = totalVendas;
     }
 
     @Override
@@ -20,9 +32,9 @@ public class Gerente extends Funcionario{
     }
 
     @Override
-    public double calcularSalario() {
-        //double bonus = totalVendas * 0.15
-        return (getSalario() /*+ bonus*/);
+    public void calcularSalarioFinal() {
+        double bonus = totalVendas * 0.05;
+        setSalarioFinal(getSalario() + bonus);
     }
 
     @Override
@@ -32,14 +44,15 @@ public class Gerente extends Funcionario{
 
     public static Funcionario fromString(String linha) {
         String[] dados = linha.split(", ");
-        int idFuncionario = Integer.parseInt(dados[0].trim());
-        String cargo = dados[1].trim();
-        String nome = dados[2].trim();
-        String email = dados[3].trim();
-        String cpf = dados[4].trim();
-        double salario = Double.parseDouble(dados[5].trim());
-        String senha = dados[6].trim();
+        int idFuncionario = Integer.parseInt(dados[0]);
+        String cargo = dados[1];
+        String nome = dados[2];
+        String email = dados[3];
+        String cpf = dados[4];
+        double salarioFixo = Double.parseDouble(dados[5]);
+        double salarioFinal = Double.parseDouble(dados[6]);
+        String senha = dados[7];
 
-        return new Gerente(idFuncionario, cargo, nome, email, cpf, salario, senha);
+        return new Gerente(idFuncionario, cargo, nome, email, cpf, salarioFixo, salarioFinal, senha);
     }
 }

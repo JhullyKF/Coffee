@@ -9,15 +9,18 @@ public abstract class Funcionario implements Identificavel {
     private String nome;
     private String email;
     private String cpf;
-    private double salario;
+    private double salarioFixo;
+    private double salarioFinal;
     private String senha;
 
-    public Funcionario(int idFuncionario, String cargo, String nome, String email, String cpf, double salario, String senha) {
+    //from string
+    public Funcionario(int idFuncionario, String cargo, String nome, String email, String cpf, double salarioFixo, double salarioFinal, String senha) {
         this.cargo = cargo;
         this.nome = nome;
         this.email = email;
         this.cpf = cpf;
-        this.salario = salario;
+        this.salarioFixo = salarioFixo;
+        this.salarioFinal = salarioFinal;
         this.senha = senha;
         this.idFuncionario = idFuncionario;
         if (idFuncionario >= proxId){
@@ -25,13 +28,14 @@ public abstract class Funcionario implements Identificavel {
         }
     }
 
-    public Funcionario(String cargo, String nome, String email, String cpf, double salario, String senha){
+    //criar funcionario
+    public Funcionario(String cargo, String nome, String email, String cpf, double salarioFixo, String senha){
         this.idFuncionario = proxId++;
         this.cargo = cargo;
         this.nome = nome;
         this.email = email;
         this.cpf = cpf;
-        this.salario = salario;
+        this.salarioFixo = salarioFixo;
         this.senha = senha;
     }
 
@@ -72,11 +76,17 @@ public abstract class Funcionario implements Identificavel {
     }
 
     public double getSalario(){
-        return salario;
+        return salarioFixo;
     }
 
-    public void setSalario(double salario){
-        this.salario = salario;
+    public void setSalarioFinal(double salarioFinal){
+        this.salarioFinal = salarioFinal;
+    }
+    public void setSalario(double salarioFixo){
+        if (salarioFixo < 0) {
+            throw new IllegalArgumentException("Salário não pode ser negativo.");
+        }
+        this.salarioFixo = salarioFixo;
     }
 
     public String getSenha() {
@@ -89,7 +99,7 @@ public abstract class Funcionario implements Identificavel {
 
     public abstract void exibirDados();
 
-    public abstract double calcularSalario();
+    public abstract void calcularSalarioFinal();
 
     public abstract String toString();
 }

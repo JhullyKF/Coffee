@@ -1,13 +1,23 @@
 package com.github.coffe.model.entidades;
 
 public class Vendedor extends Funcionario{
+    private int totalVendas;
 
     public Vendedor(String nome, String email,String cpf){
         super("Vendedor", nome, email, cpf, 2500.00, "Mudar@123");
     }
+    //from string
+    public Vendedor(int id, String cargo, String nome, String email, String cpf, double salarioFixo, double salarioFinal, String senha, int totalVendas){
+        super(id, cargo, nome, email, cpf, salarioFixo, salarioFinal, senha);
+        this.totalVendas = totalVendas;
+    }
 
-    public Vendedor(int id, String cargo, String nome, String email, String cpf, double salario, String senha){
-        super(id, cargo, nome, email, cpf, salario, senha);
+    public int getTotalVendas() {
+        return totalVendas;
+    }
+
+    public void setTotalVendas(int totalVendas) {
+        this.totalVendas = totalVendas;
     }
 
     @Override
@@ -20,28 +30,29 @@ public class Vendedor extends Funcionario{
     }
 
     @Override
-    public double calcularSalario() {
-        //double bonus = TotalVendasFuncionario * 0.10;
-        //return (getSalario() + bonus);
-        return 1;
+    public void calcularSalarioFinal() {
+        double bonus = totalVendas * 0.10;
+        setSalarioFinal(getSalario() + bonus);
     }
 
     @Override
     public String toString() {
         return getIdFuncionario() + ", " + getCargo() + ", "  + getNome() + ", " + getEmail() + ", " + getCpf() + ", " +
-                getSalario() + ", " + getSenha();
+                + getSalario() + ", " + getSenha();
     }
 
     public static Funcionario fromString(String linha) {
         String[] dados = linha.split(", ");
         int id = Integer.parseInt(dados[0]);
-        String cargo = dados[1].trim();
-        String nome = dados[2].trim();
-        String email = dados[3].trim();
-        String cpf = dados[4].trim();
-        double salario = Double.parseDouble(dados[5].trim());
-        String senha = dados[6];
+        String cargo = dados[1];
+        String nome = dados[2];
+        String email = dados[3];
+        String cpf = dados[4];
+        double salarioFixo = Double.parseDouble(dados[5]);
+        double salarioFinal = Double.parseDouble(dados[6]);
+        String senha = dados[7];
+        int totalVendas = Integer.parseInt(dados[8]);
 
-        return new Vendedor(id, cargo, nome, email, cpf, salario, senha);
+        return new Vendedor(id, cargo, nome, email, cpf, salarioFixo, salarioFinal, senha, totalVendas);
     }
 }
