@@ -7,9 +7,11 @@ public class Produto {
     private String nome;
     private double preco;
     private int estoque;
+    private String descricao;
 
-    public Produto(int idProduto, String nome, double preco, int estoque) {
+    public Produto(int idProduto, String nome, String descricao, double preco, int estoque) {
         this.nome = nome;
+        this.descricao = descricao;
         this.preco = preco;
         this.estoque = estoque;
         this.idProduto = idProduto;
@@ -18,11 +20,20 @@ public class Produto {
         }
     }
 
-    public Produto(String nome, double preco, int estoque){
+    public Produto(String nome, String descricao, double preco, int estoque){
         this.idProduto = proxId++;
         this.nome = nome;
+        this.descricao = descricao;
         this.preco = preco;
         this.estoque = estoque;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public int getIdProduto() {
@@ -54,24 +65,23 @@ public class Produto {
     }
 
     public void exibirDados(){
-        System.out.println("============ Dados do produto " + getIdProduto() + ": =============");
-        System.out.println("Nome: " + getNome());
-        System.out.println("Valor: " + getPreco());
-        System.out.println("Estoque: " + getEstoque());
+        System.out.printf("%-2d | %-15s | %-85s | R$%-2.2f | %d\n",
+                getIdProduto(), getNome(), getDescricao(), getPreco(), getEstoque());
     }
 
     public String toString() {
-        return getIdProduto() + ", " + getNome() + ", "  + getPreco() + ", " + getEstoque();
+        return getIdProduto() + "; " + getNome() + "; " + getDescricao() + "; "  + getPreco() + "; " + getEstoque();
     }
 
     public static Produto fromString(String linha) {
-        String[] dados = linha.split(", ");
+        String[] dados = linha.split("; ");
         int id = Integer.parseInt(dados[0]);
-        String nome = dados[1].trim();
-        double preco = Double.parseDouble(dados[2].trim());
-        int estoque = Integer.parseInt(dados[3].trim());
+        String nome = dados[1];
+        String descricao = dados[2];
+        double preco = Double.parseDouble(dados[3]);
+        int estoque = Integer.parseInt(dados[4]);
 
-        return new Produto(id, nome, preco, estoque);
+        return new Produto(id, nome, descricao, preco, estoque);
     }
 }
 

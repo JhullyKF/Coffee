@@ -1,3 +1,11 @@
-0, kit panela, 500.0, 400
-2, Panela Avulsa, 50.99, 50
-3, Copo Plastico, 5.99, 10
+0; Espresso; Café concentrado, servido em pequena quantidade (30 ml); 07.99; 100
+1; Americano; Espresso diluído com água quente, mais leve que o espresso tradicional; 09.00; 100
+2; Café Latte; Espresso com bastante leite vaporizado e uma fina camada de espuma; 13.59; 50
+3; Cappuccino; Partes iguais de espresso, leite vaporizado e espuma de leite. Equilibrado e popular; 14.35; 50
+4; Macchiato; Espresso “manchado” com um pouco de espuma de leite. Mais forte que o latte; 10.19; 79
+5; Mocha; Combinação de espresso, leite vaporizado e chocolate. Doce e achocolatado; 14.99; 99
+6; Affogato; Sobremesa com uma bola de sorvete de baunilha “afogada” em espresso quente; 19.50; 20
+7; Iced Coffee; Café coado ou espresso com gelo, simples e refrescante; 11.99; 25
+8; Iced Latte; Espresso com leite gelado e gelo; 13.99; 26
+9; Iced Mocha; Espresso com leite, gelo e calda de chocolate; 15.39; 50
+10; Frappuccino; Café batido com leite, gelo e chantilly; 19.99; 20
