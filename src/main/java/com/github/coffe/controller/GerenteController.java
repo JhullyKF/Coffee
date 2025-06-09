@@ -16,20 +16,23 @@ public class GerenteController {
     public GerenteController(){
         fc = new FuncionarioController();
     }
-    public void getTotalVendas(){
+    public int getTotalVendas(){
         PedidoController pc = new PedidoController();
-        gerente.setTotalVendas(pc.getPedidosValidados().size());
+        return pc.getPedidosValidados().size();
     }
     public void loginGerente(Gerente gerente){
         this.gerente = gerente;
+        this.gerente.setTotalVendas(getTotalVendas());
     }
 
     public boolean cadastrarVendedor(Vendedor v){
         if(validador.validarCPF(v.getCpf()) && validador.validarEmail(v.getEmail()) &&
                 !validador.cpfExistente(fc.getFuncionarios(), v.getCpf()) &&
                 !validador.emailExistente(fc.getFuncionarios(), v.getEmail())) {
+
             fc.getFuncionarios().add(v);
             log.info("Gerente: {} cadastrou novo funcionario vendedor {}", gerente.getNome(), v.getIdFuncionario());
+            fc.getFuncionarioPersistencia().salvarEmArquivo(fc.getFuncionarios());
             return true;
         }
         log.warn("Erro ao cadastrar novo vendedor. Dados inválidos ou já existentes");
@@ -38,6 +41,7 @@ public class GerenteController {
 
     public boolean demitirFuncionario(Funcionario f){
         fc.getFuncionarios().remove(f);
+        fc.getFuncionarioPersistencia().salvarEmArquivo(fc.getFuncionarios());
 
         if(!fc.getFuncionarios().contains(f)) {
             log.info("Gerente {} demitiu funcionario {} com sucesso", gerente.getNome(), f.getIdFuncionario());
@@ -49,7 +53,8 @@ public class GerenteController {
 
     public boolean alterarSalario(Funcionario f, double salario){
         try{
-            f.setSalario(salario);
+            f.setSalarioFixo(salario);
+            fc.getFuncionarioPersistencia().salvarEmArquivo(fc.getFuncionarios());
             log.info("Gerente {} alterou salário de funcionario {}", gerente.getNome(), f.getIdFuncionario());
             if (fc.getFuncionarios().contains(f)) return true;
         } catch (IllegalArgumentException e) {

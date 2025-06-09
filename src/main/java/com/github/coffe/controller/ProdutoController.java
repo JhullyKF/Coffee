@@ -5,7 +5,6 @@ import com.github.coffe.persistencia.ProdutoPersistencia;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
-import java.util.Objects;
 
 
 public class ProdutoController {
@@ -26,20 +25,19 @@ public class ProdutoController {
     public Produto alterarEstoque(int id, int quantidade){
         for (Produto p : produtos) {
             if (p.getIdProduto() == id) {
-                if (quantidade <= p.getEstoque()) {
+                if (p.getEstoque() >= quantidade) {
                     p.setEstoque(p.getEstoque() - quantidade);
                     produtoPersistencia.salvarEmArquivo(produtos);
                     log.info("Estoque do produto {} atualizado com sucesso", id);
-
+                    return null;
                 } else {
-                    log.warn("Produto sem estoque suficiente: " + id);
+                    log.warn("Produto sem estoque suficiente: {}", id);
                     return p;
                 }
             }
-            // Produto não encontrado
-            log.warn("Produto {} não encontrado.", id);
-            return p;
         }
+        // Produto não encontrado
+        log.warn("Produto {} não encontrado.", id);
         return null;
     }
 

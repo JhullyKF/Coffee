@@ -71,14 +71,18 @@ public abstract class Funcionario implements Identificavel {
         this.cpf = cpf;
     }
 
-    public double getSalario(){
+    public double getSalarioFixo(){
         return salarioFixo;
+    }
+
+    public double getSalarioFinal() {
+        return salarioFinal;
     }
 
     public void setSalarioFinal(double salarioFinal){
         this.salarioFinal = salarioFinal;
     }
-    public void setSalario(double salarioFixo){
+    public void setSalarioFixo(double salarioFixo){
         if (salarioFixo < 0) {
             throw new IllegalArgumentException("Salário não pode ser negativo.");
         }

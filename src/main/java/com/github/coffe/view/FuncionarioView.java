@@ -37,10 +37,10 @@ public class FuncionarioView {
                         return;
 
                     case "Vendedor":
-                        VendedorView vendedorView = new VendedorView();
                         VendedorController vendedorController = new VendedorController();
-                        vendedorController.loginVendedor((Vendedor) funcionario);
-                        vendedorView.menuVendedor();
+                        vendedorController.loginVendedor(funcionario);
+                        VendedorView vendedorView = new VendedorView(vendedorController);
+                        vendedorView.menuVendedor(); //
                         return;
 
                     default:

@@ -1,16 +1,28 @@
 package com.github.coffe.view;
 
+import com.github.coffe.controller.FuncionarioController;
 import com.github.coffe.controller.PedidoController;
 import com.github.coffe.controller.VendedorController;
+import com.github.coffe.model.entidades.Funcionario;
+import com.github.coffe.model.entidades.Vendedor;
 import com.github.coffe.model.servicos.Pedido;
 
 import java.util.Scanner;
 
+import static java.lang.Thread.sleep;
+
 public class VendedorView {
     private final Scanner sc = new Scanner(System.in);
     private final PedidoController pedidoController = new PedidoController();
-    private final VendedorController vendedorController = new VendedorController();
+    private final VendedorController vc;
     private final PedidoView pedidoView = new PedidoView();
+    private final FuncionarioController fc;
+
+    public VendedorView(VendedorController vc) {
+        this.vc = vc;
+        //vc.loginVendedor(vendedor);
+        fc = new FuncionarioController();
+    }
 
     public void menuVendedor(){
         int op;
@@ -18,7 +30,7 @@ public class VendedorView {
             System.out.println("======  Selecione uma opção:  =======");
             System.out.println("[1] - Listar pedidos");
             System.out.println("[2] - Processar pedidos");
-            System.out.println("[3] - Editar pedidos");
+            System.out.println("[3] - Minha conta");
             System.out.println("[0] - voltar");                 //ok
             op = Integer.parseInt(sc.nextLine());
             switch (op) {
@@ -28,8 +40,7 @@ public class VendedorView {
 
                 case 2: processarPedido(); break;
 
-                case 3:
-                    break;
+                case 3: menuConta(); break;
 
                 default:
                 System.out.println("Entrada invalida! Tente novamente");
@@ -39,6 +50,14 @@ public class VendedorView {
     }
 
     public void processarPedido(){
+        for (int i = 0; i < 3; i++) {
+            System.out.println(".");
+            try {
+                sleep(200);
+            } catch (InterruptedException e) {
+                System.out.println(e);
+            }
+        }
         if (pedidoController.getPedidos().isEmpty()){
             System.out.println("Lista de pedidos vazia");
             return;
@@ -47,13 +66,85 @@ public class VendedorView {
             p.exibirDados();
         }
 
-        System.out.println("Informe o id do pedido: ");
+        System.out.println("\n\nInforme o id do pedido: ");
         int id = Integer.parseInt(sc.nextLine());
-        boolean result = vendedorController.processarPedido(id);
+        boolean result = vc.processarPedido(id);
         if (result){
             System.out.println("Pedido processado com sucesso");
             return;
         }
         System.out.println("Erro ao processar pedido!");
+    }
+
+    public void menuConta() {
+        int op = 1;
+        while (true) {
+            for (int i = 0; i < 3; i++) {
+                System.out.println(".");
+                try {
+                    sleep(200);
+                } catch (InterruptedException e) {
+                    System.out.println(e);
+                }
+            }
+
+            System.out.println("======  Selecione uma opção:  =======");
+            System.out.println("[1] - Listar meus dados");
+            System.out.println("[2] - Editar meus dados");
+            System.out.println("[0] - Voltar");
+            op = Integer.parseInt(sc.nextLine());
+
+            switch (op) {
+                case 0:
+                    return;
+
+                case 1:
+                    vc.exibirDados();
+                    break;
+
+                case 2:
+
+                    boolean result = false;
+                    System.out.println("Selecione uma opção para editar: ");
+                    System.out.println("[0] - Voltar");
+                    System.out.println("[1] - Editar email");
+                    System.out.println("[2] - Editar senha");
+                    int editar = Integer.parseInt(sc.nextLine());
+
+                    switch (editar) {
+                        case 0:
+                            return;
+
+                        case 1:
+                            System.out.println("Insira o novo email: ");
+                            String email = sc.nextLine();
+                            result = vc.editarDados(editar, email);
+                            if (result){
+                                System.out.println("Email editado com sucesso");
+                                return;
+                            }
+                            System.out.println(result);
+                            break;
+
+                        case 2:
+                            System.out.println("Insira a nova senha: ");
+                            String senha = sc.nextLine();
+                            result = vc.editarDados(editar, senha);
+                            if (result){
+                                System.out.println("Senha editada com sucesso");
+                                return;
+                            }
+                            System.out.println(result);
+                            break;
+
+                        default:
+                            System.out.println("Entrada inválida!"); break;
+                    }
+                    break;
+
+                default:
+                    System.out.println("Entrada inválida!"); break;
+            }
+        }
     }
 }

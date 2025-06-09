@@ -12,8 +12,12 @@ public class FuncionarioController {
     private final FuncionarioPersistencia funcionarioPersistencia;
 
     public FuncionarioController(){
-        this.funcionarioPersistencia = new FuncionarioPersistencia("src/main/java/com/github/coffe/dados/funcionarios.txt");
+        funcionarioPersistencia = new FuncionarioPersistencia("src/main/java/com/github/coffe/dados/funcionarios.txt");
         funcionarios = funcionarioPersistencia.carregarDoArquivo();
+    }
+
+    public FuncionarioPersistencia getFuncionarioPersistencia() {
+        return funcionarioPersistencia;
     }
 
     public ArrayList<Funcionario> getFuncionarios(){

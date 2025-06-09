@@ -1,7 +1,5 @@
 package com.github.coffe.model.entidades;
 
-import com.github.coffe.controller.PedidoController;
-
 public class Gerente extends Funcionario{
     int totalVendas;
 
@@ -28,18 +26,18 @@ public class Gerente extends Funcionario{
         System.out.println("Nome: " + getNome());
         System.out.println("Email: " + getEmail());
         System.out.println("CPF: " + getCpf());
-        System.out.println("Salário: " + getSalario());
+        System.out.println("Salário: " + getSalarioFixo());
     }
 
     @Override
     public void calcularSalarioFinal() {
         double bonus = totalVendas * 0.05;
-        setSalarioFinal(getSalario() + bonus);
+        setSalarioFinal(getSalarioFixo() + bonus);
     }
 
     @Override
     public String toString() {
-        return getIdFuncionario() + ", " + getCargo() + ", " + getNome() + ", " + getEmail() + ", " + getCpf() + ", " + getSalario() + ", " + getSenha();
+        return getIdFuncionario() + ", " + getCargo() + ", " + getNome() + ", " + getEmail() + ", " + getCpf() + ", " + getSalarioFixo() + ", " + getSalarioFinal() + ", " + getSenha();
     }
 
     public static Funcionario fromString(String linha) {

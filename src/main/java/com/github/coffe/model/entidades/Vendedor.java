@@ -26,19 +26,19 @@ public class Vendedor extends Funcionario{
         System.out.println("Nome: " + getNome());
         System.out.println("Email: " + getEmail());
         System.out.println("CPF: " + getCpf());
-        System.out.println("Salário: " + getSalario());
+        System.out.println("Salário: " + getSalarioFixo());
     }
 
     @Override
     public void calcularSalarioFinal() {
         double bonus = totalVendas * 0.10;
-        setSalarioFinal(getSalario() + bonus);
+        setSalarioFinal(getSalarioFixo() + bonus);
     }
 
     @Override
     public String toString() {
         return getIdFuncionario() + ", " + getCargo() + ", "  + getNome() + ", " + getEmail() + ", " + getCpf() + ", " +
-                + getSalario() + ", " + getSenha();
+                + getSalarioFixo() + ", "  + getSalarioFinal() + ", " + getSenha() + ", " + getTotalVendas();
     }
 
     public static Funcionario fromString(String linha) {

@@ -1,6 +1,5 @@
 package com.github.coffe.controller;
 
-import com.github.coffe.model.entidades.Gerente;
 import com.github.coffe.model.servicos.ItemPedido;
 import com.github.coffe.model.servicos.Pedido;
 import com.github.coffe.model.servicos.Produto;
@@ -13,7 +12,7 @@ import java.util.Iterator;
 
 public class PedidoController {
     private static final Logger log = LogManager.getLogger(PedidoController.class);
-    private final ArrayList<Pedido> pedidos;
+    private ArrayList<Pedido> pedidos;
     private final ArrayList<Pedido> pendentes = new ArrayList<>();
     private final ArrayList<Pedido> validados = new ArrayList<>();
     private final PedidoPersistencia pedidoPersistencia;
@@ -32,6 +31,10 @@ public class PedidoController {
         pedidos = pedidoPersistencia.carregarDoArquivo();
         this.clienteController = clienteController;
         carregarStatusPedidos();
+    }
+
+    public PedidoPersistencia getPedidoPersistencia() {
+        return pedidoPersistencia;
     }
 
     //Adicionar, remover e listar itens do carrinho
@@ -124,6 +127,7 @@ public class PedidoController {
 
     //Listagem dos pedidos feitos
     public ArrayList<Pedido> getPedidos() {
+        pedidos = pedidoPersistencia.carregarDoArquivo();
         return pedidos;
     }
 
@@ -142,12 +146,25 @@ public class PedidoController {
     }
 
     public ArrayList<Pedido> getPedidosPendentes(){
+        ArrayList<Pedido> pendentes = new ArrayList<>();
+        for (Pedido p : pedidos) {
+            if ("Pendente".equals(p.getStatus())) {
+                pendentes.add(p);
+            }
+        }
         return pendentes;
     }
 
     public ArrayList<Pedido> getPedidosValidados(){
+        ArrayList<Pedido> validados = new ArrayList<>();
+        for (Pedido p : pedidos) {
+            if (!"Pendente".equals(p.getStatus())) {
+                validados.add(p);
+            }
+        }
         return validados;
     }
+
 
     public void carregarStatusPedidos(){
         for (Pedido p: pedidos){

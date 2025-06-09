@@ -76,8 +76,8 @@ public class Pedido {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getId_Pedido()).append(", ").append(getIdCliente()).append(", ")
-                .append(getStatus()).append(", ");
+        sb.append(getId_Pedido()).append(", ").append(getIdCliente()).append(", ").append(getIdVendedor()).append(", ")
+                .append(getStatus()).append(", ").append(getObservacao()).append(", ");
 
         for (int i = 0; i < itens.size(); i++) {
             sb.append(itens.get(i).toString());
@@ -88,18 +88,21 @@ public class Pedido {
 
     public static Pedido fromString(String linha) {
         String[] dados = linha.split(", ");
+
         int idPedido = Integer.parseInt(dados[0]);
         int idCliente = Integer.parseInt(dados[1]);
-        Integer idVendedor = Integer.parseInt(dados[2]);
+        Integer idVendedor = dados[2].equals("null") ? null : Integer.parseInt(dados[2]);
         String status = dados[3];
         String observacao = dados[4];
 
         List<ItemPedido> itens = new ArrayList<>();
-        String[] itensStr = dados[3].split("; ");
-        for (String item : itensStr) {
-            itens.add(ItemPedido.fromString(item));
-        }
 
+        if (dados.length > 5) {
+            String[] itensStr = dados[5].split("; ");
+            for (String item : itensStr) {
+                itens.add(ItemPedido.fromString(item));
+            }
+        }
         return new Pedido(idPedido, idCliente, idVendedor, status, observacao, itens);
     }
 }
