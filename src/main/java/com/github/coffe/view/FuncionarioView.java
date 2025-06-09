@@ -1,6 +1,12 @@
 package com.github.coffe.view;
 
 import com.github.coffe.controller.FuncionarioController;
+import com.github.coffe.controller.GerenteController;
+import com.github.coffe.controller.VendedorController;
+import com.github.coffe.model.entidades.Funcionario;
+import com.github.coffe.model.entidades.Gerente;
+import com.github.coffe.model.entidades.Vendedor;
+
 import java.util.Scanner;
 
 public class FuncionarioView {
@@ -15,25 +21,33 @@ public class FuncionarioView {
             System.out.print("Insira sua senha: ");
             String senha = sc.nextLine();
 
-            int tipo = funcionarioController.verificaLogin(cpf, senha);
+            Funcionario funcionario = funcionarioController.verificaLogin(cpf, senha);
 
-             switch (tipo){
-                 case 1:
-                     GerenteView gerenteView = new GerenteView();
-                     gerenteView.opcoesGerencia(); return;
+            if(funcionario == null) {
+                System.out.println("Credenciais inválidas!");
+                System.out.println("Deseja tentar novamente? [1] sim / [0] não");
+                op = Integer.parseInt(sc.nextLine());
+            } else {
+                switch (funcionario.getCargo()) {
+                    case "Gerente":
+                        GerenteView gerenteView = new GerenteView();
+                        GerenteController gerenteController = new GerenteController();
+                        gerenteController.loginGerente((Gerente) funcionario);
+                        gerenteView.opcoesGerencia();
+                        return;
 
-                 case 2:
-                     VendedorView vendedorView = new VendedorView();
-                     vendedorView.menuVendedor(); break;
+                    case "Vendedor":
+                        VendedorView vendedorView = new VendedorView();
+                        VendedorController vendedorController = new VendedorController();
+                        vendedorController.loginVendedor((Vendedor) funcionario);
+                        vendedorView.menuVendedor();
+                        return;
 
-                 case 0:
-                     System.out.println("Credenciais inválidas!");
-                     System.out.println("Deseja tentar novamente? [1] sim / [0] não");
-                     op = Integer.parseInt(sc.nextLine()); break;
-
-                 default:
-                     System.out.println("Entrada inválida!"); return;
-             }
+                    default:
+                        System.out.println("Entrada inválida!");
+                        return;
+                }
+            }
         } while (op != 0);
 
     }

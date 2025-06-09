@@ -9,6 +9,10 @@ import java.util.ArrayList;
 public class PedidoView {
     private final PedidoController pedidoController;
 
+    public PedidoView() {
+        this.pedidoController = new PedidoController();
+    }
+
     public PedidoView(PedidoController pedidoController){
         this.pedidoController =  pedidoController;
     }

@@ -13,7 +13,7 @@ public class ClienteController{
     private final ClientePersistencia clientePersistencia;
     private static final Logger log = LogManager.getLogger(ClienteController.class);
     private Cliente usuario;
-    Validador validador = new Validador();
+    private final Validador validador = new Validador();
 
     //Construtor
     public ClienteController() {

@@ -12,6 +12,7 @@ public class ClienteView {
     private final PedidoController pedidoController = new PedidoController(this.clienteController);
     private final ProdutoController produtoController = new ProdutoController();
     private final PedidoView pedidoView = new PedidoView(pedidoController);
+    private final ProdutoView pv = new ProdutoView();
     private int id, qtd;
 
     //Menus
@@ -69,10 +70,10 @@ public class ClienteView {
             System.out.println("\nSelecione uma opção para continuarmos: ");
             System.out.println("[1] - Adicionar item ao carrinho");
             System.out.println("[2] - Vizualizar carrinho");
-            System.out.println("[3] - retirar item do carrinho");
-            System.out.println("[4] - finalizar pedido");
-            System.out.println("[5] - vizualizar pedidos");
-            System.out.println("[6] - listar produtos");
+            System.out.println("[3] - Retirar item do carrinho");
+            System.out.println("[4] - Finalizar pedido");
+            System.out.println("[5] - Vizualizar pedidos");
+            System.out.println("[6] - Listar produtos");
             System.out.println("[0] - Sair\n");
             int opc = Integer.parseInt(sc.nextLine());
             switch (opc){
@@ -112,7 +113,7 @@ public class ClienteView {
                     pedidoView.mostrarPedidosCliente();
                     break;
                 case 6:
-                    if(produtoController.listarProdutos()){
+                    if(pv.listarProdutos()){
                         break;
                     }
                     System.err.println("\nSem produtos no momento!");

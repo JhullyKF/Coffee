@@ -34,22 +34,28 @@ public class ProdutoController {
     }
 
     public boolean alterarEstoque(int id, int quantidade){
-        for (Produto p: produtos){
-            if(p.getIdProduto() == id){
-                if (quantidade <= p.getEstoque()){
-                    int estoque = p.getEstoque() - quantidade;
-                    p.setEstoque(estoque);
-                    log.info("Estoque atualizado com sucesso");
-                    return true;
+        try {
+            for (Produto p : produtos) {
+                if (p.getIdProduto() == id) {
+                    if (quantidade <= p.getEstoque()) {
+                        p.setEstoque(p.getEstoque() - quantidade);
+                        log.info("Estoque atualizado com sucesso");
+                    } else{
+                        throw new IllegalArgumentException("Produto sem estoque suficiente: " + p.getIdProduto());
+
+                    }
                 }
             }
+            produtoPersistencia.salvarEmArquivo(produtos);
+            return true;
+        } catch (Exception e) {
+
         }
-        log.warn("Erro ao atualizar estoque");
         return false;
     }
 
-    public boolean addProduto(String nome, double valor, int estoque){
-        Produto p = new Produto(nome, valor, estoque);
+    public boolean addProduto(String nome, String desc, double valor, int estoque){
+        Produto p = new Produto(nome, desc, valor, estoque);
         produtos.add(p);
         produtoPersistencia.salvarEmArquivo(produtos);
 
@@ -70,46 +76,47 @@ public class ProdutoController {
 
     public boolean alterarProduto(int id, int op, String campo) {
         Produto produto = null;
+
         for (Produto p : produtos) {
             if (p.getIdProduto() == id) {
                 log.debug("Produto encontrado");
                 produto = p;
+                break;
             }
         }
-        switch (op) {
-            case 1:
-                Objects.requireNonNull(produto).setNome(campo);
-                log.debug("Nome alterado");
 
-                break;
+        if (produto == null){
+            throw new IllegalArgumentException("Produto não encontrado");
+        } else {
+            switch (op) {
+                case 1:
+                    produto.setNome(campo);
+                    log.info("Nome do produto {} alterado com sucesso", produto.getIdProduto());
+                    break;
 
-            case 2:
-                Objects.requireNonNull(produto).setPreco(Double.parseDouble(campo));
-                log.debug("Preço alterado");
-                break;
+                case 2:
+                    produto.setDescricao(campo);
+                    log.info("Descrição do produto {} alterada com sucesso", produto.getIdProduto());
+                    break;
 
-            case 3:
-                Objects.requireNonNull(produto).setEstoque(Integer.parseInt(campo));
-                log.debug("estoque alterado");
-                break;
+                case 3:
+                    produto.setPreco(Double.parseDouble(campo));
+                    log.info("Preço do produto {} alterado com sucesso", produto.getIdProduto());
+                    break;
 
-            default:
-                log.debug("Default");
-                break;
+                case 4:
+                    produto.setEstoque(Integer.parseInt(campo));
+                    log.info("Estoque do produto {} alterado com sucesso", produto.getIdProduto());
+                    break;
+
+                default:
+                    log.debug("Default");
+                    break;
+            }
+            produtoPersistencia.salvarEmArquivo(produtos);
         }
-        produtoPersistencia.salvarEmArquivo(produtos);
 
         return produtos.contains(produto);
-    }
-
-    public boolean listarProdutos(){
-        if(!produtos.isEmpty()){
-            for(Produto p: produtos){
-                p.exibirDados();
-            }
-            return true;
-        }
-        return false;
     }
 
     public Produto getProdutoPorId(int id){
@@ -120,5 +127,6 @@ public class ProdutoController {
         }
         return null;
     }
+
 
 }

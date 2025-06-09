@@ -23,6 +23,7 @@ public class GerenteView {
     private final GerenteController gerenteController = new GerenteController();
     private final ProdutoController produtoController = new ProdutoController();
     private final ClienteController clienteController = new ClienteController();
+    private final ProdutoView produtoView = new ProdutoView();
 
     //Menu de Gerencia principal
     public void opcoesGerencia(){
@@ -127,7 +128,7 @@ public class GerenteView {
 
             switch (op){
                 case 0: return;
-                case 1: produtoController.listarProdutos(); break;
+                case 1: produtoView.listarProdutos(); break;
                 case 2: addProduto(); break;
                 case 3: removerProduto(); break;
                 case 4: alterarProduto(); break;
@@ -220,11 +221,13 @@ public class GerenteView {
         do{
             System.out.println("Insira o nome do produto: ");
             String nome = sc.nextLine();
+            System.out.println("Insira uma breve descrição: ");
+            String desc = sc.nextLine();
             System.out.println("Insira o preço: ");
             double valor = Double.parseDouble(sc.nextLine());
             System.out.println("Insira o estoque: ");
             int estoque = Integer.parseInt(sc.nextLine());
-            boolean result = produtoController.addProduto(nome, valor, estoque);
+            boolean result = produtoController.addProduto(nome, desc, valor, estoque);
 
             if (!result){
                 System.out.println("Erro ao cadastrar o produto");
@@ -266,8 +269,9 @@ public class GerenteView {
 
             System.out.println("Digite a opção a ser alterada: ");
             System.out.println("[1] - Nome");
-            System.out.println("[2] - Valor");
-            System.out.println("[3] - Estoque");
+            System.out.println("[2] - Descrição");
+            System.out.println("[3] - Valor");
+            System.out.println("[4] - Estoque");
             System.out.println("[0] - Sair");
             op = Integer.parseInt(sc.nextLine());
             boolean result = false;
@@ -277,18 +281,28 @@ public class GerenteView {
                     String nome = sc.nextLine();
                     result = produtoController.alterarProduto(id, op, nome);
                     break;
+
                 case 2:
+                    System.out.println("Informe uma nova descrição: ");
+                    String desc = sc.nextLine();
+                    result = produtoController.alterarProduto(id, op, desc);
+                    break;
+
+                case 3:
                     System.out.println("Informe o novo valor: ");
                     String valor = sc.nextLine();
                     result = produtoController.alterarProduto(id, op, valor);
                     break;
-                case 3:
+
+                case 4:
                     System.out.println("Informe o novo estoque: ");
                     String estoque = sc.nextLine();
                     result = produtoController.alterarProduto(id, op, estoque);
                     break;
+
                 case 0:
                     return;
+
                 default:
                     System.out.println("Entrada inválida"); break;
             }

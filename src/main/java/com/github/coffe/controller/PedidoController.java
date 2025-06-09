@@ -1,5 +1,6 @@
 package com.github.coffe.controller;
 
+import com.github.coffe.model.entidades.Gerente;
 import com.github.coffe.model.servicos.ItemPedido;
 import com.github.coffe.model.servicos.Pedido;
 import com.github.coffe.model.servicos.Produto;
@@ -13,8 +14,8 @@ import java.util.Iterator;
 public class PedidoController {
     private static final Logger log = LogManager.getLogger(PedidoController.class);
     private final ArrayList<Pedido> pedidos;
-    private ArrayList<Pedido> pendentes = new ArrayList<>();
-    private ArrayList<Pedido> validados = new ArrayList<>();
+    private final ArrayList<Pedido> pendentes = new ArrayList<>();
+    private final ArrayList<Pedido> validados = new ArrayList<>();
     private final PedidoPersistencia pedidoPersistencia;
     private final ArrayList<ItemPedido> carrinho = new ArrayList<>();
     private final ProdutoController produtoController = new ProdutoController();

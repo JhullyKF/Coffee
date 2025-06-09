@@ -4,14 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Pedido {
-    private List<ItemPedido> itens;
+    private final List<ItemPedido> itens;
     private static int proxId = 1;
     private final int id_Pedido;
-    private int idCliente;
+    private final int idCliente;
     private String status;
+    private Integer idVendedor;
 
-    public Pedido(int id_Pedido, int idCliente, String status, List<ItemPedido> itens){
+    //ler do arquivo
+    public Pedido(int id_Pedido, int idCliente, Integer idVendedor, String status, List<ItemPedido> itens){
         this.idCliente = idCliente;
+        this.idVendedor = idVendedor;
         this.itens = itens;
         this.status = status;
         this.id_Pedido = id_Pedido;
@@ -19,12 +22,13 @@ public class Pedido {
             proxId = id_Pedido + 1;
         }
     }
-
+    //criar pedido
     public Pedido(int idCliente, List<ItemPedido> itens){
         this.id_Pedido = proxId++;
         this.idCliente = idCliente;
         this.itens = itens;
         this.status = "Pendente";
+        this.idVendedor = null;
     }
 
     public int getId_Pedido(){
@@ -35,12 +39,18 @@ public class Pedido {
         return idCliente;
     }
 
+    public Integer getIdVendedor(){ return idVendedor; }
+
     public String getStatus(){
         return status;
     }
 
     public void setStatus(String status){
         this.status = status;
+    }
+
+    public void setIdVendedor(Integer idVendedor){
+        this.idVendedor = idVendedor;
     }
 
     public void exibirDados(){
@@ -70,15 +80,16 @@ public class Pedido {
     public static Pedido fromString(String linha) {
         String[] dados = linha.split(", ");
         int idPedido = Integer.parseInt(dados[0]);
-        int idCliente = Integer.parseInt(dados[1].trim());
-        String status = dados[2].trim();
+        int idCliente = Integer.parseInt(dados[1]);
+        Integer idVendedor = Integer.parseInt(dados[2]);
+        String status = dados[3];
 
         List<ItemPedido> itens = new ArrayList<>();
         String[] itensStr = dados[3].split("; ");
-        for (String itemStr : itensStr) {
-            itens.add(ItemPedido.fromString(itemStr));
+        for (String item : itensStr) {
+            itens.add(ItemPedido.fromString(item));
         }
 
-        return new Pedido(idPedido, idCliente, status, itens);
+        return new Pedido(idPedido, idCliente, idVendedor, status, itens);
     }
 }

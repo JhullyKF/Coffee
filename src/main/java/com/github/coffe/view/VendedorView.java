@@ -8,8 +8,9 @@ import java.util.Scanner;
 
 public class VendedorView {
     private final Scanner sc = new Scanner(System.in);
-    private PedidoController pedidoController = new PedidoController();
-    private VendedorController vendedorController = new VendedorController();
+    private final PedidoController pedidoController = new PedidoController();
+    private final VendedorController vendedorController = new VendedorController();
+    private final PedidoView pedidoView = new PedidoView();
 
     public void menuVendedor(){
         int op;
@@ -23,7 +24,7 @@ public class VendedorView {
             switch (op) {
                 case 0: return;
 
-                case 1: listarPedidos(); break;
+                case 1: pedidoView.mostrarTodosPedidos(); break;
 
                 case 2: processarPedido(); break;
 
@@ -34,17 +35,6 @@ public class VendedorView {
                     System.out.println("Entrada invalida! Tente novamente");
                     break;
             }
-        }
-    }
-
-    public void listarPedidos(){
-        if (pedidoController.getPedidos().isEmpty()){
-            System.out.println("Lista de pedidos vazia");
-            return;
-        }
-
-        for (Pedido p: pedidoController.getPedidos()){
-            p.exibirDados();
         }
     }
 
