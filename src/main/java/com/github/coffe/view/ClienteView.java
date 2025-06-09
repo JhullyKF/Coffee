@@ -4,6 +4,9 @@ import com.github.coffe.controller.ClienteController;
 import com.github.coffe.controller.PedidoController;
 import com.github.coffe.controller.ProdutoController;
 import com.github.coffe.model.entidades.Cliente;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Scanner;
 
 public class ClienteView {
@@ -14,6 +17,7 @@ public class ClienteView {
     private final PedidoView pedidoView = new PedidoView(pedidoController);
     private final ProdutoView pv = new ProdutoView();
     private int id, qtd;
+    private static final Logger log = LogManager.getLogger(ClienteView.class);
 
     //Menus
     public void menuClienteAcesso(){
@@ -41,13 +45,12 @@ public class ClienteView {
             System.out.println("[0] - Sair\n");
             int opc = Integer.parseInt(sc.nextLine());
             switch (opc){
-                case 1: realizarPedido();
+                case 1: realizarPedido(); break;
                 case 2:
                     System.out.println("\n============ Seus dados =============");
                     clienteController.exibirCliente();
                     break;
-                case 3: editarDados();
-                    break;
+                case 3: editarDados(); break;
                 case 4:
                     System.out.println("\nDeseja mesmo excluir sua conta?");
                     System.out.println("[1] - Sim / [2] - Não\n");
@@ -193,6 +196,10 @@ public class ClienteView {
         String email = sc.nextLine();
         System.out.println("Digite sua senha:");
         String senha = sc.nextLine();
-        return clienteController.cadastrarCliente(cpf, email, nome, senha);
+        boolean valido = clienteController.cadastrarCliente(cpf, email, nome, senha);
+        if (!valido) {
+            System.err.println("\nCadastro falhou! Verifique os dados e tente novamente.");
+        }
+        return valido;
     }
 }

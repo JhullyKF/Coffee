@@ -1,8 +1,9 @@
 package com.github.coffe.model.servicos;
 
 
+import com.github.coffe.utils.ProximoIdManager;
+
 public class Produto {
-    private static int proxId = 1;
     private final int idProduto;
     private String nome;
     private double preco;
@@ -15,13 +16,10 @@ public class Produto {
         this.preco = preco;
         this.estoque = estoque;
         this.idProduto = idProduto;
-        if (idProduto >= proxId){
-            proxId = idProduto + 1;
-        }
     }
 
-    public Produto(String nome, String descricao, double preco, int estoque){
-        this.idProduto = proxId++;
+    public Produto(String nome,String descricao, double preco, int estoque){
+        this.idProduto = ProximoIdManager.getProximoId(ProximoIdManager.produto);
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;

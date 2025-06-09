@@ -1,13 +1,14 @@
 package com.github.coffe.model.servicos;
 
+import com.github.coffe.utils.ProximoIdManager;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Pedido {
-    private final List<ItemPedido> itens;
-    private static int proxId = 1;
+    private List<ItemPedido> itens;
     private final int id_Pedido;
-    private final int idCliente;
+    private int idCliente;
     private String status;
     private Integer idVendedor;
 
@@ -18,13 +19,11 @@ public class Pedido {
         this.itens = itens;
         this.status = status;
         this.id_Pedido = id_Pedido;
-        if (id_Pedido >= proxId){
-            proxId = id_Pedido + 1;
-        }
     }
+
     //criar pedido
     public Pedido(int idCliente, List<ItemPedido> itens){
-        this.id_Pedido = proxId++;
+        this.id_Pedido = ProximoIdManager.getProximoId(ProximoIdManager.pedido);
         this.idCliente = idCliente;
         this.itens = itens;
         this.status = "Pendente";

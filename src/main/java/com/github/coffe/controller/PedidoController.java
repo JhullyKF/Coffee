@@ -39,6 +39,7 @@ public class PedidoController {
     public boolean addItem(int id, int qtd){
         Produto produto = produtoController.getProdutoPorId(id);
         if(produto == null || qtd <= 0){
+            log.warn("Tentativa de adicionar item inválido no carrinho. ProdutoID: {}, Quantidade: {}", id, qtd);
             return false;
         }
 
@@ -46,20 +47,24 @@ public class PedidoController {
             if(itemPedido.getIdProduto() == id){
                 int novaQtd = itemPedido.getQuantidade() + qtd;
                 if(novaQtd > produto.getEstoque()){
+                    log.warn("Estoque insuficiente. ProdutoID: {}, Solicitado: {}, Disponível: {}", id, novaQtd, produto.getEstoque());
                     return false;
                 }
                 itemPedido.setQuantidade(novaQtd);
+                log.info("Item adicionado ao carrinho com sucesso. ProdutoID: {}, Quantidade: {}", id, qtd);
                 return true;
             }
         }
 
         if(qtd > produto.getEstoque()){
+            log.warn("Estoque insuficiente. ProdutoID: {}, Solicitado: {}, Disponível: {}", id, qtd, produto.getEstoque());
             return false;
         }
 
         ItemPedido itemPedido = new ItemPedido(id, qtd);
         verificarProduto(itemPedido);
         carrinho.add(itemPedido);
+        log.info("Item adicionado ao carrinho com sucesso. ProdutoID: {}, Quantidade: {}", id, qtd);
         return true;
     }
 
@@ -75,14 +80,18 @@ public class PedidoController {
                 int qtdReduzida = item.getQuantidade() - qtd;
                 if (qtdReduzida == 0) {
                     iterator.remove();
+                    log.info("Item removido do carrinho. ProdutoID: {}", id);
                 } else if(qtdReduzida < 0){
+                    log.warn("Quantidade para remover item do carrinho maior que a existente. ProdutoID: {}, Atual: {}, Tentativa: {}", id, item.getQuantidade(), qtd);
                     return false;
                 } else{
+                    log.info("Quantidade do produto {} no carrinho reduzida para {}", item.getNomeItem(), qtdReduzida);
                     item.setQuantidade(qtdReduzida);
                 }
                 return true;
             }
         }
+        log.warn("Produto a ser removido não encontrado. ProdutoID: {}", id);
         return false;
     }
 
@@ -106,8 +115,10 @@ public class PedidoController {
             pedidos.add(pedido);
             pedidoPersistencia.salvarEmArquivo(pedidos);
             carrinho.clear();
+            log.info("Pedido finalizado para cliente ID {}", pedido.getIdCliente());
             return true;
         }
+        log.warn("Tentativa de finalizar pedido com carrinho vazio");
         return false;
     }
 
