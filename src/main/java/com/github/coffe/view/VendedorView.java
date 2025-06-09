@@ -31,9 +31,9 @@ public class VendedorView {
                 case 3:
                     break;
 
-                    default:
-                    System.out.println("Entrada invalida! Tente novamente");
-                    break;
+                default:
+                System.out.println("Entrada invalida! Tente novamente");
+                break;
             }
         }
     }
@@ -50,5 +50,10 @@ public class VendedorView {
         System.out.println("Informe o id do pedido: ");
         int id = Integer.parseInt(sc.nextLine());
         boolean result = vendedorController.processarPedido(id);
+        if (result){
+            System.out.println("Pedido processado com sucesso");
+            return;
+        }
+        System.out.println("Erro ao processar pedido!");
     }
 }

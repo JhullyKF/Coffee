@@ -11,14 +11,16 @@ public class Pedido {
     private int idCliente;
     private String status;
     private Integer idVendedor;
+    private String observacao;
 
     //ler do arquivo
-    public Pedido(int id_Pedido, int idCliente, Integer idVendedor, String status, List<ItemPedido> itens){
+    public Pedido(int id_Pedido, int idCliente, Integer idVendedor, String status, String observacao, List<ItemPedido> itens){
         this.idCliente = idCliente;
         this.idVendedor = idVendedor;
         this.itens = itens;
         this.status = status;
         this.id_Pedido = id_Pedido;
+        this.observacao = observacao;
     }
 
     //criar pedido
@@ -59,6 +61,14 @@ public class Pedido {
         System.out.println("Itens: " + getItens());
     }
 
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
+    }
+
     public List<ItemPedido> getItens(){
         return itens;
     }
@@ -82,6 +92,7 @@ public class Pedido {
         int idCliente = Integer.parseInt(dados[1]);
         Integer idVendedor = Integer.parseInt(dados[2]);
         String status = dados[3];
+        String observacao = dados[4];
 
         List<ItemPedido> itens = new ArrayList<>();
         String[] itensStr = dados[3].split("; ");
@@ -89,6 +100,6 @@ public class Pedido {
             itens.add(ItemPedido.fromString(item));
         }
 
-        return new Pedido(idPedido, idCliente, idVendedor, status, itens);
+        return new Pedido(idPedido, idCliente, idVendedor, status, observacao, itens);
     }
 }

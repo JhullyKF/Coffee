@@ -22,36 +22,25 @@ public class ProdutoController {
         return produtos;
     }
 
-    public boolean verificarEstoque(int id, int quantidade){
-        for(Produto p: produtos){
-            if (p.getIdProduto() == id){
-                if (quantidade <= p.getEstoque()){
-                    return true;
+
+    public Produto alterarEstoque(int id, int quantidade){
+        for (Produto p : produtos) {
+            if (p.getIdProduto() == id) {
+                if (quantidade <= p.getEstoque()) {
+                    p.setEstoque(p.getEstoque() - quantidade);
+                    produtoPersistencia.salvarEmArquivo(produtos);
+                    log.info("Estoque do produto {} atualizado com sucesso", id);
+
+                } else {
+                    log.warn("Produto sem estoque suficiente: " + id);
+                    return p;
                 }
             }
+            // Produto não encontrado
+            log.warn("Produto {} não encontrado.", id);
+            return p;
         }
-        return false;
-    }
-
-    public boolean alterarEstoque(int id, int quantidade){
-        try {
-            for (Produto p : produtos) {
-                if (p.getIdProduto() == id) {
-                    if (quantidade <= p.getEstoque()) {
-                        p.setEstoque(p.getEstoque() - quantidade);
-                        log.info("Estoque atualizado com sucesso");
-                    } else{
-                        throw new IllegalArgumentException("Produto sem estoque suficiente: " + p.getIdProduto());
-
-                    }
-                }
-            }
-            produtoPersistencia.salvarEmArquivo(produtos);
-            return true;
-        } catch (Exception e) {
-
-        }
-        return false;
+        return null;
     }
 
     public boolean addProduto(String nome, String desc, double valor, int estoque){
