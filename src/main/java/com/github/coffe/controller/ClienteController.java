@@ -89,19 +89,7 @@ public class ClienteController{
         return true;
     }
 
-    public Cliente verificarCliente(String identificador, String senha){
-        for (Cliente c : clientes) {
-            if (c.getCpf().equals(identificador) ||
-                    (c.getEmail().equals(identificador)) &&
-                            c.getSenha().equals(senha)) {
-                log.info("Login realizado pelo cliente {}", c.getNome());
-                return c;
-            }
-        }
-        log.warn("Tentativa de login mal sucedida para o usuário {}", identificador);
-        return null;
-    }
-
+    //Outros
     public boolean removerCliente(int id){
         for (Cliente c : clientes){
             if(c.getId_Cliente() == id){

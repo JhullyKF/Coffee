@@ -1,6 +1,6 @@
 package com.github.coffe.view;
 
-import com.github.coffe.controller.AutenticadorFuncionarios;
+import com.github.coffe.controller.Autenticador;
 import com.github.coffe.controller.FuncionarioController;
 import com.github.coffe.model.entidades.Funcionario;
 
@@ -9,18 +9,17 @@ import java.util.Scanner;
 public class FuncionarioView {
     private final FuncionarioController fc = new FuncionarioController();
     private final Scanner sc = new Scanner(System.in);
-    private final AutenticadorFuncionarios autenticador = new AutenticadorFuncionarios(fc.getFuncionarios());
-
+    private final Autenticador<Funcionario> autenticador = new Autenticador(fc.getFuncionarios());
 
     public void loginFuncionario(){
         int op;
         do {
-            System.out.print("Insira seu CPF: ");
-            String cpf = sc.nextLine();
+            System.out.print("Insira seu CPF ou Email: ");
+            String identificador = sc.nextLine();
             System.out.print("Insira sua senha: ");
             String senha = sc.nextLine();
 
-            if (autenticador.autenticar(cpf, senha)) {
+            if (autenticador.autenticar(identificador, senha)) {
                 return;
             }
 

@@ -1,11 +1,9 @@
 package com.github.coffe.view;
 
+import com.github.coffe.controller.Autenticador;
 import com.github.coffe.controller.ClienteController;
 import com.github.coffe.controller.PedidoController;
-import com.github.coffe.controller.ProdutoController;
 import com.github.coffe.model.entidades.Cliente;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.Scanner;
 
@@ -13,11 +11,12 @@ public class ClienteView {
     private final Scanner sc = new Scanner(System.in);
     private final ClienteController clienteController = new ClienteController();
     private final PedidoController pedidoController = new PedidoController(this.clienteController);
-    private final ProdutoController produtoController = new ProdutoController();
     private final PedidoView pedidoView = new PedidoView(pedidoController);
     private final ProdutoView pv = new ProdutoView();
+    private final ProdutoView produtoView = new ProdutoView();
+    private final Autenticador<Cliente> autenticador = new Autenticador<>(clienteController.getClientes());
+
     private int id, qtd;
-    private static final Logger log = LogManager.getLogger(ClienteView.class);
 
     //Menus
     public void menuClienteAcesso(){
@@ -116,7 +115,7 @@ public class ClienteView {
                     pedidoView.mostrarPedidosCliente();
                     break;
                 case 6:
-                    if(pv.listarProdutos()){
+                    if(produtoView.listarProdutos()){
                         break;
                     }
                     System.err.println("\nSem produtos no momento!");
@@ -169,20 +168,16 @@ public class ClienteView {
             String identificador = sc.nextLine();
             System.out.println("Senha: ");
             String senha = sc.nextLine();
-            Cliente cliente = clienteController.verificarCliente(identificador, senha);
-            if(cliente != null){
-                clienteController.logarCliente(cliente);
-                mainMenuCliente();
+            if(autenticador.autenticar(identificador, senha)){
                 return;
-            } else{
-                System.out.println("\nUsuário ou senha inválidos");
-                System.out.println("[1] - Tentar novamente");
-                System.out.println("[0] - Sair");
-                int opc = Integer.parseInt(sc.nextLine());
-                if(opc == 0) return;
-                else if (opc!=1){
-                    System.out.println("\nEntrada inválida! Tente novamente");
-                }
+            }
+            System.out.println("\nUsuário ou senha inválidos");
+            System.out.println("[1] - Tentar novamente");
+            System.out.println("[0] - Sair");
+            int opc = Integer.parseInt(sc.nextLine());
+            if(opc == 0) return;
+            else if (opc!=1){
+                System.out.println("\nEntrada inválida! Tente novamente");
             }
         }while(true);
     }
