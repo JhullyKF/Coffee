@@ -55,14 +55,7 @@ public class GerenteView {
     public void gerenciarFuncionarios(){
         int op;
         while (true) {
-            for (int i = 0; i<3; i++) {
-                System.out.println(".");
-                try{
-                    sleep(200);
-                } catch (InterruptedException e){
-                    log.error("Delay com erro: ", e);
-                }
-            }
+            apresenta();
 
             System.out.println("==== Selecione uma opção: =====");
             System.out.println("[1] - Listar funcionario");
@@ -87,14 +80,7 @@ public class GerenteView {
     public void gerenciarClientes() {
         int op;
         while (true) {
-            for (int i = 0; i<3; i++) {
-                System.out.println(".");
-                try{
-                    sleep(200);
-                } catch (InterruptedException e){
-                    log.error("Delay com erro: ", e);
-                }
-            }
+            apresenta();
 
             System.out.println("==== Selecione uma opção: =====");
             System.out.println("[1] - Listar clientes");            //ok
@@ -104,7 +90,7 @@ public class GerenteView {
 
             switch (op){
                 case 0: return;
-                case 1: listarClientes(); break;
+                case 1: clienteController.listarClientes(); break;
                 case 2: removerCliente(); break;
                 default:
                     System.out.println("Entrada inválida, tente novamente!");
@@ -115,20 +101,12 @@ public class GerenteView {
     public void gerenciarProdutos(){
         int op;
         while (true){
-            for (int i = 0; i<3; i++) {
-                System.out.println(".");
-                try{
-                    sleep(200);
-                } catch (InterruptedException e){
-                    log.error("Delay com erro: ", e);
-                }
-            }
-
+            apresenta();
             System.out.println("==== Selecione uma opção: =====");
-            System.out.println("[1] - Listar produtos");      //ok
-            System.out.println("[2] - Cadastrar produto");    //ok
-            System.out.println("[3] - Excluir produto");     //ok
-            System.out.println("[4] - Alterar produtos");        //ok
+            System.out.println("[1] - Listar produtos");
+            System.out.println("[2] - Cadastrar produto");
+            System.out.println("[3] - Excluir produto");
+            System.out.println("[4] - Alterar produtos");
             System.out.println("[0] - Voltar");
             op = Integer.parseInt(sc.nextLine());
 
@@ -146,7 +124,7 @@ public class GerenteView {
 
     //Funções de gerenciar funcionarios
     public void cadastrarVendedor(){
-        //inserir verificação de email e cpf
+        apresenta();
         System.out.println("Informe o nome do novo funcionário: ");
         String nome = sc.nextLine();
         System.out.println("Insira o CPF: ");
@@ -163,16 +141,21 @@ public class GerenteView {
     }
 
     public void demitirFuncionario(){
-        boolean result = false;
+        apresenta();
+        boolean result;
         System.out.println("Insira o ID do funcionário para desligamento: ");
         int id = Integer.parseInt(sc.nextLine());
-        Funcionario f = funcionarioController.buscaFuncionario(id);
-
-        f.exibirDados();
+        Vendedor v = (Vendedor) funcionarioController.buscaFuncionario(id);
+        if (v==null){
+            System.out.println("Erro ao buscar funcionario");
+            return;
+        }
+        v.exibirDados();
         System.out.println("Deseja confirmar a demissão? ");
         System.out.println("[1] - sim / [2] - não");
+
         switch (Integer.parseInt(sc.nextLine())){
-            case 1:  result = gerenteController.demitirFuncionario(f); break;
+            case 1:  result = gerenteController.demitirFuncionario(v); break;
             case 2:
                 System.out.println("Cancelando..."); return;
             default:
@@ -187,13 +170,17 @@ public class GerenteView {
     }
 
     public void alterarSalario(){
+        apresenta();
         boolean result = false;
         System.out.println("Insira o id do funcionario para alteração: ");
         int id = Integer.parseInt(sc.nextLine());
 
-        Funcionario f = funcionarioController.buscaFuncionario(id);
+        Vendedor f = (Vendedor) funcionarioController.buscaFuncionario(id);
+        if (f == null){
+            System.out.println("Erro ao buscar funcionario");
+            return;
+        }
 
-        System.out.println("====== Dados do funcionário: =======");
         f.exibirDados();
         System.out.println("Informe o novo salário: ");
         double salario = sc.nextDouble();
@@ -215,6 +202,7 @@ public class GerenteView {
     //Funções de gerenciar produtos
 
     public void addProduto(){
+        apresenta();
         int op;
         do{
             System.out.println("Insira o nome do produto: ");
@@ -240,6 +228,7 @@ public class GerenteView {
     }
 
     public void removerProduto(){
+        apresenta();
         int op;
         do {
             System.out.println("Insira o ID do produto: ");
@@ -260,6 +249,7 @@ public class GerenteView {
     }
 
     public void alterarProduto(){
+        apresenta();
         int op;
         do {
             System.out.println("Insira o ID do produto: ");
@@ -316,11 +306,7 @@ public class GerenteView {
     }
 
     //Funções de gerenciar clientes
-    public void listarClientes(){
-        for(Cliente c: clienteController.getClientes()){
-            c.exibirDadosGerencia();
-        }
-    }
+
 
     public void removerCliente(){
         int op;
@@ -340,5 +326,16 @@ public class GerenteView {
 
         } while(op!=0);
         System.out.println("Encerrando processo...");
+    }
+
+    public void apresenta(){
+        for (int i = 0; i<3; i++) {
+            System.out.println(".");
+            try{
+                sleep(200);
+            } catch (InterruptedException e){
+                log.error("Delay com erro: ", e);
+            }
+        }
     }
 }

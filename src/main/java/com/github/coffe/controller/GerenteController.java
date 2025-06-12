@@ -13,6 +13,7 @@ public class GerenteController {
     private Gerente gerente;
     private final Validador validador = new Validador();
 
+
     public void loginGerente(Funcionario gerente){
         this.gerente = (Gerente) gerente;
         this.gerente.setTotalVendas(totalVendas());
@@ -42,15 +43,15 @@ public class GerenteController {
         return false;
     }
 
-    public boolean demitirFuncionario(Funcionario f){
-        fc.getFuncionarios().remove(f);
+    public boolean demitirFuncionario(Vendedor v){
+        fc.getFuncionarios().remove(v);
         fc.getFuncionarioPersistencia().salvarEmArquivo(fc.getFuncionarios());
-
-        if(!fc.getFuncionarios().contains(f)) {
-            log.info("Gerente {} demitiu funcionario {} com sucesso", gerente.getNome(), f.getIdFuncionario());
+        if(!fc.getFuncionarios().contains(v)) {
+            log.info("Gerente {} demitiu funcionario {} com sucesso", gerente.getNome(), v.getIdFuncionario());
+            fc.atualizarListaFuncionarios();
             return true;
         }
-        log.warn("Erro ao demitir funcionario {} ID : {}", f.getNome(), f.getIdFuncionario());
+        log.warn("Erro ao demitir funcionario {} ID : {}", v.getNome(), v.getIdFuncionario());
         return false;
     }
 

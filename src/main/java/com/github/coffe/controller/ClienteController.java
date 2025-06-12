@@ -104,4 +104,10 @@ public class ClienteController{
         log.warn("Erro ao remover usuário, ID inválido");
         return false;
     }
+
+    public void listarClientes(){
+        for(Cliente c: clientes){
+            c.exibirDadosGerencia();
+        }
+    }
 }
