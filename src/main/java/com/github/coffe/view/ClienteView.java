@@ -9,14 +9,23 @@ import java.util.Scanner;
 
 public class ClienteView {
     private final Scanner sc = new Scanner(System.in);
-    private final ClienteController clienteController = new ClienteController();
-    private final PedidoController pedidoController = new PedidoController(this.clienteController);
-    private final PedidoView pedidoView = new PedidoView(pedidoController);
+    private ClienteController clienteController = new ClienteController();
+    private PedidoController pedidoController;
+    private PedidoView pedidoView;
     private final ProdutoView pv = new ProdutoView();
     private final ProdutoView produtoView = new ProdutoView();
     private final Autenticador<Cliente> autenticador = new Autenticador<>(clienteController.getClientes());
 
     private int id, qtd;
+
+    public ClienteView(ClienteController clienteController) {
+        this.clienteController = clienteController;
+        PedidoController pedidoController = new PedidoController(clienteController);
+        this.pedidoView = new PedidoView(pedidoController);
+    }
+
+    public ClienteView() {
+    }
 
     //Menus
     public void menuClienteAcesso(){

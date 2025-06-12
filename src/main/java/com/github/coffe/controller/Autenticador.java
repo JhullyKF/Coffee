@@ -49,7 +49,7 @@ public class Autenticador<T extends Identificavel>{
         } else if(obj instanceof Cliente) {
             ClienteController clienteController = new ClienteController();
             clienteController.logarCliente((Cliente) obj);
-            ClienteView clienteView = new ClienteView();
+            ClienteView clienteView = new ClienteView(clienteController);
             clienteView.mainMenuCliente();
             return;
         }

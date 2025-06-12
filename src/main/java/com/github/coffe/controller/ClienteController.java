@@ -36,6 +36,7 @@ public class ClienteController{
             case "nome":
                 log.info("Nome do cliente <{}> atualizado de \"{}\" para \"{}\"", usuario.getId_Cliente(), usuario.getNome(), dadoAtualizado);
                 usuario.setNome(dadoAtualizado);
+                clientePersistencia.salvarEmArquivo(clientes);
                 break;
             case "email":
                 if (!validador.validarEmail(dadoAtualizado) || validador.emailExistente(clientes, dadoAtualizado)) {
@@ -45,10 +46,12 @@ public class ClienteController{
                 }
                 log.info("Email do cliente <{}> atualizado de \"{}\" para \"{}\"", usuario.getId_Cliente(), usuario.getEmail(), dadoAtualizado);
                 usuario.setEmail(dadoAtualizado);
+                clientePersistencia.salvarEmArquivo(clientes);
                 break;
             case "senha":
                 log.info("Senha do cliente <{}> atualizado de \"{}\" para \"{}\"", usuario.getId_Cliente(), usuario.getSenha(), dadoAtualizado);
                 usuario.setSenha(dadoAtualizado);
+                clientePersistencia.salvarEmArquivo(clientes);
                 break;
         }
         if(valido){
