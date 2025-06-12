@@ -28,7 +28,7 @@ public class VendedorController {
 
     public void exibirDados(){
         fc.atualizarListaFuncionarios();
-        vendedor = buscaFuncionario(vendedor.getIdFuncionario());
+        vendedor = (Vendedor) fc.buscaFuncionario(vendedor.getIdFuncionario());
 
         System.out.println("+----------------------+----------------------+");
         System.out.printf ("| %-20s | %-20s |\n", "Campo", "Valor");
@@ -43,7 +43,7 @@ public class VendedorController {
     }
 
     public boolean editarDados(int op, String campo){
-        Vendedor v = buscaFuncionario(vendedor.getIdFuncionario());
+        Vendedor v = (Vendedor) fc.buscaFuncionario(vendedor.getIdFuncionario());
         if (v == null){
             throw new IllegalArgumentException("Não foi possivel achar o funcionario na base de dados");
         }
@@ -90,7 +90,7 @@ public class VendedorController {
         pedido.setStatus("Processado");
         pedido.setIdVendedor(vendedor.getIdFuncionario());
 
-        Vendedor v = buscaFuncionario(vendedor.getIdFuncionario());
+        Vendedor v = (Vendedor) fc.buscaFuncionario(vendedor.getIdFuncionario());
         v.setTotalVendas(v.getTotalVendas() + 1);
 
         pedidoController.getPedidoPersistencia().salvarEmArquivo(pedidoController.getPedidos());
@@ -103,13 +103,6 @@ public class VendedorController {
         return false;
     }
 
-    public Vendedor buscaFuncionario(int id){
-        for(Funcionario f: fc.getFuncionarios()){
-            if (id == f.getIdFuncionario()){
-                return (Vendedor) f;
-            }
-        }
-        return null;
-    }
+
 }
 

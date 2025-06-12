@@ -31,6 +31,7 @@ public class FuncionarioView {
     }
 
     public void listarFuncionarios(){
+        fc.atualizarListaFuncionarios();
         for(Funcionario f: fc.getFuncionarios()){
             f.exibirDados();
         }

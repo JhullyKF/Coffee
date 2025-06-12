@@ -20,9 +20,10 @@ public class GerenteController {
 
     public int totalVendas(){
         int qtdVendas=0;
-        for(Funcionario f: fc.getFuncionarios()){
-            Vendedor v = (Vendedor) f;
-            qtdVendas += v.getTotalVendas();
+        for(Funcionario f: fc.getFuncionarios()) {
+            if (f instanceof Vendedor){
+                qtdVendas += ((Vendedor) f).getTotalVendas();
+            }
         }
         return qtdVendas;
     }

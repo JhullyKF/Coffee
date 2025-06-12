@@ -4,7 +4,7 @@ import com.github.coffe.controller.ProdutoController;
 import com.github.coffe.model.servicos.Produto;
 
 public class ProdutoView {
-    private ProdutoController pc = new ProdutoController();
+    private final ProdutoController pc = new ProdutoController();
 
     public boolean listarProdutos(){
         if(!pc.getProdutos().isEmpty()) {

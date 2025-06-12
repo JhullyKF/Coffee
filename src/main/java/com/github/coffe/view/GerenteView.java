@@ -166,20 +166,19 @@ public class GerenteView {
         boolean result = false;
         System.out.println("Insira o ID do funcionário para desligamento: ");
         int id = Integer.parseInt(sc.nextLine());
-        for(Funcionario f: funcionarioController.getFuncionarios()){
-            if(f.getIdFuncionario() == id){
-                f.exibirDados();
-                System.out.println("Deseja confirmar a demissão? ");
-                System.out.println("[1] - sim / [2] - não");
-                switch (Integer.parseInt(sc.nextLine())){
-                    case 1:  result = gerenteController.demitirFuncionario(f); break;
-                    case 2:
-                        System.out.println("Cancelando..."); return;
-                    default:
-                        System.out.println("Entrada inválida!"); return;
-                }
-            }
+        Funcionario f = funcionarioController.buscaFuncionario(id);
+
+        f.exibirDados();
+        System.out.println("Deseja confirmar a demissão? ");
+        System.out.println("[1] - sim / [2] - não");
+        switch (Integer.parseInt(sc.nextLine())){
+            case 1:  result = gerenteController.demitirFuncionario(f); break;
+            case 2:
+                System.out.println("Cancelando..."); return;
+            default:
+                System.out.println("Entrada inválida!"); return;
         }
+
         if (result) {
             System.out.println("Funcionario demitido com sucesso");
             return;
@@ -191,22 +190,21 @@ public class GerenteView {
         boolean result = false;
         System.out.println("Insira o id do funcionario para alteração: ");
         int id = Integer.parseInt(sc.nextLine());
-        for(Funcionario f: funcionarioController.getFuncionarios()){
-            if(f.getIdFuncionario() == id){
-                System.out.println("====== Dados do funcionário: =======");
-                f.exibirDados();
-                System.out.println("Informe o novo salário: ");
-                double salario = sc.nextDouble();
-                System.out.println("Deseja confirmar a alteração? ");
-                System.out.println("[1] - sim / [2] - não");
-                switch (Integer.parseInt(sc.nextLine())){
-                    case 1: result = gerenteController.alterarSalario(f, salario); break;
-                    case 2:
-                        System.out.println("Cancelando..."); break;
-                    default:
-                        System.out.println("Entrada inválida!"); break;
-                }
-            }
+
+        Funcionario f = funcionarioController.buscaFuncionario(id);
+
+        System.out.println("====== Dados do funcionário: =======");
+        f.exibirDados();
+        System.out.println("Informe o novo salário: ");
+        double salario = sc.nextDouble();
+        System.out.println("Deseja confirmar a alteração? ");
+        System.out.println("[1] - sim / [2] - não");
+        switch (Integer.parseInt(sc.nextLine())){
+            case 1: result = gerenteController.alterarSalario(f, salario); break;
+            case 2:
+                System.out.println("Cancelando..."); break;
+            default:
+                System.out.println("Entrada inválida!"); break;
         }
         if (result)
             System.out.println("Salario alterado com sucesso");
