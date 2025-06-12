@@ -30,6 +30,7 @@ public class PedidoView {
     }
 
     public void mostrarPedidosPendentes(){
+        pedidoController.carregarStatusPedidos();
         ArrayList<Pedido> pendentes = pedidoController.getPedidosPendentes();
         if(pendentes.isEmpty()) {
             System.out.println("\nNenhum pedido pendente encontrado!");

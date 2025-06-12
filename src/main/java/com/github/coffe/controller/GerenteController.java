@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 
 public class GerenteController {
     private static final Logger log = LogManager.getLogger(GerenteController.class);
-    private FuncionarioController fc = new FuncionarioController();
+    private final FuncionarioController fc = new FuncionarioController();
     private Gerente gerente;
     private final Validador validador = new Validador();
 

@@ -7,7 +7,6 @@ import com.github.coffe.controller.ProdutoController;
 import com.github.coffe.model.entidades.Cliente;
 import com.github.coffe.model.entidades.Funcionario;
 import com.github.coffe.model.entidades.Vendedor;
-import com.github.coffe.model.servicos.Produto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,24 +18,28 @@ public class GerenteView {
     private static final Logger log = LogManager.getLogger(GerenteView.class);
 
     private final Scanner sc = new Scanner(System.in);
-    private final FuncionarioController funcionarioController = new FuncionarioController();
+    private final FuncionarioController funcionarioController;
+    private final FuncionarioView funcionarioView = new FuncionarioView();
     private final GerenteController gerenteController;
-    private final ProdutoController produtoController = new ProdutoController();
-    private final ClienteController clienteController = new ClienteController();
+    private final ProdutoController produtoController;
+    private final ClienteController clienteController;
     private final ProdutoView produtoView = new ProdutoView();
 
-    public GerenteView(GerenteController gc){
-        gerenteController = gc;
+    public GerenteView(GerenteController gerenteController){
+        this.gerenteController = gerenteController;
+        funcionarioController = new FuncionarioController();
+        produtoController = new ProdutoController();
+        clienteController = new ClienteController();
     }
     //Menu de Gerencia principal
     public void opcoesGerencia(){
         int op;
         while(true){
             System.out.println("======  Selecione uma opção:  =======");
-            System.out.println("[1] - Gerenciar funcionarios"); //ok
-            System.out.println("[2] - Gerenciar clientes");     //ok
-            System.out.println("[3] - Gerenciar produtos");     //ok
-            System.out.println("[0] - voltar");                 //ok
+            System.out.println("[1] - Gerenciar funcionarios");
+            System.out.println("[2] - Gerenciar clientes");
+            System.out.println("[3] - Gerenciar produtos");
+            System.out.println("[0] - voltar");
             op = Integer.parseInt(sc.nextLine());
             switch (op){
                 case 0: return;
@@ -62,16 +65,16 @@ public class GerenteView {
             }
 
             System.out.println("==== Selecione uma opção: =====");
-            System.out.println("[1] - Listar funcionario");          //ok
-            System.out.println("[2] - Cadastrar novo vendedor");     //ok
-            System.out.println("[3] - Demitir funcionario");         //ok
-            System.out.println("[4] - Alterar salários");            //ok
-            System.out.println("[0] - Voltar");                      //ok
+            System.out.println("[1] - Listar funcionario");
+            System.out.println("[2] - Cadastrar novo vendedor");
+            System.out.println("[3] - Demitir funcionario");
+            System.out.println("[4] - Alterar salários");
+            System.out.println("[0] - Voltar");
             op = Integer.parseInt(sc.nextLine());
 
             switch (op){
                 case 0: return;
-                case 1: listarFuncionarios(); break;
+                case 1: funcionarioView.listarFuncionarios(); break;
                 case 2: cadastrarVendedor(); break;
                 case 3: demitirFuncionario(); break;
                 case 4: alterarSalario(); break;
@@ -82,7 +85,7 @@ public class GerenteView {
     }
 
     public void gerenciarClientes() {
-        int op = 1;
+        int op;
         while (true) {
             for (int i = 0; i<3; i++) {
                 System.out.println(".");
@@ -142,13 +145,8 @@ public class GerenteView {
     }
 
     //Funções de gerenciar funcionarios
-    public void listarFuncionarios(){
-        for(Funcionario f: funcionarioController.getFuncionarios()){
-            f.exibirDados();
-        }
-    }
-
     public void cadastrarVendedor(){
+        //inserir verificação de email e cpf
         System.out.println("Informe o nome do novo funcionário: ");
         String nome = sc.nextLine();
         System.out.println("Insira o CPF: ");
@@ -170,7 +168,6 @@ public class GerenteView {
         int id = Integer.parseInt(sc.nextLine());
         for(Funcionario f: funcionarioController.getFuncionarios()){
             if(f.getIdFuncionario() == id){
-                System.out.println("====== Dados do funcionário: =======");
                 f.exibirDados();
                 System.out.println("Deseja confirmar a demissão? ");
                 System.out.println("[1] - sim / [2] - não");
@@ -220,7 +217,7 @@ public class GerenteView {
     //Funções de gerenciar produtos
 
     public void addProduto(){
-        int op = 1;
+        int op;
         do{
             System.out.println("Insira o nome do produto: ");
             String nome = sc.nextLine();
@@ -245,7 +242,7 @@ public class GerenteView {
     }
 
     public void removerProduto(){
-        int op = 1;
+        int op;
         do {
             System.out.println("Insira o ID do produto: ");
             int id = Integer.parseInt(sc.nextLine());
@@ -265,7 +262,7 @@ public class GerenteView {
     }
 
     public void alterarProduto(){
-        int op = 1;
+        int op;
         do {
             System.out.println("Insira o ID do produto: ");
             int id = Integer.parseInt(sc.nextLine());
@@ -328,7 +325,7 @@ public class GerenteView {
     }
 
     public void removerCliente(){
-        int op = 1;
+        int op;
         do {
             System.out.println("Insira o ID do cliente: ");
             int id = Integer.parseInt(sc.nextLine());

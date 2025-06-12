@@ -2,6 +2,7 @@ package com.github.coffe.view;
 
 import com.github.coffe.controller.AutenticadorFuncionarios;
 import com.github.coffe.controller.FuncionarioController;
+import com.github.coffe.model.entidades.Funcionario;
 
 import java.util.Scanner;
 
@@ -28,4 +29,12 @@ public class FuncionarioView {
             op = Integer.parseInt(sc.nextLine());
         } while (op !=0);
     }
+
+    public void listarFuncionarios(){
+        for(Funcionario f: fc.getFuncionarios()){
+            f.exibirDados();
+        }
+    }
 }
+
+

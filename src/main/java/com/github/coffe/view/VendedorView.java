@@ -1,9 +1,6 @@
 package com.github.coffe.view;
 
-import com.github.coffe.controller.PedidoController;
 import com.github.coffe.controller.VendedorController;
-
-import com.github.coffe.model.servicos.Pedido;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,7 +11,6 @@ import static java.lang.Thread.sleep;
 public class VendedorView {
     private static final Logger log = LogManager.getLogger(VendedorView.class);
     private final Scanner sc = new Scanner(System.in);
-    private final PedidoController pedidoController = new PedidoController();
     private final VendedorController vc;
     private final PedidoView pedidoView = new PedidoView();
 
@@ -56,18 +52,12 @@ public class VendedorView {
                 log.error("e: ", e);
             }
         }
-        pedidoController.carregarStatusPedidos();
-        if (pedidoController.getPedidosPendentes().isEmpty()){
-            System.out.println("Lista de pedidos vazia");
-            return;
-        }
-        for(Pedido p: pedidoController.getPedidosPendentes()){
-            p.exibirDados();
-        }
+        pedidoView.mostrarPedidosPendentes();
 
-        System.out.println("\n\nInforme o id do pedido: ");
+        System.out.println("\n↳ Informe o id do pedido: ");
         int id = Integer.parseInt(sc.nextLine());
         boolean result = vc.processarPedido(id);
+
         if (result){
             System.out.println("Pedido processado com sucesso");
             return;
@@ -81,7 +71,7 @@ public class VendedorView {
             for (int i = 0; i < 3; i++) {
                 System.out.println(".");
                 try {
-                    sleep(200);
+                    sleep(150);
                 } catch (InterruptedException e) {
                     log.error("e: ", e);
                 }
