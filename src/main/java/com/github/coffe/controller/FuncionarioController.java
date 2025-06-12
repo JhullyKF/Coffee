@@ -27,15 +27,4 @@ public class FuncionarioController {
     public ArrayList<Funcionario> getFuncionarios(){
         return new ArrayList<>(funcionarios);
     }
-
-    public Funcionario verificaLogin(String cpf, String senha){
-        for(Funcionario f: funcionarios){
-            if(f.getCpf().equals(cpf) && f.getSenha().equals(senha.trim())){
-                log.info("Login de <{}> realizado com sucesso.", f.getNome());
-                return f;
-            }
-        }
-        log.warn("Tentativa de login mal sucedida para o usuário {}, senha: {}", cpf, senha);
-        return null;
-    }
 }

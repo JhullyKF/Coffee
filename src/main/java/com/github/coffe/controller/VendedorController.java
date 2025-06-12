@@ -23,6 +23,7 @@ public class VendedorController {
 
     public void loginVendedor(Funcionario vendedor){
         this.vendedor = (Vendedor) vendedor;
+        log.info("Vendedor {} logado com sucesso", vendedor.getIdFuncionario());
     }
 
     public void exibirDados(){

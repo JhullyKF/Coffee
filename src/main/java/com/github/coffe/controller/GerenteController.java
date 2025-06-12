@@ -9,20 +9,22 @@ import org.apache.logging.log4j.Logger;
 
 public class GerenteController {
     private static final Logger log = LogManager.getLogger(GerenteController.class);
-    private final FuncionarioController fc;
+    private FuncionarioController fc = new FuncionarioController();
     private Gerente gerente;
     private final Validador validador = new Validador();
 
-    public GerenteController(){
-        fc = new FuncionarioController();
+    public void loginGerente(Funcionario gerente){
+        this.gerente = (Gerente) gerente;
+        this.gerente.setTotalVendas(totalVendas());
     }
-    public int getTotalVendas(){
-        PedidoController pc = new PedidoController();
-        return pc.getPedidosValidados().size();
-    }
-    public void loginGerente(Gerente gerente){
-        this.gerente = gerente;
-        this.gerente.setTotalVendas(getTotalVendas());
+
+    public int totalVendas(){
+        int qtdVendas=0;
+        for(Funcionario f: fc.getFuncionarios()){
+            Vendedor v = (Vendedor) f;
+            qtdVendas += v.getTotalVendas();
+        }
+        return qtdVendas;
     }
 
     public boolean cadastrarVendedor(Vendedor v){

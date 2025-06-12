@@ -29,7 +29,7 @@ public class VendedorView {
             System.out.println("[1] - Listar pedidos");
             System.out.println("[2] - Processar pedidos");
             System.out.println("[3] - Minha conta");
-            System.out.println("[0] - voltar");                 //ok
+            System.out.println("[0] - voltar");
             op = Integer.parseInt(sc.nextLine());
             switch (op) {
                 case 0: return;
@@ -102,46 +102,47 @@ public class VendedorView {
                     break;
 
                 case 2:
-
-                    boolean result;
                     System.out.println("Selecione uma opção para editar: ");
                     System.out.println("[0] - Voltar");
                     System.out.println("[1] - Editar email");
                     System.out.println("[2] - Editar senha");
-                    int editar = Integer.parseInt(sc.nextLine());
-
-                    switch (editar) {
-                        case 0:
-                            return;
-
-                        case 1:
-                            System.out.println("Insira o novo email: ");
-                            String email = sc.nextLine();
-                            result = vc.editarDados(editar, email);
-                            if (result){
-                                System.out.println("Email editado com sucesso");
-                                return;
-                            }
-                            break;
-
-                        case 2:
-                            System.out.println("Insira a nova senha: ");
-                            String senha = sc.nextLine();
-                            result = vc.editarDados(editar, senha);
-                            if (result){
-                                System.out.println("Senha editada com sucesso");
-                                return;
-                            }
-                            break;
-
-                        default:
-                            System.out.println("Entrada inválida!"); break;
-                    }
+                    editarDados(Integer.parseInt(sc.nextLine()));
                     break;
 
                 default:
                     System.out.println("Entrada inválida!"); break;
             }
+        }
+    }
+
+    public void editarDados(int editar){
+        boolean result;
+        switch (editar) {
+            case 0:
+                return;
+
+            case 1:
+                System.out.println("Insira o novo email: ");
+                String email = sc.nextLine();
+                result = vc.editarDados(editar, email);
+                if (result){
+                    System.out.println("Email editado com sucesso");
+                    return;
+                }
+                break;
+
+            case 2:
+                System.out.println("Insira a nova senha: ");
+                String senha = sc.nextLine();
+                result = vc.editarDados(editar, senha);
+                if (result){
+                    System.out.println("Senha editada com sucesso");
+                    return;
+                }
+                break;
+
+            default:
+                System.out.println("Entrada inválida!"); break;
         }
     }
 }

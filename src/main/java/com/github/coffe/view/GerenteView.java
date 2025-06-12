@@ -20,11 +20,14 @@ public class GerenteView {
 
     private final Scanner sc = new Scanner(System.in);
     private final FuncionarioController funcionarioController = new FuncionarioController();
-    private final GerenteController gerenteController = new GerenteController();
+    private final GerenteController gerenteController;
     private final ProdutoController produtoController = new ProdutoController();
     private final ClienteController clienteController = new ClienteController();
     private final ProdutoView produtoView = new ProdutoView();
 
+    public GerenteView(GerenteController gc){
+        gerenteController = gc;
+    }
     //Menu de Gerencia principal
     public void opcoesGerencia(){
         int op;
