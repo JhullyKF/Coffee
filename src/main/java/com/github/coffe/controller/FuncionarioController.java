@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class FuncionarioController {
     private static final Logger log = LogManager.getLogger(FuncionarioController.class);
-    private final ArrayList<Funcionario> funcionarios;
+    private ArrayList<Funcionario> funcionarios = new ArrayList<>();
     private final FuncionarioPersistencia funcionarioPersistencia;
 
     public FuncionarioController(){
@@ -20,8 +20,12 @@ public class FuncionarioController {
         return funcionarioPersistencia;
     }
 
+    public void atualizarListaFuncionarios(){
+        funcionarios = funcionarioPersistencia.carregarDoArquivo();
+    }
+
     public ArrayList<Funcionario> getFuncionarios(){
-        return funcionarios;
+        return new ArrayList<>(funcionarios);
     }
 
     public Funcionario verificaLogin(String cpf, String senha){

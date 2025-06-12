@@ -1,27 +1,25 @@
 package com.github.coffe.view;
 
-import com.github.coffe.controller.FuncionarioController;
 import com.github.coffe.controller.PedidoController;
 import com.github.coffe.controller.VendedorController;
-import com.github.coffe.model.entidades.Funcionario;
-import com.github.coffe.model.entidades.Vendedor;
+
 import com.github.coffe.model.servicos.Pedido;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Scanner;
 
 import static java.lang.Thread.sleep;
 
 public class VendedorView {
+    private static final Logger log = LogManager.getLogger(VendedorView.class);
     private final Scanner sc = new Scanner(System.in);
     private final PedidoController pedidoController = new PedidoController();
     private final VendedorController vc;
     private final PedidoView pedidoView = new PedidoView();
-    private final FuncionarioController fc;
 
     public VendedorView(VendedorController vc) {
         this.vc = vc;
-        //vc.loginVendedor(vendedor);
-        fc = new FuncionarioController();
     }
 
     public void menuVendedor(){
@@ -55,14 +53,15 @@ public class VendedorView {
             try {
                 sleep(200);
             } catch (InterruptedException e) {
-                System.out.println(e);
+                log.error("e: ", e);
             }
         }
-        if (pedidoController.getPedidos().isEmpty()){
+        pedidoController.carregarStatusPedidos();
+        if (pedidoController.getPedidosPendentes().isEmpty()){
             System.out.println("Lista de pedidos vazia");
             return;
         }
-        for(Pedido p: pedidoController.getPendentes()){
+        for(Pedido p: pedidoController.getPedidosPendentes()){
             p.exibirDados();
         }
 
@@ -77,14 +76,14 @@ public class VendedorView {
     }
 
     public void menuConta() {
-        int op = 1;
+        int op;
         while (true) {
             for (int i = 0; i < 3; i++) {
                 System.out.println(".");
                 try {
                     sleep(200);
                 } catch (InterruptedException e) {
-                    System.out.println(e);
+                    log.error("e: ", e);
                 }
             }
 
@@ -104,7 +103,7 @@ public class VendedorView {
 
                 case 2:
 
-                    boolean result = false;
+                    boolean result;
                     System.out.println("Selecione uma opção para editar: ");
                     System.out.println("[0] - Voltar");
                     System.out.println("[1] - Editar email");
@@ -123,7 +122,6 @@ public class VendedorView {
                                 System.out.println("Email editado com sucesso");
                                 return;
                             }
-                            System.out.println(result);
                             break;
 
                         case 2:
@@ -134,7 +132,6 @@ public class VendedorView {
                                 System.out.println("Senha editada com sucesso");
                                 return;
                             }
-                            System.out.println(result);
                             break;
 
                         default:

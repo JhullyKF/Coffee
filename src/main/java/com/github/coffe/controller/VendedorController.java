@@ -8,14 +8,11 @@ import com.github.coffe.model.servicos.Produto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
-
 public class VendedorController {
     private static final Logger log = LogManager.getLogger(VendedorController.class);
     private final PedidoController pedidoController;
     private final ProdutoController produtoController;
     private Vendedor vendedor;
-    private final ArrayList<Pedido> totalVendas = new ArrayList<>();
     private final FuncionarioController fc;
 
     public VendedorController() {
@@ -24,118 +21,94 @@ public class VendedorController {
         fc = new FuncionarioController();
     }
 
-    public ArrayList<Pedido> getTotalVendas(){
-        try {
-            if (vendedor == null) {
-                log.warn("Vendedor não carregado");
-                throw new IllegalArgumentException("vendedor nulo.");
-            } else {
-                totalVendas.clear();
-
-                for (Pedido p : pedidoController.getPedidos()) {
-                    Integer idVendedor = p.getIdVendedor();
-                    if (idVendedor != null && idVendedor.equals(vendedor.getIdFuncionario())) {
-                        totalVendas.add(p);
-                    }
-                }
-
-                log.info("Total de vendas do vendedor {} carregadas com sucesso", vendedor.getTotalVendas());
-                return totalVendas;
-            }
-        } catch (Exception e) {
-            log.warn("Erro ao carregar total de vendas do vendedor {}: {}",
-                    (vendedor != null ? vendedor.getIdFuncionario() : "desconhecido"), e.getMessage());
-        }
-        return null;
-    }
-
     public void loginVendedor(Funcionario vendedor){
         this.vendedor = (Vendedor) vendedor;
-        if(getTotalVendas()!=null){
-            this.vendedor.setTotalVendas(getTotalVendas().size());
-        }
     }
 
     public void exibirDados(){
-            System.out.println("+----------------------+----------------------+");
-            System.out.printf ("| %-20s | %-20s |\n", "Campo", "Valor");
-            System.out.println("+----------------------+----------------------+");
-            System.out.printf ("| %-20s | %-20s |\n", "ID", vendedor.getIdFuncionario());
-            System.out.printf ("| %-20s | %-20s |\n", "Nome", vendedor.getNome());
-            System.out.printf ("| %-20s | %-20s |\n", "Email", vendedor.getEmail());
-            System.out.printf ("| %-20s | %-20s |\n", "CPF", vendedor.getCpf());
-            System.out.printf ("| %-20s | %-20s |\n", "Senha", vendedor.getSenha());
-            System.out.printf ("| %-20s | %-20d |\n", "Vendas", vendedor.getTotalVendas());
-            System.out.println("+----------------------+----------------------+");
+        fc.atualizarListaFuncionarios();
+        vendedor = buscaFuncionario(vendedor.getIdFuncionario());
+
+        System.out.println("+----------------------+----------------------+");
+        System.out.printf ("| %-20s | %-20s |\n", "Campo", "Valor");
+        System.out.println("+----------------------+----------------------+");
+        System.out.printf ("| %-20s | %-20s |\n", "ID", vendedor.getIdFuncionario());
+        System.out.printf ("| %-20s | %-20s |\n", "Nome", vendedor.getNome());
+        System.out.printf ("| %-20s | %-20s |\n", "Email", vendedor.getEmail());
+        System.out.printf ("| %-20s | %-20s |\n", "CPF", vendedor.getCpf());
+        System.out.printf ("| %-20s | %-20s |\n", "Senha", vendedor.getSenha());
+        System.out.printf ("| %-20s | %-20d |\n", "Vendas", vendedor.getTotalVendas());
+        System.out.println("+----------------------+----------------------+");
     }
 
     public boolean editarDados(int op, String campo){
-        Funcionario funcionario= null;
-        for (Funcionario f: fc.getFuncionarios()){
-            if (f.getIdFuncionario() == vendedor.getIdFuncionario()){
-                funcionario = f;
-            }
+        Vendedor v = buscaFuncionario(vendedor.getIdFuncionario());
+        if (v == null){
+            throw new IllegalArgumentException("Não foi possivel achar o funcionario na base de dados");
         }
+
         switch (op){
             case 1:
-                funcionario.setEmail(campo);
+                v.setEmail(campo);
                 break;
 
             case 2:
-                funcionario.setSenha(campo);
+                v.setSenha(campo);
                 break;
 
             default:
                 System.out.println("Entrada inválida");
                 break;
         }
-        vendedor = (Vendedor) funcionario;
+        vendedor = v;
         fc.getFuncionarioPersistencia().salvarEmArquivo(fc.getFuncionarios());
 
         return fc.getFuncionarios().contains(vendedor);
     }
 
     public boolean processarPedido(int id) {
-        Pedido pedido = null;
-
-        for (Pedido p : pedidoController.getPendentes()) {
-            if (p.getId_Pedido() == id) {
-                pedido = p;
-                log.info("Pedido encontrado");
-                break;
-            }
+        if (vendedor == null) {
+            log.warn("Erro ao logar o vendedor");
+            return false;
         }
-        if (pedido == null) {
+        Pedido pedido = pedidoController.getPedidoId(id);
+        if (pedido == null){
             log.warn("Pedido não encontrado");
             return false;
         }
 
-        if (vendedor == null) {
-            log.warn("Vendedor não está logado");
-            return false;
+        for (ItemPedido i : pedido.getItens()){
+            pedidoController.verificarProduto(i);
+            Produto produto = produtoController.alterarEstoque(i.getIdProduto(), i.getQuantidade());
+
+            if (produto != null) {
+                pedido.setObservacao("Item " + i.getIdProduto() + " removido: quantidade excede estoque");
+            }
         }
 
-        try {
-            for (ItemPedido i : pedido.getItens()) {
-                Produto produto = produtoController.alterarEstoque(i.getIdProduto(), i.getQuantidade());
+        pedido.setStatus("Processado");
+        pedido.setIdVendedor(vendedor.getIdFuncionario());
 
-                if (produto != null) {
-                    pedido.setObservacao("Item " + i.getIdProduto() + " removido: quantidade excede estoque");
-                }
-            }
+        Vendedor v = buscaFuncionario(vendedor.getIdFuncionario());
+        v.setTotalVendas(v.getTotalVendas() + 1);
 
-            pedido.setStatus("Processado");
-            pedido.setIdVendedor(vendedor.getIdFuncionario());
-            pedidoController.getPedidoPersistencia().salvarEmArquivo(pedidoController.getPedidos());
-            pedidoController.carregarStatusPedidos();
+        pedidoController.getPedidoPersistencia().salvarEmArquivo(pedidoController.getPedidos());
+        pedidoController.carregarStatusPedidos();
+        fc.getFuncionarioPersistencia().salvarEmArquivo(fc.getFuncionarios());
+        if (pedido.getStatus().equals("Processado")){
             log.info("Pedido {} processado por vendedor {} com sucesso", pedido.getId_Pedido(), vendedor.getIdFuncionario());
             return true;
-
-        } catch (Exception e) {
-            log.warn("Erro ao processar pedido: ", e);
         }
-
         return false;
+    }
+
+    public Vendedor buscaFuncionario(int id){
+        for(Funcionario f: fc.getFuncionarios()){
+            if (id == f.getIdFuncionario()){
+                return (Vendedor) f;
+            }
+        }
+        return null;
     }
 }
 

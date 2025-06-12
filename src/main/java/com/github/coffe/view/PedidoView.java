@@ -42,13 +42,12 @@ public class PedidoView {
     }
 
     public void mostrarTodosPedidos(){
-        ArrayList<Pedido> pedidos = pedidoController.getPedidos();
-        if(pedidos.isEmpty()) {
+        if(pedidoController.getPedidos().isEmpty()) {
             System.out.println("\nNenhum pedido encontrado!");
             return;
         }
-
-        for(Pedido pedido : pedidos){
+        pedidoController.carregarStatusPedidos();
+        for(Pedido pedido : pedidoController.getPedidos()){
             pedido.exibirDados();
         }
     }

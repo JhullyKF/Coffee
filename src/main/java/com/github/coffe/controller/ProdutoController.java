@@ -21,23 +21,21 @@ public class ProdutoController {
         return produtos;
     }
 
-
     public Produto alterarEstoque(int id, int quantidade){
-        for (Produto p : produtos) {
-            if (p.getIdProduto() == id) {
-                if (p.getEstoque() >= quantidade) {
-                    p.setEstoque(p.getEstoque() - quantidade);
-                    produtoPersistencia.salvarEmArquivo(produtos);
-                    log.info("Estoque do produto {} atualizado com sucesso", id);
-                    return null;
-                } else {
-                    log.warn("Produto sem estoque suficiente: {}", id);
-                    return p;
-                }
-            }
+        Produto produto = getProdutoPorId(id);
+        if (produto == null){
+            log.warn("Produto não encontrado");
+            throw new IllegalArgumentException("Produto não encontrado");
         }
-        // Produto não encontrado
-        log.warn("Produto {} não encontrado.", id);
+
+        if (produto.getEstoque() < quantidade){
+            log.warn("Produto sem estoque suficiente: {}", id);
+            return produto;
+
+        }
+        produto.setEstoque(produto.getEstoque() - quantidade);
+        produtoPersistencia.salvarEmArquivo(produtos);
+        log.info("Estoque do produto {} atualizado com sucesso", id);
         return null;
     }
 
@@ -50,59 +48,50 @@ public class ProdutoController {
     }
 
     public boolean removerProduto(int id){
-        Produto produto = null;
-        for(Produto p: produtos){
-            if(p.getIdProduto() == id){
-                produtos.remove(p);
-                produtoPersistencia.salvarEmArquivo(produtos);
-                produto = p;
-            }
+        Produto produto = getProdutoPorId(id);
+        if(produto == null){
+            log.warn("Produto não encontrado");
+            throw new IllegalArgumentException("Produto não encontrado");
         }
+        produtos.remove(produto);
+        produtoPersistencia.salvarEmArquivo(produtos);
         return produtos.contains(produto);
     }
 
     public boolean alterarProduto(int id, int op, String campo) {
-        Produto produto = null;
-
-        for (Produto p : produtos) {
-            if (p.getIdProduto() == id) {
-                log.debug("Produto encontrado");
-                produto = p;
-                break;
-            }
-        }
+        Produto produto = getProdutoPorId(id);
 
         if (produto == null){
+            log.warn("Produto não encontrado");
             throw new IllegalArgumentException("Produto não encontrado");
-        } else {
-            switch (op) {
-                case 1:
-                    produto.setNome(campo);
-                    log.info("Nome do produto {} alterado com sucesso", produto.getIdProduto());
-                    break;
-
-                case 2:
-                    produto.setDescricao(campo);
-                    log.info("Descrição do produto {} alterada com sucesso", produto.getIdProduto());
-                    break;
-
-                case 3:
-                    produto.setPreco(Double.parseDouble(campo));
-                    log.info("Preço do produto {} alterado com sucesso", produto.getIdProduto());
-                    break;
-
-                case 4:
-                    produto.setEstoque(Integer.parseInt(campo));
-                    log.info("Estoque do produto {} alterado com sucesso", produto.getIdProduto());
-                    break;
-
-                default:
-                    log.debug("Default");
-                    break;
-            }
-            produtoPersistencia.salvarEmArquivo(produtos);
         }
 
+        switch (op) {
+            case 1:
+                produto.setNome(campo);
+                log.info("Nome do produto {} alterado com sucesso", produto.getIdProduto());
+                break;
+
+            case 2:
+                produto.setDescricao(campo);
+                log.info("Descrição do produto {} alterada com sucesso", produto.getIdProduto());
+                break;
+
+            case 3:
+                produto.setPreco(Double.parseDouble(campo));
+                log.info("Preço do produto {} alterado com sucesso", produto.getIdProduto());
+                break;
+
+            case 4:
+                produto.setEstoque(Integer.parseInt(campo));
+                log.info("Estoque do produto {} alterado com sucesso", produto.getIdProduto());
+                break;
+
+            default:
+                log.debug("Default");
+                break;
+        }
+        produtoPersistencia.salvarEmArquivo(produtos);
         return produtos.contains(produto);
     }
 

@@ -49,19 +49,10 @@ public class PedidoController {
         for(ItemPedido itemPedido : carrinho){
             if(itemPedido.getIdProduto() == id){
                 int novaQtd = itemPedido.getQuantidade() + qtd;
-                if(novaQtd > produto.getEstoque()){
-                    log.warn("Estoque insuficiente. ProdutoID: {}, Solicitado: {}, Disponível: {}", id, novaQtd, produto.getEstoque());
-                    return false;
-                }
                 itemPedido.setQuantidade(novaQtd);
                 log.info("Item adicionado ao carrinho com sucesso. ProdutoID: {}, Quantidade: {}", id, qtd);
                 return true;
             }
-        }
-
-        if(qtd > produto.getEstoque()){
-            log.warn("Estoque insuficiente. ProdutoID: {}, Solicitado: {}, Disponível: {}", id, qtd, produto.getEstoque());
-            return false;
         }
 
         ItemPedido itemPedido = new ItemPedido(id, qtd);
@@ -127,12 +118,11 @@ public class PedidoController {
 
     //Listagem dos pedidos feitos
     public ArrayList<Pedido> getPedidos() {
-        pedidos = pedidoPersistencia.carregarDoArquivo();
-        return pedidos;
+        return new ArrayList<>(pedidos);
     }
 
-    public ArrayList<Pedido> getPendentes(){
-        return pendentes;
+    public void atualizarArquivo(){
+        pedidos = pedidoPersistencia.carregarDoArquivo();
     }
 
     public ArrayList<Pedido> getPedidosUsuario(){
@@ -146,27 +136,17 @@ public class PedidoController {
     }
 
     public ArrayList<Pedido> getPedidosPendentes(){
-        ArrayList<Pedido> pendentes = new ArrayList<>();
-        for (Pedido p : pedidos) {
-            if ("Pendente".equals(p.getStatus())) {
-                pendentes.add(p);
-            }
-        }
         return pendentes;
     }
 
     public ArrayList<Pedido> getPedidosValidados(){
-        ArrayList<Pedido> validados = new ArrayList<>();
-        for (Pedido p : pedidos) {
-            if (!"Pendente".equals(p.getStatus())) {
-                validados.add(p);
-            }
-        }
         return validados;
     }
 
-
     public void carregarStatusPedidos(){
+        pendentes.clear();
+        validados.clear();
+        atualizarArquivo();
         for (Pedido p: pedidos){
             if(p.getStatus().equals("Pendente")){
                 pendentes.add(p);
@@ -176,4 +156,12 @@ public class PedidoController {
         }
     }
 
+    public Pedido getPedidoId(int id){
+        for(Pedido p: pedidos){
+            if (id == p.getId_Pedido()){
+                return p;
+            }
+        }
+        return null;
+    }
 }

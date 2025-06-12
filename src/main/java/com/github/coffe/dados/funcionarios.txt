@@ -1,2 +1,2 @@
 0, Gerente, Gerente1, gerente@coffee.com, 12345678900, 5000.0, 5500.0, Mudar@123
-1, Vendedor, Jhully, jhujhu@gmail.com, 123456, 2500.0, 3000.0, teste@123, 0
+1, Vendedor, Jhully, jhujhu@gmail.com, 123456, 2500.0, 3000.0, teste@123, 1
