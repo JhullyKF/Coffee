@@ -20,7 +20,7 @@ public class ClienteView {
 
     public ClienteView(ClienteController clienteController) {
         this.clienteController = clienteController;
-        PedidoController pedidoController = new PedidoController(clienteController);
+        pedidoController = new PedidoController(clienteController);
         this.pedidoView = new PedidoView(pedidoController);
     }
 

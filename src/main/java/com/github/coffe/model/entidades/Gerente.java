@@ -1,7 +1,7 @@
 package com.github.coffe.model.entidades;
 
 public class Gerente extends Funcionario{
-    int totalVendas;
+    private int totalVendas;
 
     public Gerente(String nome, String email, String cpf) {
         super("Gerente", nome, email, cpf, 5000.00,"Mudar@123");
