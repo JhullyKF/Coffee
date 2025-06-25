@@ -4,8 +4,6 @@ import com.github.coffe.controller.ClienteController;
 import com.github.coffe.controller.FuncionarioController;
 import com.github.coffe.controller.GerenteController;
 import com.github.coffe.controller.ProdutoController;
-import com.github.coffe.model.entidades.Cliente;
-import com.github.coffe.model.entidades.Funcionario;
 import com.github.coffe.model.entidades.Vendedor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

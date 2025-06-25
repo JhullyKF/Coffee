@@ -12,11 +12,8 @@ public class ClienteView {
     private ClienteController clienteController = new ClienteController();
     private PedidoController pedidoController;
     private PedidoView pedidoView;
-    private final ProdutoView pv = new ProdutoView();
     private final ProdutoView produtoView = new ProdutoView();
     private final Autenticador<Cliente> autenticador = new Autenticador<>(clienteController.getClientes());
-
-    private int id, qtd;
 
     public ClienteView(ClienteController clienteController) {
         this.clienteController = clienteController;
@@ -77,6 +74,7 @@ public class ClienteView {
     }
 
     public void realizarPedido(){
+        int id, qtd;
         do {
             System.out.println("\nSelecione uma opção para continuarmos: ");
             System.out.println("[1] - Adicionar item ao carrinho");
